@@ -2,15 +2,15 @@
   "name": "ciwgo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "engines": {
     "node": "^12.x || ^14.x || ^16.x"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "debug": "nodemon --inspect src/index.js",
-    "lint": "eslint src --ext .js",
+    "start": "node src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "debug": "nodemon --inspect src/index.ts",
+    "lint": "eslint src --ext .ts",
     "lint:fix": "npm run lint -- --fix"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
+    "node": "^16.19.0",
     "pm2": "^5.2.2"
   },
   "devDependencies": {
