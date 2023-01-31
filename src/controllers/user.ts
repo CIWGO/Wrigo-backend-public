@@ -1,3 +1,7 @@
+export {};
+
+declare function require(path: string): any;
+
 const UserModel = require("../models/user");
 const { generateToken } = require("../utils/jwt");
 
