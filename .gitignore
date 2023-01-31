@@ -1,4 +1,4 @@
-#Mac/OSX
+# Mac/OSX
 .DS_Store
 
 # VSCode
@@ -12,5 +12,8 @@
 # Local History for Visual Studio Code
 .history/
 
-#node_modules
+# node_modules
 **/node_modules
+
+# .env
+.env
