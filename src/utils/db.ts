@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const connectToDB = () => {
   // DB_HOST, DB_PORT, DB_PASSWORD
@@ -28,4 +28,4 @@ const connectToDB = () => {
   return mongoose.connect(connectionString);
 };
 
-module.exports = connectToDB;
+export default connectToDB;
