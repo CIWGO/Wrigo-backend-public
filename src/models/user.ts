@@ -41,4 +41,4 @@ schema.methods.validatePassword = async function (password) {
 };
 
 const user  = model<IUserDocument>("User", schema);
-export default user
+export default user;
