@@ -1,5 +1,5 @@
-const { Router } = require("express");
-const { register, login, test } = require("../controllers/user");
+import { Router } from "express";
+import { register, login, test } from "../controllers/user";
 
 const userRouter = Router();
 
@@ -8,4 +8,4 @@ userRouter.post("/login", login);
 
 userRouter.post("/test", test);
 
-module.exports = userRouter;
+export { userRouter };

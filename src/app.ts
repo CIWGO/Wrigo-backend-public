@@ -1,13 +1,11 @@
-export {};
-
-const express = require("express");
+import express, { Express } from "express";
+import { v1Router } from "./routes/index";
 
 require("express-async-errors");
-const v1Router = require("./routes/index");
 
-const app = express();
+const app: Express = express();
 
 app.use(express.json());
 app.use("/v1", v1Router);
 
-module.exports = app;
+export default app;

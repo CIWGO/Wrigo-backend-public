@@ -1,27 +1,19 @@
-export {};
+import UserModel from "../models/user";
+import { generateToken } from "../utils/jwt";
+import { Response, Request } from "express";
 
-declare function require(path: string): any;
-
-const UserModel = require("../models/user");
-const { generateToken } = require("../utils/jwt");
-
-const register = async (req, res) => {
+const register = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-  // daa validation
-  // check duplicate username
-
   const user = new UserModel({ username, password });
-  // try {
+
   await user.hashPassword();
   await user.save();
-  // } catch () {
 
-  // }
   const token = generateToken({ id: user.id, username });
   res.status(201).json({ username, token });
 };
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   const user = await UserModel.findOne({ username }).exec();
   if (!user) {
@@ -37,15 +29,11 @@ const login = async (req, res) => {
   res.json({ username, token });
 };
 
-const test = async (req, res) => {
+const test = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   console.log("this is a test function");
 
   res.json({ username, password });
 };
 
-module.exports = {
-  register,
-  login,
-  test,
-};
+export { register, login, test };

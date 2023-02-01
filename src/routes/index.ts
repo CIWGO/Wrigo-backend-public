@@ -1,11 +1,8 @@
-export {};
-
-const { Router } = require("express");
-
-const userRouter = require("./user");
+import { Router } from "express";
+import { userRouter } from "./user";
 
 const v1Router = Router();
 
 v1Router.use("/users", userRouter);
 
-module.exports = v1Router;
+export { v1Router };
