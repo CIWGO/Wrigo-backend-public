@@ -56,8 +56,14 @@ control + c
 
 ## MongoDB connection
 
-* Application connection string: mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrites=true&w=majority
-* VS Code extension connection string: mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
+* Application connection string: 
+```
+mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrites=true&w=majority
+```
+* VS Code extension connection string: 
+```
+mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
+```
 
 ## Version History
 
