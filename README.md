@@ -81,6 +81,7 @@ mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
 * Albert Yu yuzhiqiang3014@gmail.com
 * Yinghe Zhou zhouyinghe0821@gmail.com
 * Hai Yang leoyh.97@gmail.com
+* Haixin Zhang haixin.zhang.777@gmail.com
 
 ## License
 
