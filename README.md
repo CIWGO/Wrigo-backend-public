@@ -54,7 +54,7 @@ npm start
 control + c
 ```
 
-## MongoDB connection
+## MongoDB Connection
 
 * Application connection string: 
 ```
@@ -63,6 +63,23 @@ mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrit
 * VS Code extension connection string: 
 ```
 mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
+```
+
+## Program Flow Chart
+
+```
+https://lucid.app/lucidchart/bdc56173-a829-40ab-9e06-65a9ac4fe73a/edit?viewport_loc=-11%2C181%2C1752%2C1075%2C0_0&invitationId=inv_486e4eeb-9c68-4fba-88ce-d4f2d7566492
+```
+
+## Test Emails
+
+```
+ciwgo-dev@hotmail.com
+Ciwgo123
+```
+```
+ciwgo-test@hotmail.com
+Ciwgo123
 ```
 
 ## Version History
