@@ -2,10 +2,21 @@ import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IUser {
-  username: string;
   password: string;
   email: string;
+  verified: boolean;
+  otp: string;
+  username: string;
   avatar?: string;
+  gender:string;
+  country:string;
+  state:string;
+  suburb:string;
+  postcode:string;
+  study_field:string;
+  articles:string[]; //all articles' ids uploaded by this user
+  subscription:boolean;
+  planID?:string;
 }
 
 export interface IUserDocument extends IUser, Document {
