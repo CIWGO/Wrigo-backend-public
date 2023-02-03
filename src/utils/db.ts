@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-
+import config from "../config";
 const connectToDB = () => {
   // DB_HOST, DB_PORT, DB_PASSWORD
-  const connectionString = process.env.CONNECTION_STRING;
+  const connectionString = config.CONNECTION_STRING;
+
   // const connectionString = connectionStr || process.env.CONNECTION_STRING;
   if (!connectionString) {
     console.error("connection string is undefined");
@@ -27,5 +28,13 @@ const connectToDB = () => {
   });
   return mongoose.connect(connectionString);
 };
+
+// const connectToDB = async () => {
+//   try {
+//     await mongoose.connect(process.env.CONNECTION_STRING);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
 export default connectToDB;
