@@ -9,10 +9,8 @@ export interface IUser {
   username: string;
   avatar?: string;
   gender:string;
+  birth: Date;
   country:string;
-  state:string;
-  suburb:string;
-  postcode:string;
   study_field:string;
   articles:string[]; //all articles' ids uploaded by this user
   subscription:boolean;
