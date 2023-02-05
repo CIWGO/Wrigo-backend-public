@@ -6,5 +6,8 @@ namespace NodeJS {
     interface ProcessEnv {
         PORT: string;
         CONNECTION_STRING: string;
+        DB_NAME: string;
+        CIW_COLLECTION_NAME: string;
+
     }
 }
