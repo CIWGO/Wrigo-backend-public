@@ -13,6 +13,7 @@
 * jsonwebtoken ver ^9.0.0
 * mongoose ver ^6.6.5
 * morgan ver ^1.10.0
+* nodemailer ^6.4.7
 * pm2 ver ^5.2.2
 
 ### Dev Dependencies
@@ -20,6 +21,7 @@
 * @types/express ver ^4.17.16
 * @types/mongoose ver ^5.11.97
 * @types/node ver ^18.11.18
+* @types/nodemailer ^6.4.7
 * @typescript-eslint/eslint-plugin ver ^5.50.0
 * @typescript-eslint/parser ver ^5.50.0
 * eslint ver ^8.33.0
@@ -30,13 +32,9 @@
 
 ### Installing
 
-* Install all needed packages
+* Install all needed Dependencies
 ```
-npm i
-``` 
-* Install ts-node to run typescript-based code
-```
-npm install -g ts-node
+npm ci
 ```
 * Install MongoDB for VS Code extension
 
@@ -44,7 +42,11 @@ npm install -g ts-node
 
 * Run the project
 ```
-npm start
+npm run start
+```
+* DEV modal
+```
+npm run dev
 ```
 * Stop running
 ```
