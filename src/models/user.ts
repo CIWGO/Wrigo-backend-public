@@ -23,11 +23,6 @@ export interface IUserDocument extends IUser, Document {
 }
 
 const schema: Schema<IUserDocument> = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   password: {
     type: String,
     required: true,
@@ -43,6 +38,15 @@ const schema: Schema<IUserDocument> = new Schema({
   otp: {
     type: String,
     required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  avatar: {
+    type: undefined,
+    required: false,
   },
   gender: {
     type: String,
@@ -67,6 +71,10 @@ const schema: Schema<IUserDocument> = new Schema({
   subscription: {
     type: Boolean,
     required: true,
+  },
+  planID: {
+    type: undefined,
+    required: false,
   },
 });
 
