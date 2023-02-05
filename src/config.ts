@@ -14,11 +14,15 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 interface ENV {
   PORT: number | undefined;
   CONNECTION_STRING: string | undefined;
+  DB_NAME: string | undefined;
+  CIW_COLLECTION_NAME: string | undefined;
 }
 
 interface Config {
   PORT: number;
   CONNECTION_STRING: string;
+  DB_NAME: string;
+  CIW_COLLECTION_NAME: string;
 }
 
 // Loading process.env as ENV interface
@@ -26,7 +30,9 @@ interface Config {
 const getConfig = (): ENV => {
   return {
     PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
-    CONNECTION_STRING: process.env.CONNECTION_STRING
+    CONNECTION_STRING: process.env.CONNECTION_STRING,
+    DB_NAME: process.env.DB_NAME,
+    CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME
   };
 };
 
