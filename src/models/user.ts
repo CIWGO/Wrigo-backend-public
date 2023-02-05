@@ -45,7 +45,7 @@ const schema: Schema<IUserDocument> = new Schema({
     unique: true,
   },
   avatar: {
-    type: undefined,
+    type: String,
     required: false,
   },
   gender: {
@@ -73,7 +73,7 @@ const schema: Schema<IUserDocument> = new Schema({
     required: true,
   },
   planID: {
-    type: undefined,
+    type: String,
     required: false,
   },
 });
