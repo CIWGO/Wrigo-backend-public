@@ -5,11 +5,11 @@ export interface Writing {
   create_time: Date;
   isSubmitted: boolean;
   submit_time: Date;
-  task_topic: string;
+  task_topic?: string;
   writing_content: string;
-  feedback: [string,string]; //feedback: [feedback_id, feedback]
-  score: [number];
-  total_score: number;
+  feedback?: []; //feedback: [feedback_id, feedback]
+  score?: []; // Data type stored in this array: number
+  total_score?: number;
 }
 
 const schema = new Schema<Writing>({
@@ -42,17 +42,17 @@ const schema = new Schema<Writing>({
     required: true,
   },
   feedback: {
-    type: [String, String],
+    type: [],
     required: false,
   },
   score: {
-    type: [Number],
+    type: [],
     required: false,
   },
   total_score: {
     type: Number,
     required: false,
-  }
+  },
 });
 
 const writing = model<Writing>("Writing", schema);

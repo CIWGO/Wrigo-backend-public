@@ -6,17 +6,17 @@ export interface User {
   email: string;
   password: string;
   email_verified: boolean;
-  OTP: string;
+  OTP?: string;
   username: string;
   signup_date: Date;
-  gender: string;
-  birth: Date;
-  country: string;
-  study_field: string;
-  writing_ids: [string];
+  gender?: string;
+  birth?: Date;
+  country?: string;
+  study_field?: string;
+  writing_ids?: [];
   isSubscribed: boolean;
   isAdmin: boolean;
-  login_history: [[Date,String]];
+  login_history: []; // Data format: [[Date, String]]
   isActive: boolean;
 }
 
@@ -34,6 +34,7 @@ const schema: Schema<UserDocument> = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -45,11 +46,15 @@ const schema: Schema<UserDocument> = new Schema({
   },
   OTP: {
     type: String,
-    required: true,
+    required: false,
   },
   username: {
     type: String,
-    required: false,
+    required: true,
+  },
+  signup_date: {
+    type: Date,
+    required: true,
   },
   gender: {
     type: String,
@@ -68,9 +73,9 @@ const schema: Schema<UserDocument> = new Schema({
     required: false,
   },
   writing_ids: {
-    type: [String],
+    type: [],
     required: false,
-  }, 
+  },
   isSubscribed: {
     type: Boolean,
     required: true,
@@ -80,13 +85,13 @@ const schema: Schema<UserDocument> = new Schema({
     required: true,
   },
   login_history: {
-    type: [[Date, String]],
+    type: [],
     required: true,
   },
   isActive: {
     type: Boolean,
     required: true,
-  }
+  },
 });
 
 //Do not declare methods using ES6 arrow functions (=>).
