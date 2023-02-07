@@ -12,27 +12,27 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 // as someone could skip these variables or not setup a .env file at all
 
 interface ENV {
-  PORT: number | undefined;
-  CONNECTION_STRING: string | undefined;
-  DB_NAME: string | undefined;
-  CIW_COLLECTION_NAME: string | undefined;
+  PORT?: number;
+  CONNECTION_STRING?: string;
+  CIW_COLLECTION_NAME?: string;
+  OPENAI_APIKEY?: string;
 }
 
 interface Config {
   PORT: number;
   CONNECTION_STRING: string;
-  DB_NAME: string;
   CIW_COLLECTION_NAME: string;
+  OPENAI_APIKEY: string;
 }
 
 // Loading process.env as ENV interface
 
 const getConfig = (): ENV => {
   return {
-    PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
+    PORT: process.env.PORT ? Number(process.env.PORT) : 3005,
     CONNECTION_STRING: process.env.CONNECTION_STRING,
-    DB_NAME: process.env.DB_NAME,
-    CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME
+    CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME,
+    OPENAI_APIKEY: process.env.OPENAI_APIKEY
   };
 };
 
@@ -43,11 +43,12 @@ const getConfig = (): ENV => {
 // definition.
 
 const getSanitzedConfig = (config: ENV): Config => {
-  for (const [key, value] of Object.entries(config)) {
-    if (value === undefined) {
+  const configs = Object.entries(config);
+  configs.forEach(([key, value]) => {
+    if (!value) {
       throw new Error(`Missing key ${key} in config.env`);
     }
-  }
+  });
   return config as Config;
 };
 

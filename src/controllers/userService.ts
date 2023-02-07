@@ -11,11 +11,7 @@ const createUser = async (req: Request, res: Response) => {
         res.status(201).json({ username, email })
         console.log(username);
     } catch (error) {
-        let errorMessage = "Failed to create new user";
-        if (error instanceof Error) {
-            errorMessage = error.message;
-        }
-        res.status(500).send(errorMessage);
+        res.status(500).send(error.message || "Failed to create new user");
     }
 };
 
@@ -27,11 +23,7 @@ const findUser = async (req: Request, res: Response) => {
         const email = user.email;
         res.status(201).json({ email })
     } catch (error) {
-        let errorMessage = "User does not exist";
-        if (error instanceof Error) {
-            errorMessage = error.message;
-        }
-        res.status(500).send(errorMessage);
+        res.status(500).send(error.message || "User does not exist");
     }
 };
 
@@ -47,11 +39,7 @@ const updateUser = async (req: Request, res: Response) => {
         res.status(201).json({ newUserEmail });
         console.log(user.username, " + ", userUpdated.email);
     } catch (error) {
-        let errorMessage = "Failed to update the user";
-        if (error instanceof Error) {
-            errorMessage = error.message;
-        }
-        res.status(500).send(errorMessage);
+        res.status(500).send(error.message || "Failed to update user");
     }
 };
 
@@ -62,11 +50,7 @@ const deleteUser = async (req: Request, res: Response) => {
         const user = await UserModel.deleteOne(username);
         console.log(user);
     } catch (error) {
-        let errorMessage = "Failed to delete the user";
-        if (error instanceof Error) {
-            errorMessage = error.message;
-        }
-        res.status(500).send(errorMessage);
+        res.status(500).send(error.message || "Failed to delete user");
     }
 }
 
