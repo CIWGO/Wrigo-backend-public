@@ -1,3 +1,4 @@
+// Code reference: https://mongoosejs.com/docs/typescript.html
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -18,6 +19,7 @@ export interface User {
   isAdmin: boolean;
   login_history: []; // Data format: [[Date, String]]
   isActive: boolean;
+  avatar?: string;
 }
 
 export interface UserDocument extends User, Document {
@@ -91,7 +93,12 @@ const schema: Schema<UserDocument> = new Schema({
   isActive: {
     type: Boolean,
     required: true,
+    unique: true,
   },
+  avatar: {
+    type: String,
+    required: false,
+  }
 });
 
 //Do not declare methods using ES6 arrow functions (=>).
