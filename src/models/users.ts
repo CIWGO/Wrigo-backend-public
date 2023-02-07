@@ -19,6 +19,7 @@ export interface User {
   isAdmin: boolean;
   login_history: []; // Data format: [[Date, String]]
   isActive: boolean;
+  avatar?: string;
 }
 
 export interface UserDocument extends User, Document {
