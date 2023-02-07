@@ -1,5 +1,4 @@
 import UserModel from "../../models/user";
-// import { generateToken } from "../../utils/jwt";
 import { Response, Request } from "express";
 const showUserProfile = async (req: Request, res: Response) => {
   const { username } = req.params;
