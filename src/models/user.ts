@@ -1,23 +1,37 @@
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
-export interface IUser {
-  username: string
-  password: string
-  email: string
-  avatar?: string
-  country: string
-  gender: string
-  birthday: Date
+export interface User {
+  uid: string;
+  email: string;
+  password: string;
+  email_verified: boolean;
+  OTP?: string;
+  username: string;
+  signup_date: Date;
+  gender?: string;
+  birth?: Date;
+  country?: string;
+  study_field?: string;
+  writing_ids?: [];
+  isSubscribed: boolean;
+  isAdmin: boolean;
+  login_history: []; // Data format: [[Date, String]]
+  isActive: boolean;
 }
 
-export interface IUserDocument extends IUser, Document {
-  hashPassword: () => Promise<void>
-  validatePassword: (password: string) => Promise<void>
+export interface UserDocument extends User, Document {
+  hashPassword: () => Promise<void>;
+  validatePassword: (password: string) => Promise<void>;
 }
 
-const schema: Schema<IUserDocument> = new Schema({
-  username: {
+const schema: Schema<UserDocument> = new Schema({
+  uid: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
     type: String,
     required: true,
     unique: true,
@@ -26,21 +40,57 @@ const schema: Schema<IUserDocument> = new Schema({
     type: String,
     required: true,
   },
-  email: {
+  email_verified: {
+    type: Boolean,
+    required: true,
+  },
+  OTP: {
+    type: String,
+    required: false,
+  },
+  username: {
     type: String,
     required: true,
   },
-  country: {
-    type: String,
+  signup_date: {
+    type: Date,
     required: true,
   },
   gender: {
     type: String,
     required: false,
   },
-  birthday: {
+  birth: {
     type: Date,
     required: false,
+  },
+  country: {
+    type: String,
+    required: false,
+  },
+  study_field: {
+    type: String,
+    required: false,
+  },
+  writing_ids: {
+    type: [],
+    required: false,
+  },
+  isSubscribed: {
+    type: Boolean,
+    required: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+  },
+  login_history: {
+    type: [],
+    required: true,
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
   },
 });
 
@@ -55,5 +105,5 @@ schema.methods.validatePassword = async function (password) {
   bcrypt.compare(password, this.password);
 };
 
-const user = model<IUserDocument>("User", schema);
+const user = model<UserDocument>("User", schema);
 export default user;
