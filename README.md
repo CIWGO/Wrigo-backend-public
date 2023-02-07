@@ -67,6 +67,21 @@ mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrit
 mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
 ```
 
+## OpenAI APIKey
+
+```
+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
+```
+
+## .env Variables
+
+```
+PORT = 3005
+CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/user?retryWrites=true&w=majority"
+CIW_COLLECTION_NAME = "user"
+OPENAI_APIKEY = "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"
+```
+
 ## Program Flow Chart
 
 ```
