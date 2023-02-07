@@ -4,7 +4,7 @@ import { Response, Request } from "express";
 const showUserProfile = async (req: Request, res: Response) => {
   const { username } = req.params;
   const user = await UserModel.findOne({ username }).exec();
-  if (user == undefined) return res.status(404).json({error:"user not found"});
+  if (!user) return res.status(404).json({error:"user not found"});
   res.json(user);
 };
 
@@ -17,7 +17,7 @@ const createUserProfile = async (req: Request, res: Response) => {
     },
   },
   { new: true },).exec();
-  if (user == undefined) return res.sendStatus(404);
+  if (!user) return res.sendStatus(404);
   res.send(user);
 };
 
@@ -31,7 +31,7 @@ const updateUserProfile = async (req: Request, res: Response) => {
         "email": email,
         "country": country,
         "gender": gender,
-        "birthday":birthday
+        "birth":birthday
       },
     },
     { new: true },
