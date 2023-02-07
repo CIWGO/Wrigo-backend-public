@@ -1,3 +1,4 @@
+// Code reference: https://mongoosejs.com/docs/typescript.html
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -26,7 +27,12 @@ const schema : Schema<IUserDocument> = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
+  avatar: {
+    type: String,
+    required: false,
+  }
 });
 
 //Do not declare methods using ES6 arrow functions (=>). 
