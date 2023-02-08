@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, test } from "../controllers/user";
+import { register, login, test } from "../controllers/userHashPw";
 import {showUserProfile,createUserProfile,updateUserProfile } from "../controllers/userProfile/userProfile";
 
 const userRouter = Router();
