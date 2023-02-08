@@ -75,7 +75,7 @@ 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
 
 ## .env Variables
 
-Create a file named .env under project root foder and paste the following into this file. 
+Create a file named .env under project root folder and paste the following into this file. 
 
 ```
 PORT = 3005
