@@ -10,19 +10,24 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const message = {
-  from: "ciwgo-dev@hotmail.com",
-  to: "hnytllftw@gmail.com",
-  subject: "Email Notification",
-  text: "Hello, this is a test email from nodemailer."
+// To call sendEmail func and pass in data: 
+// sendEmail('from@example.com', 'to@example.com', 'Email subject', 'Email text');
+const sendEmail = (from: string, to: string, subject: string, text: string): void => {
+  const email = {
+    from,
+    to,
+    subject,
+    text
+  };
+
+  transporter.sendMail(email, (error: Error | null, info: SentMessageInfo): void => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.toString());
+    }
+  });
 };
 
-transporter.sendMail(message, (error: Error | null, info: SentMessageInfo): void => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Email sent: " + info.toString());
-  }
-});
-
+export default sendEmail;
 
