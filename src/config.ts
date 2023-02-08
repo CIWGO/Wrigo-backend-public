@@ -1,11 +1,10 @@
-import path from "path";
 import dotenv from "dotenv";
 
 // Code source: https://dev.to/asjadanis/parsing-env-with-typescript-3jjm
 // Parsing .env file and converting it into our own custom Config type
 
 // Parsing the env file.
-dotenv.config({ path: path.resolve(__dirname, ".env") });
+dotenv.config();
 
 // Interface to load env variables
 // Note these variables can possibly be undefined
