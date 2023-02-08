@@ -1,4 +1,4 @@
-import UserModel from "../../models/user";
+import UserModel from "../../models/users";
 import { Response, Request } from "express";
 const showUserProfile = async (req: Request, res: Response) => {
   const { username } = req.params;
