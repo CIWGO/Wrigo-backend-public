@@ -77,7 +77,6 @@ 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
 
 Create a file named .env under src folder and paste the following into this file. 
 
->>>>>>> 99e0d845b57859f75215ae26dd87c0822de44b70
 ```
 PORT = 3005
 CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/user?retryWrites=true&w=majority"
