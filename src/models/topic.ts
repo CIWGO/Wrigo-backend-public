@@ -18,11 +18,9 @@ const schema = new Schema<Topic>({
   },
   topic_category: {
     type: String,
-    required: false,
   },
   topic_difficulty: {
     type: String,
-    required: false,
   },
 });
 

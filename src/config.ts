@@ -41,7 +41,7 @@ const getConfig = (): ENV => {
 // it as Config which just removes the undefined from our type 
 // definition.
 
-const getSanitzedConfig = (config: ENV): Config => {
+const getSanitizedConfig = (config: ENV): Config => {
   const configs = Object.entries(config);
   configs.forEach(([key, value]) => {
     if (!value) {
@@ -53,6 +53,6 @@ const getSanitzedConfig = (config: ENV): Config => {
 
 const config = getConfig();
 
-const sanitizedConfig = getSanitzedConfig(config);
+const sanitizedConfig = getSanitizedConfig(config);
 
 export default sanitizedConfig;
