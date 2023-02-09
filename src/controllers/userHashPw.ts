@@ -29,11 +29,4 @@ const login = async (req: Request, res: Response) => {
   res.json({ username, token });
 };
 
-const test = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  console.log("this is a test function");
-
-  res.json({ username, password });
-};
-
-export { register, login, test };
+export { register, login };
