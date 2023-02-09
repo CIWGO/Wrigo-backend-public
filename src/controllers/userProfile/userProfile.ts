@@ -4,7 +4,7 @@ import { Response, Request } from "express";
 const showUserProfile = async (req: Request, res: Response) => {
   const { username } = req.params;
   const user = await UserModel.findOne({ username }).exec();
-  
+
   if (!user) return res.status(404).json({ error: "user not found" });
   res.status(200).json(user);
 };

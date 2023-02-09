@@ -31,14 +31,14 @@ const getConfig = (): ENV => {
     PORT: process.env.PORT ? Number(process.env.PORT) : 3005,
     CONNECTION_STRING: process.env.CONNECTION_STRING,
     CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME,
-    OPENAI_APIKEY: process.env.OPENAI_APIKEY
+    OPENAI_APIKEY: process.env.OPENAI_APIKEY,
   };
 };
 
-// Throwing an Error if any field was undefined we don't 
-// want our app to run if it can't connect to DB and ensure 
+// Throwing an Error if any field was undefined we don't
+// want our app to run if it can't connect to DB and ensure
 // that these fields are accessible. If all is good return
-// it as Config which just removes the undefined from our type 
+// it as Config which just removes the undefined from our type
 // definition.
 
 const getSanitizedConfig = (config: ENV): Config => {

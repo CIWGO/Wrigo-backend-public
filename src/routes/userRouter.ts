@@ -6,11 +6,15 @@ import {
   deleteUser,
 } from "../controllers/userService";
 import { login } from "../controllers/userLogin";
-import {showUserProfile,createUserProfile,updateUserProfile } from "../controllers/userProfile/userProfile";
+import {
+  showUserProfile,
+  createUserProfile,
+  updateUserProfile,
+} from "../controllers/userProfile/userProfile";
 
 const userRouter = Router();
 
-// post 
+// post
 userRouter.post("/user", createUserProfile);
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
