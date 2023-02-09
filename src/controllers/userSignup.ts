@@ -32,9 +32,7 @@ const createUser = async (req: Request, res: Response) => {
     user.signup_date =  new Date(Date.now());
 
 	try {
-		const isExist = await UserModel.findOne({ username }).exec();
-
-        await user.hashPassword();
+		const isExist = await UserModel.exists({ username }).exec();
 
 		if (!isExist) {
 			await user.save();
@@ -43,6 +41,8 @@ const createUser = async (req: Request, res: Response) => {
 			res.status(500).send("Username is taken");
 		}
         
+        await user.hashPassword();
+
 	} catch (error) {
 		res.status(500).send(error.message || "Failed to sign up, please retry.");
 	}
