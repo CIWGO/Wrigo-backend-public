@@ -11,9 +11,9 @@ const PORT = process.env.PORT;
 connectToDB();
 app.use(userRouter);
 
-mongoose.connection.once('open', () => {
-  console.log('db is connected');
-})
+mongoose.connection.once("open", () => {
+  console.log("db is connected");
+});
 
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`);
