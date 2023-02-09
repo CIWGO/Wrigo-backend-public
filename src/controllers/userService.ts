@@ -11,9 +11,7 @@ const createUser = async (req: Request, res: Response) => {
     res.status(201).json({ username, email });
     console.log(username);
   } catch (error) {
-    res
-      .status(500)
-      .send(error.message || { error: "Failed to create new user" });
+    res.status(500).send(error.message || "Failed to create new user");
   }
 };
 
