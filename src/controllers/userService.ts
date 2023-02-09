@@ -20,8 +20,8 @@ const findUser = async (req: Request, res: Response) => {
     try {
         const { username } = req.body;
         const user = await UserModel.findOne({ username }).exec();
-        const email = user.email;
-        res.status(201).json({ email });
+        // const email = user.email;
+        res.status(201).json(user);
     } catch (error) {
         res.status(500).send(error.message || "User does not exist");
     }

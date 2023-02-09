@@ -8,9 +8,9 @@ userRouter.post("", register);
 userRouter.post("/login", login);
 
 userRouter.post("/test", test);
-userRouter.get("/user", showUserProfile);
-userRouter.post("/user", createUserProfile);
-userRouter.put("/user", updateUserProfile);
+userRouter.get("/userProfile", showUserProfile);
+userRouter.post("/userProfile", createUserProfile);
+userRouter.put("/userProfile", updateUserProfile);
 
 
 
