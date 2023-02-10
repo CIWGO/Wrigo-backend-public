@@ -1,10 +1,5 @@
 import { Router } from "express";
-import {
-  createUser,
-  findUser,
-  updateUser,
-  deleteUser,
-} from "../controllers/userService";
+import { createUser } from "../controllers/userSignup";
 import { login } from "../controllers/userLogin";
 import {
   showUserProfile,
@@ -15,16 +10,16 @@ import {
 const userRouter = Router();
 
 // post
-userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
+userRouter.post("/userProfile", createUserProfile);
+
 // put
-userRouter.put("/updateUser", updateUser);
 userRouter.put("/userProfile", updateUserProfile);
+
 // get
-userRouter.get("/findUser", findUser);
 userRouter.get("/userProfile", showUserProfile);
+
 // delete
-userRouter.delete("deleteUser", deleteUser);
 
 export { userRouter };
