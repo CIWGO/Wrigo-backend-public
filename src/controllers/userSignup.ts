@@ -39,6 +39,7 @@ const createUser = async (req: Request, res: Response) => {
 
 	try {
         await user.hashPassword();
+        
 		const isExist = await UserModel.exists({ username }).exec();
 
 		if (!isExist) {
