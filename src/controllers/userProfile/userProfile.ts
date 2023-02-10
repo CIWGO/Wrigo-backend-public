@@ -40,4 +40,4 @@ const updateUserProfile = async (req: Request, res: Response) => {
   res.status(200).send(user);                                                                                                                                             
 };
 
-export {showUserProfile,createUserProfile,updateUserProfile};
+export { showUserProfile, createUserProfile, updateUserProfile };

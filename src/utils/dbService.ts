@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import config from "../config";
+
 const connectToDB = () => {
   const connectionString = config.CONNECTION_STRING;
 
@@ -18,6 +19,7 @@ const connectToDB = () => {
   db.on("disconnected", () => {
     console.log("db disconnected");
   });
+
   return mongoose.connect(connectionString);
 };
 
