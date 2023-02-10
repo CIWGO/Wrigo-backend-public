@@ -2,6 +2,7 @@
 
 import UserModel from "../models/users";
 import { Request, Response } from "express";
+import { v4 as uuidv4 } from 'uuid'; 
 
 // Create one user
 const createUser = async (req: Request, res: Response) => {
@@ -30,6 +31,11 @@ const createUser = async (req: Request, res: Response) => {
 	});
 
     user.signup_date =  new Date(Date.now());
+    user.uid = uuidv4();
+    user.isActive = true;
+    user.isAdmin = false;
+    user.isSubscribed = false;
+    user.email_verified = false;
 
 	try {
 		const isExist = await UserModel.exists({ username }).exec();

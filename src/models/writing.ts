@@ -1,4 +1,5 @@
 import { Schema, model, Types } from "mongoose";
+
 export interface Writing {
   _id: Types.ObjectId;
   uid: string;
