@@ -12,13 +12,13 @@ const userRouter = Router();
 // post
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
-userRouter.post("/user", createUserProfile);
+userRouter.post("/userProfile", createUserProfile);
 
 // put
-userRouter.put("/user", updateUserProfile);
+userRouter.put("/userProfile", updateUserProfile);
 
 // get
-userRouter.get("/user", showUserProfile);
+userRouter.get("/userProfile", showUserProfile);
 
 // delete
 
