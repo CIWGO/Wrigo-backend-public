@@ -6,6 +6,7 @@ import {
   createUserProfile,
   updateUserProfile,
 } from "../controllers/userProfile/userProfile";
+import { verifyOtp } from "../controllers/userOtp";
 
 const userRouter = Router();
 
@@ -13,6 +14,7 @@ const userRouter = Router();
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
+userRouter.post("/userOtp", verifyOtp);
 
 // put
 userRouter.put("/userProfile", updateUserProfile);

@@ -93,7 +93,6 @@ const schema: Schema<UserDocument> = new Schema({
   isActive: {
     type: Boolean,
     required: true,
-    unique: true,
   },
   avatar: {
     type: String,
