@@ -2,7 +2,7 @@
 
 import UserModel from "../models/users";
 import { Request, Response } from "express";
-import { v4 as uuidv4 } from 'uuid'; 
+import { v4 as uuidv4 } from "uuid";
 
 // Create one user
 const createUser = async (req: Request, res: Response) => {
@@ -30,16 +30,16 @@ const createUser = async (req: Request, res: Response) => {
 		email_verified,
 	});
 
-    user.signup_date = new Date(Date.now());
-    user.uid = uuidv4();
-    user.isActive = true;
-    user.isAdmin = false;
-    user.isSubscribed = false;
-    user.email_verified = false;
+	user.signup_date = new Date(Date.now());
+	user.uid = uuidv4();
+	user.isActive = true;
+	user.isAdmin = false;
+	user.isSubscribed = false;
+	user.email_verified = false;
 
 	try {
-        await user.hashPassword();
-        
+		await user.hashPassword();
+
 		const isExist = await UserModel.exists({ username }).exec();
 
 		if (!isExist) {
@@ -48,6 +48,8 @@ const createUser = async (req: Request, res: Response) => {
 		} else {
 			res.status(500).send("Username is taken");
 		}
+
+		await user.hashPassword();
 
 	} catch (error) {
 		res.status(500).send(error.message || "Failed to sign up, please retry.");

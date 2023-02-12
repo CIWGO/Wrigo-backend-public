@@ -2,9 +2,9 @@ import { Router } from "express";
 import { createUser } from "../controllers/userSignup";
 import { login } from "../controllers/userLogin";
 import {
-  showUserProfile,
-  createUserProfile,
-  updateUserProfile,
+	showUserProfile,
+	createUserProfile,
+	updateUserProfile,
 } from "../controllers/userProfile/userProfile";
 
 const userRouter = Router();
