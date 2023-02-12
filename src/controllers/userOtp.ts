@@ -17,24 +17,31 @@ export async function generateOtp(email) {
     specialChars: false,
   });
   console.log(OTP);
-  const text = `Your OTP is $OPT`;
+  const text = `Your OTP is ${OTP}`;
   sendEmail("ciwgo-dev@hotmail.com", email, "Email verification", text);
   const salt = await bcrypt.genSalt(10);
   const hashOTP = await bcrypt.hash(OTP, salt);
   return hashOTP.toString();
 }
 
+// when user signup need to change the isActivate to true
 const verifyOtp = async (req: Request, res: Response) => {
   const OptHolder = await user.find({
     username: req.body.username,
   });
-  if (!OptHolder) return res.status(400).send("Cannot find the user");
-  const rightOtpFind = OptHolder[OptHolder.length - 1];
-  const validUser = await bcrypt.compare(req.body.OTP, rightOtpFind.OTP);
-  if (validUser) {
-    return res.status(200).send("User verify successful.");
+  if (OptHolder.length === 0) {
+    return res.status(400).send("Cannot find the user");
   } else {
-    return res.status(400).send("Your OTP was wrong.");
+    // if users have same otp then choose the latest one
+    const rightOtpFind = OptHolder[OptHolder.length - 1];
+    // compare the OTP from req and database
+    const validUser = await bcrypt.compare(req.body.OTP, rightOtpFind.OTP);
+
+    if (validUser) {
+      return res.status(200).send("User verify successful.");
+    } else {
+      return res.status(400).send("Your OTP was wrong.");
+    }
   }
 };
 
