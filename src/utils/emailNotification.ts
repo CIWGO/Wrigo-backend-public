@@ -6,28 +6,35 @@ const transporter = nodemailer.createTransport({
   secure: false,
   auth: {
     user: "ciwgo-dev@hotmail.com",
-    pass: "Ciwgo123"
-  }
+    pass: "Ciwgo123",
+  },
 });
 
-// To call sendEmail func and pass in data: 
+// To call sendEmail func and pass in data:
 // sendEmail('from@example.com', 'to@example.com', 'Email subject', 'Email text');
-const sendEmail = (from: string, to: string, subject: string, text: string): void => {
+const sendEmail = (
+  from: string,
+  to: string,
+  subject: string,
+  text: string
+): void => {
   const email = {
     from,
     to,
     subject,
-    text
+    text,
   };
 
-  transporter.sendMail(email, (error: Error | null, info: SentMessageInfo): void => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.toString());
+  transporter.sendMail(
+    email,
+    (error: Error | null, info: SentMessageInfo): void => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.toString());
+      }
     }
-  });
+  );
 };
 
 export default sendEmail;
-

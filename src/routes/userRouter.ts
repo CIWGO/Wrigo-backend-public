@@ -1,20 +1,30 @@
 import { Router } from "express";
-import {
-  createUser,
-  findUser,
-  updateUser,
-  deleteUser,
-} from "../controllers/userService";
+import { createUser } from "../controllers/userSignup";
 import { login } from "../controllers/userLogin";
+import {
+  showUserProfile,
+  createUserProfile,
+  updateUserProfile,
+} from "../controllers/userProfile/userProfile";
 import { changePassword } from "../controllers/changePassword";
+
 const userRouter = Router();
 
+// post
 userRouter.post("/signup", createUser);
-userRouter.get("/findUser", findUser);
-userRouter.put("/updateUser", updateUser);
-userRouter.delete("deleteUser", deleteUser);
-
 userRouter.post("/login", login);
+userRouter.post("/userProfile", createUserProfile);
+
+// put
+userRouter.put("/userProfile", updateUserProfile);
+
+// get
+userRouter.get("/userProfile", showUserProfile);
+
+// delete
+
+
+//patch
 userRouter.patch("/changePassword", changePassword);
 
 export { userRouter };

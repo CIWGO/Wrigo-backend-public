@@ -98,7 +98,7 @@ const schema: Schema<UserDocument> = new Schema({
   avatar: {
     type: String,
     required: false,
-  }
+  },
 });
 
 //Do not declare methods using ES6 arrow functions (=>).
