@@ -1,0 +1,17 @@
+{
+    "evaluateOutputFormat": {
+        "Scores": {
+            "TR":0.0,
+            "CC":0.0,
+            "LR":0.0,
+            "GRA":0.0
+        },
+        "feedback": {
+            "TR":[],
+            "CC":[],
+            "LR":[],
+            "GRA":[],
+            "Overall":[]
+        }
+    }
+}
