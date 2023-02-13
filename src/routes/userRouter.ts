@@ -6,6 +6,7 @@ import {
 	createUserProfile,
 	updateUserProfile,
 } from "../controllers/userProfile/userProfile";
+import { changePassword } from "../controllers/changePassword";
 
 const userRouter = Router();
 
@@ -21,5 +22,9 @@ userRouter.put("/userProfile", updateUserProfile);
 userRouter.get("/userProfile", showUserProfile);
 
 // delete
+
+
+//patch
+userRouter.patch("/changePassword", changePassword);
 
 export { userRouter };
