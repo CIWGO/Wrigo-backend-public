@@ -7,5 +7,6 @@ namespace NodeJS {
     CONNECTION_STRING: string;
     CIW_COLLECTION_NAME: string;
     OPENAI_APIKEY: string;
+    OPENAI_APIURL: string;
   }
 }
