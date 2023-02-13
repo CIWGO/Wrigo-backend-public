@@ -27,12 +27,12 @@ interface Config {
 // Loading process.env as ENV interface
 
 const getConfig = (): ENV => {
-  return {
-    PORT: process.env.PORT ? Number(process.env.PORT) : 3005,
-    CONNECTION_STRING: process.env.CONNECTION_STRING,
-    CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME,
-    OPENAI_APIKEY: process.env.OPENAI_APIKEY,
-  };
+	return {
+		PORT: process.env.PORT ? Number(process.env.PORT) : 3005,
+		CONNECTION_STRING: process.env.CONNECTION_STRING,
+		CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME,
+		OPENAI_APIKEY: process.env.OPENAI_APIKEY,
+	};
 };
 
 // Throwing an Error if any field was undefined we don't
@@ -42,13 +42,13 @@ const getConfig = (): ENV => {
 // definition.
 
 const getSanitizedConfig = (config: ENV): Config => {
-  const configs = Object.entries(config);
-  configs.forEach(([key, value]) => {
-    if (!value) {
-      throw new Error(`Missing key ${key} in config.env`);
-    }
-  });
-  return config as Config;
+	const configs = Object.entries(config);
+	configs.forEach(([key, value]) => {
+		if (!value) {
+			throw new Error(`Missing key ${key} in config.env`);
+		}
+	});
+	return config as Config;
 };
 
 const config = getConfig();

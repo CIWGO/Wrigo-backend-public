@@ -1,27 +1,27 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 
 export interface Topic {
-  topic_id: Types.ObjectId;
+  topic_id: string;
   topic_content: string;
   topic_category?: string;
   topic_difficulty?: string;
 }
 
 const schema = new Schema<Topic>({
-  topic_id: {
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
-  topic_content: {
-    type: String,
-    required: true,
-  },
-  topic_category: {
-    type: String,
-  },
-  topic_difficulty: {
-    type: String,
-  },
+	topic_id: {
+		type: String,
+		required: true,
+	},
+	topic_content: {
+		type: String,
+		required: true,
+	},
+	topic_category: {
+		type: String,
+	},
+	topic_difficulty: {
+		type: String,
+	},
 });
 
 const topic = model<Topic>("Topic", schema);
