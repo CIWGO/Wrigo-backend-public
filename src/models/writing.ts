@@ -7,6 +7,7 @@ export interface Writing {
   submit_time: Date;
   task_topic?: string;
   writing_content: string;
+	feedback_id: string;
   feedback?: []; //feedback: [feedback_id, feedback]
   score?: []; // Data type stored in this array: number
   total_score?: number;
@@ -36,6 +37,10 @@ const schema = new Schema<Writing>({
 	writing_content: {
 		type: String,
 		required: true,
+	},
+	feedback_id: {
+		type: String,
+		required: false,
 	},
 	feedback: {
 		type: [],
