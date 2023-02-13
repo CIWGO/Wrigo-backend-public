@@ -1,5 +1,6 @@
 import UserModel from "../models/users";
 import { Request, Response } from "express";
+import { createUserSession } from "./userSession";
 
 const login = async (req: Request, res: Response) => {
   try {
@@ -13,7 +14,8 @@ const login = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Incorrect password" });
     }
 
-    res.status(200).json({ message: "Login successful" });
+    const token = createUserSession(user);
+    res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     res.status(500).json({ error: error.message || "Server error" });
   }
