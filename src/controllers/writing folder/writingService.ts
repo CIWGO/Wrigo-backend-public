@@ -6,7 +6,7 @@ import axios from "axios";
 import { generatePromptForEvaluation } from "./promptOperation";
 import { v4 as uuidv4 } from "uuid";
 
-const URL = "https://api.openai.com/v1/completions";
+const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
 
 // take topic and essay from user input and generate a prompt for evaluation
@@ -52,7 +52,21 @@ const evaluateWriting = async (req: Request, res: Response) => {
          parse json
          store it in DB
          then return it to user (postman)*/
-		res.status(200).json(JSON.parse(response.data.choices[0].text));
+		const comment = JSON.parse(response.data.choices[0].text);
+
+		// find writingDoc and update the comment received from API
+		writingDoc.collection.findOneAndUpdate(
+			{uid: writingDoc.uid},
+			{
+				$set: {
+					feedback_id: uuidv4(),
+					feedback: comment.feedback,
+					score: comment.Scores
+				}
+			}
+		); 
+
+		res.status(200).json(comment);
 	}).catch((error) => {
 		// if error detected, return the error
 		res.send(error || "Failed to get response");

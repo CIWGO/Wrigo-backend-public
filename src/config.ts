@@ -15,6 +15,7 @@ interface ENV {
   CONNECTION_STRING?: string;
   CIW_COLLECTION_NAME?: string;
   OPENAI_APIKEY?: string;
+	OPENAI_APIURL?: string;
 }
 
 interface Config {
@@ -22,6 +23,7 @@ interface Config {
   CONNECTION_STRING: string;
   CIW_COLLECTION_NAME: string;
   OPENAI_APIKEY: string;
+  OPENAI_APIURL: string;
 }
 
 // Loading process.env as ENV interface
@@ -32,6 +34,7 @@ const getConfig = (): ENV => {
 		CONNECTION_STRING: process.env.CONNECTION_STRING,
 		CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME,
 		OPENAI_APIKEY: process.env.OPENAI_APIKEY,
+		OPENAI_APIURL: process.env.OPENAI_APIURL,
 	};
 };
 
