@@ -3,9 +3,9 @@ import { createUser } from "../controllers/userSignup";
 import { deleteUser } from "../controllers/userDelete";
 import { login } from "../controllers/userLogin";
 import {
-  showUserProfile,
-  createUserProfile,
-  updateUserProfile,
+	showUserProfile,
+	createUserProfile,
+	updateUserProfile,
 } from "../controllers/userProfile/userProfile";
 import { verifyOtp } from "../controllers/userOtp";
 import { resetPassword } from "../controllers/resetPassword";
