@@ -37,4 +37,4 @@ const sendEmail = (
 	);
 };
 
-export default sendEmail;
+export { sendEmail };

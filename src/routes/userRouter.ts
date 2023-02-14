@@ -8,7 +8,7 @@ import {
 	updateUserProfile,
 } from "../controllers/userProfile/userProfile";
 import { verifyOtp } from "../controllers/userOtp";
-import resetPassword from "../controllers/resetPassword";
+import { resetPassword } from "../controllers/resetPassword";
 import { changePassword } from "../controllers/changePassword";
 
 const userRouter = Router();
