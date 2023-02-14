@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import app from "./app";
-import connectToDB from "./utils/dbService";
-import { userRouter } from "./routes/userRouter";
-import { apiRouter } from "./routes/apiRouter";
+import connectToDB from "./src/utils/dbService";
+import { userRouter } from "./src/routes/userRouter";
+import { apiRouter } from "./src/routes/apiRouter";
 
 dotenv.config();
 

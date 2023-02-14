@@ -1,7 +1,7 @@
 import TopicModel from "../../models/topic";
 import WritingModel from "../../models/writing";
 import { Request, Response } from "express";
-import config from "../../config";
+import config from "../../../config";
 import axios from "axios";
 import { generatePromptForEvaluation } from "./promptOperation";
 import { v4 as uuidv4 } from "uuid";
@@ -16,7 +16,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 
 	const topicDoc = new TopicModel({
 		topic_id: uuidv4(),
-		topic_content: topic
+		topic_content: topic,
 	});
 
 	const writingDoc = new WritingModel({
@@ -25,52 +25,52 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		isSubmitted: true,
 		submit_time: new Date(Date.now()),
 		task_topic: topic,
-		writing_content: content
+		writing_content: content,
 	});
 
 	topicDoc.save();
 	writingDoc.save();
 
 	// send axios request to api
-	axios(
-		{
-			method: "POST",
-			url: URL,
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${apiKey}`
-			},
-			data: {
-				model: "text-davinci-003",
-				prompt: prompt,
-				temperature: 0.2,
-				max_tokens: 1000,
-			},
-		}
-	).then((response) => {
-		/* if response achieved
+	axios({
+		method: "POST",
+		url: URL,
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${apiKey}`,
+		},
+		data: {
+			model: "text-davinci-003",
+			prompt: prompt,
+			temperature: 0.2,
+			max_tokens: 1000,
+		},
+	})
+		.then((response) => {
+			/* if response achieved
          parse json
          store it in DB
          then return it to user (postman)*/
-		const comment = JSON.parse(response.data.choices[0].text);
+			const comment = JSON.parse(response.data.choices[0].text);
 
-		// find writingDoc and update the comment received from API
-		writingDoc.collection.findOneAndUpdate(
-			{uid: writingDoc.uid},
-			{
-				$set: {
-					feedback_id: uuidv4(),
-					feedback: comment.feedback,
-					score: comment.Scores
+			// find writingDoc and update the comment received from API
+			writingDoc.collection.findOneAndUpdate(
+				{ uid: writingDoc.uid },
+				{
+					$set: {
+						feedback_id: uuidv4(),
+						feedback: comment.feedback,
+						score: comment.Scores,
+					},
 				}
-			}
-		); 
+			);
 
-		res.status(200).json(comment);
-	}).catch((error) => {
-		// if error detected, return the error
-		res.send(error || "Failed to get response");
-	});
+			res.status(200).json(comment);
+		})
+		.catch((error) => {
+			// if error detected, return the error
+			res.send(error || "Failed to get response");
+		});
 };
 
 export { evaluateWriting };
