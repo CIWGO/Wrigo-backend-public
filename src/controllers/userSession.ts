@@ -1,35 +1,32 @@
-// import { Request, Response } from "express";
-// import { validateToken } from "../utils/jwt"
+import { Request, Response } from "express";
+import { validateToken } from "../utils/jwt";
 
-// const createUserSession = (user) => {
-//   const payload = {
-//     username: user.username,
-//   };
+interface AuthRequest extends Request {
+  user?: any;
+}
 
-//   const secret = process.env.JWT_SECRET;
-//   const options = { expiresIn: "1h" };
+// call this middleware for functions that need to be protected by user login token
+const tokenGuard = (req: AuthRequest, res: Response, next) => {
+  const authorization = req.header("Authorization");
+  if (!authorization) {
+    return res.status(401).json({ error: "missing the authorization header" });
+  }
 
-//   return jwt.sign(payload, secret, options);
-// };
+  // valid authorization format: Bearer {token}
+  const tokenArray = authorization.split(" ");
+  if (tokenArray.length != 2 || tokenArray[0] != "Bearer") {
+    return res
+      .status(401)
+      .json({ error: "invalid authorization header format" });
+  }
 
-// const validateToken = (token) => {
+  try {
+    const payload = validateToken(tokenArray[1]);
+    req.user = payload;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
 
-// }
-
-//valid authorization format: Bearer {token}
-// const tokenGuard = (req: Request, res: Response){
-//   const authorization = req.header('Authorization');
-
-//   if (!authorization) {
-//     return res.status(401).json({ error: "missing the authorization header" });
-//   }
-
-//   const tokenArray = authorization.split(' ');
-//   if (tokenArray.length != 2 || tokenArray[0] != 'Bearer') {
-//     return res.status(401).json({ error: "invalid authorization header format" });
-//   }
-//   const payload = validateToken(tokkenArray[1]);
-
-// }
-
-// export { createUserSession };
+export { tokenGuard };

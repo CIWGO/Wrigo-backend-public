@@ -19,18 +19,17 @@ const changePassword = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Error in changing password" });
     } else if (result.modifiedCount === 1) {
       const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
-      
+
       sendEmail("ciwgo-dev@hotmail.com", email, "Password Changed", msg);
-      
+
       return res.status(200).json({ message: "Password changed successfully" });
     }
   } catch (error) {
-    res.status(500).send(error.message || "Error changing password2");
+    res.status(500).send(error.message || "Error changing password");
   }
 };
 
 const findUserEmail = async (username: string): Promise<string> => {
-
   // eslint-disable-next-line no-useless-catch
   try {
     const user = await UserModel.findOne({ username }, "email").exec();
