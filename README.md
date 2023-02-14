@@ -67,8 +67,10 @@ mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrit
 mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
 ```
 
-## OpenAI APIKey
-
+## OpenAI URL and APIKey
+```
+https://api.openai.com/v1/completions
+```
 ```
 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
 ```
