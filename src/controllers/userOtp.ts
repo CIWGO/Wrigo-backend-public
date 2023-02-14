@@ -2,20 +2,14 @@ import user from "../models/users";
 import { Response, Request } from "express";
 import { sendEmail } from "../utils/emailNotification";
 import bcrypt from "bcrypt";
-
-const otpGenerator = require("../utils/generateOTP");
+import otpGenerator from 'otp-generator';
 
 /* generateOtp is a function that generates an hash OPT and
  returns the hashOPT as a string， anyone who calls this function
  needs to save OTP into the database
 */
-export async function generateOtp(email) {
-	const OTP = otpGenerator.generate(6, {
-		digits: true,
-		alphabets: true,
-		upperCase: false,
-		specialChars: false,
-	});
+export async function generateOtp(email:string) {
+	const OTP = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
 	console.log(OTP);
 	const text = `Your OTP is ${OTP}`;
 	sendEmail("ciwgo-dev@hotmail.com", email, "Email verification", text);
