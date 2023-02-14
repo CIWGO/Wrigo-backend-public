@@ -7,7 +7,6 @@ import {
   createUserProfile,
   updateUserProfile,
 } from "../controllers/userProfile/userProfile";
-//import user from "@src/models/users";
 import { verifyOtp } from "../controllers/userOtp";
 import { resetPassword } from "../controllers/resetPassword";
 import { changePassword } from "../controllers/changePassword";
@@ -33,5 +32,6 @@ userRouter.get("/userProfile", tokenGuard, showUserProfile);
 // patch
 userRouter.patch("/resetPassword", resetPassword);
 userRouter.patch("/changePassword", tokenGuard, changePassword);
+
 
 export { userRouter };
