@@ -1,7 +1,7 @@
 import TopicModel from "../../models/topic";
 import WritingModel from "../../models/writing";
 import { Request, Response } from "express";
-import config from "../../config";
+import config from "../../../config";
 import axios from "axios";
 import { generatePromptForEvaluation } from "./promptOperation";
 import { v4 as uuidv4 } from "uuid";
