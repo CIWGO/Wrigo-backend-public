@@ -3,28 +3,28 @@ import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface User {
-	uid: string;
-	email: string;
-	password: string;
-	email_verified: boolean;
-	OTP?: string;
-	username: string;
-	signup_date: Date;
-	gender?: string;
-	birth?: Date;
-	country?: string;
-	study_field?: string;
-	writing_ids?: [];
-	isSubscribed: boolean;
-	isAdmin: boolean;
-	login_history: []; // Data format: [[Date, String]]
-	isActive: boolean;
-	avatar?: string;
+  uid: string;
+  email: string;
+  password: string;
+  email_verified: boolean;
+  OTP?: string;
+  username: string;
+  signup_date: Date;
+  gender?: string;
+  birth?: Date;
+  country?: string;
+  study_field?: string;
+  writing_ids?: [];
+  isSubscribed: boolean;
+  isAdmin: boolean;
+  login_history: []; // Data format: [[Date, String]]
+  isActive: boolean;
+  avatar?: string;
 }
 
 export interface UserDocument extends User, Document {
-	hashPassword: () => Promise<void>;
-	validatePassword: (password: string) => Promise<void>;
+  hashPassword: () => Promise<void>;
+  validatePassword: (password: string) => Promise<void>;
 }
 
 const schema: Schema<UserDocument> = new Schema({
@@ -113,5 +113,4 @@ schema.methods.validatePassword = async function (password) {
 };
 
 const user = model<UserDocument>("User", schema);
-
 export default user;
