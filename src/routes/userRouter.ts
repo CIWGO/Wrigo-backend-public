@@ -7,7 +7,6 @@ import {
 	createUserProfile,
 	updateUserProfile,
 } from "../controllers/userProfile/userProfile";
-//import user from "@src/models/users";
 import { verifyOtp } from "../controllers/userOtp";
 import { resetPassword } from "../controllers/resetPassword";
 import { changePassword } from "../controllers/changePassword";
