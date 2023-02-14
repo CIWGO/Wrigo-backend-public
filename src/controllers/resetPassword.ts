@@ -32,4 +32,4 @@ const resetPassword = async (req: Request, res: Response) => {
     res.send({ message: "OTP sent to your email address" });
 };
 
-export default resetPassword;
+export { resetPassword };

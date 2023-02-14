@@ -67,8 +67,10 @@ mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrit
 mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
 ```
 
-## OpenAI APIKey
-
+## OpenAI URL and APIKey
+```
+https://api.openai.com/v1/completions
+```
 ```
 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
 ```
@@ -81,7 +83,9 @@ Create a file named .env under project root folder and paste the following into 
 PORT = 3005
 CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/user?retryWrites=true&w=majority"
 CIW_COLLECTION_NAME = "user"
+OPENAI_APIURL = "https://api.openai.com/v1/completions"
 OPENAI_APIKEY = "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"
+JWT_SECRET = <secret_key>
 ```
 
 ## Program Flow Chart
