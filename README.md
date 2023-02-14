@@ -85,7 +85,7 @@ CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.m
 CIW_COLLECTION_NAME = "user"
 OPENAI_APIURL = "https://api.openai.com/v1/completions"
 OPENAI_APIKEY = "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"
-JWT_SECRET = <secret_key>
+JWT_SECRET=yoursecretkey
 ```
 
 ## Program Flow Chart
