@@ -23,7 +23,7 @@
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
     "resolveJsonModule": true,
     "allowJs": false,
-    "typeRoots": ["src/global.d.ts", "./node_modules/@types"]
+    "typeRoots": ["global.d.ts", "./node_modules/@types"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "src/index.ts", "config.ts", "global.d.ts"]
 }
