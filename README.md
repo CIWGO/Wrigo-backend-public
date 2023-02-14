@@ -80,7 +80,7 @@ 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
 Create a file named .env under project root folder and paste the following into this file. 
 
 ```
-PORT=3005
+PORT = 3005
 CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/user?retryWrites=true&w=majority"
 CIW_COLLECTION_NAME = "user"
 OPENAI_APIURL = "https://api.openai.com/v1/completions"
