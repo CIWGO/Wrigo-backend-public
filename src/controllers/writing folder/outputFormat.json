@@ -1,6 +1,6 @@
 {
     "evaluateOutputFormat": {
-        "Scores": {
+        "scores": {
             "TR":0.0,
             "CC":0.0,
             "LR":0.0,
