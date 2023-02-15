@@ -56,6 +56,17 @@ npm run dev
 control + c
 ```
 
+## Run as Docker (Need .env as well)
+
+* Build image: 
+```
+docker build -t ciwgo/backend .
+```
+* Docker Run: 
+```
+docker run --name backend -d --rm -p 3005:3005 ciwgo/backend
+```
+
 ## MongoDB Connection
 
 * Application connection string: 
