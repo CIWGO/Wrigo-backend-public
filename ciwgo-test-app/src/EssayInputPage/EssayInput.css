@@ -1,0 +1,29 @@
+.topic {
+  height: 8rem;
+  width: 36rem;
+}
+.content {
+  height: 20rem;
+  width: 36rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  gap: 2rem;
+  flex-direction: row;
+}
+
+.comment {
+  padding-top: 5rem;
+  height: 20rem;
+  width: 30rem;
+}
+.score {
+  height: 10rem;
+  width: 30rem;
+}
