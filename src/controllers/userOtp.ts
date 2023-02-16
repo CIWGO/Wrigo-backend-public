@@ -8,12 +8,11 @@ import otpGenerator from "otp-generator";
  returns the hashOTP as a string， anyone who calls this function
  needs to save OTP into the database
 */
-export async function generateOtp(email: string) {
+async function generateOtp(email: string) {
 	const OTP = otpGenerator.generate(6, {
 		upperCaseAlphabets: false,
 		specialChars: false,
 	});
-	console.log(OTP);
 	const text = `Your OTP is ${OTP}`;
 	sendEmail("ciwgo-dev@hotmail.com", email, "Email verification", text);
 	const salt = await bcrypt.genSalt(10);
@@ -26,7 +25,7 @@ const verifyOtp = async (req: Request, res: Response) => {
 	const OtpHolder = await user.find({
 		username: req.body.username,
 	});
-	if (OtpHolder.length !== 0 && OtpHolder !== undefined) {
+	if (OtpHolder.length === 0 || OtpHolder === undefined) {
 		return res.status(400).send("Cannot find the user");
 	} else {
 		// if users have same otp then choose the latest one
@@ -44,4 +43,4 @@ const verifyOtp = async (req: Request, res: Response) => {
 	}
 };
 
-export { verifyOtp };
+export { generateOtp, verifyOtp };
