@@ -1,16 +1,18 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
-export interface Writing {
+export interface Writing extends Document{
+  _id: Types.ObjectId;
   uid: string;
   create_time: Date;
   isSubmitted: boolean;
-  submit_time: Date;
+  submit_time?: Date;
   task_topic?: string;
   writing_content: string;
-	feedback_id: string;
-  feedback?: []; //feedback: [feedback_id, feedback]
-  score?: []; // Data type stored in this array: number
-  total_score?: number;
+  feedbackID?: [string];  // refers to id in feedback model
+	//feedback_id: string;
+  //feedback?: []; //feedback: [feedback_id, feedback]
+  //score?: []; // Data type stored in this array: number
+  //total_score?: number;
 }
 
 const schema = new Schema<Writing>({
@@ -28,32 +30,17 @@ const schema = new Schema<Writing>({
 	},
 	submit_time: {
 		type: Date,
-		required: true,
 	},
 	task_topic: {
 		type: String,
-		required: false,
 	},
 	writing_content: {
 		type: String,
 		required: true,
 	},
-	feedback_id: {
-		type: String,
-		required: false,
-	},
-	feedback: {
+	feedbackID: {
 		type: [],
-		required: false,
-	},
-	score: {
-		type: [],
-		required: false,
-	},
-	total_score: {
-		type: Number,
-		required: false,
-	},
+	}
 });
 
 const writing = model<Writing>("Writing", schema);
