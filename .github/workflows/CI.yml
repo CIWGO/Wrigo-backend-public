@@ -1,7 +1,7 @@
 name: Backend CI
 
 env:
-  NODE_VERSION: '18.13'               # set this to the node version to use
+  NODE_VERSION: '16.0'               # set this to the node version to use
 
 run-name: ${{ github.actor }} is asking for a pull request
 
