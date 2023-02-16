@@ -10,7 +10,7 @@ const deleteUser = async (req: Request, res: Response) => {
 			{
 				$set: {
 					isActive: isActive,
-    },
+				},
 			},
 			{ new: true }
 		).exec();

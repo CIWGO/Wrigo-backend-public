@@ -11,7 +11,7 @@ import jwt from "jsonwebtoken";
 const secret = process.env.JWT_SECRET;
 
 const generateToken = (payload) =>
-     jwt.sign(payload, secret, { expiresIn: "1h" });
+	jwt.sign(payload, secret, { expiresIn: "1h" });
 
 const validateToken = (token) => jwt.verify(token, secret);
 
