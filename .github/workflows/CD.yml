@@ -1,0 +1,19 @@
+name: Build and Deploy to Azure VM
+
+run-name: ${{ github.sha }} is building and deploying
+
+on:
+#  push:
+#    branches: ['master']
+  workflow_dispatch:
+
+jobs:
+  buildImage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+
+          
