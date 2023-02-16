@@ -8,16 +8,16 @@ export interface Topic extends Document {
 }
 
 const schema = new Schema<Topic>({
-  topic_content: {
-    type: String,
-    required: true,
-  },
-  topic_category: {
-    type: String,
-  },
-  topic_difficulty: {
-    type: String,
-  },
+	topic_content: {
+		type: String,
+		required: true,
+	},
+	topic_category: {
+		type: String,
+	},
+	topic_difficulty: {
+		type: String,
+	},
 });
 
 const topic = model<Topic>("Topic", schema);

@@ -19,50 +19,50 @@ export interface Feedback extends Document {
 }
 
 const schema = new Schema<Feedback>({
-  created_time: {
-    type: Date,
-    required: true,
-  },
-  feedback: {
-    TR: {
-      type: [String],
-      required: true,
-    },
-    CC: {
-      type: [String],
-      required: true,
-    },
-    LR: {
-      type: [String],
-      required: true,
-    },
-    GRA: {
-      type: [String],
-      required: true,
-    },
-  },
-  score: {
-    TR: {
-      type: Number,
-      required: true,
-    },
-    CC: {
-      type: Number,
-      required: true,
-    },
-    LR: {
-      type: Number,
-      required: true,
-    },
-    GRA: {
-      type: Number,
-      required: true,
-    },
-    Overall: {
-      type: Number,
-      required: true,
-    },
-  },
+	created_time: {
+		type: Date,
+		required: true,
+	},
+	feedback: {
+		TR: {
+			type: [String],
+			required: true,
+		},
+		CC: {
+			type: [String],
+			required: true,
+		},
+		LR: {
+			type: [String],
+			required: true,
+		},
+		GRA: {
+			type: [String],
+			required: true,
+		},
+	},
+	score: {
+		TR: {
+			type: Number,
+			required: true,
+		},
+		CC: {
+			type: Number,
+			required: true,
+		},
+		LR: {
+			type: Number,
+			required: true,
+		},
+		GRA: {
+			type: Number,
+			required: true,
+		},
+		Overall: {
+			type: Number,
+			required: true,
+		},
+	},
 });
 
 const Feedback = model<Feedback>("Feedback", schema);

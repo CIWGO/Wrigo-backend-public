@@ -16,31 +16,31 @@ export interface Writing extends Document {
 }
 
 const schema = new Schema<Writing>({
-  uid: {
-    type: String,
-    required: true,
-  },
-  create_time: {
-    type: Date,
-    required: true,
-  },
-  isSubmitted: {
-    type: Boolean,
-    required: true,
-  },
-  submit_time: {
-    type: Date,
-  },
-  task_topic: {
-    type: String,
-  },
-  writing_content: {
-    type: String,
-    required: true,
-  },
-  feedbackID: {
-    type: [],
-  },
+	uid: {
+		type: String,
+		required: true,
+	},
+	create_time: {
+		type: Date,
+		required: true,
+	},
+	isSubmitted: {
+		type: Boolean,
+		required: true,
+	},
+	submit_time: {
+		type: Date,
+	},
+	task_topic: {
+		type: String,
+	},
+	writing_content: {
+		type: String,
+		required: true,
+	},
+	feedbackID: {
+		type: [],
+	},
 });
 
 const writing = model<Writing>("Writing", schema);
