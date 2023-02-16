@@ -7,7 +7,8 @@ import {
 	createUserProfile,
 	updateUserProfile,
 } from "../controllers/userProfile/userProfile";
-import { verifyOtp } from "../controllers/userOtp";
+// import { verifyOTP } from "../controllers/userOtp";
+import { sendOTPViaEmail } from "../controllers/userOtp";
 import { resetPassword } from "../controllers/resetPassword";
 import { changePassword } from "../controllers/changePassword";
 import { tokenGuard } from "../controllers/userSession";
@@ -19,7 +20,8 @@ userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
-userRouter.post("/userOtp", verifyOtp);
+userRouter.post("/sendOTP", sendOTPViaEmail);
+// userRouter.post("/verifyOTP", verifyOTP);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);

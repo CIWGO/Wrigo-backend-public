@@ -11,19 +11,25 @@ dotenv.config();
 // as someone could skip these variables or not setup a .env file at all
 
 interface ENV {
-  PORT?: number;
-  CONNECTION_STRING?: string;
-  CIW_COLLECTION_NAME?: string;
-  OPENAI_APIKEY?: string;
+	PORT?: number;
+	CONNECTION_STRING?: string;
+	CIW_COLLECTION_NAME?: string;
 	OPENAI_APIURL?: string;
+	OPENAI_APIKEY?: string;
+	JWT_SECRET?: string;
+	TEST_EMAIL?: string;
+	TEST_EMAIL_PASSWORD?: string;
 }
 
 interface Config {
-  PORT: number;
-  CONNECTION_STRING: string;
-  CIW_COLLECTION_NAME: string;
-  OPENAI_APIKEY: string;
-  OPENAI_APIURL: string;
+	PORT: number;
+	CONNECTION_STRING: string;
+	CIW_COLLECTION_NAME: string;
+	OPENAI_APIURL: string;
+	OPENAI_APIKEY: string;
+	JWT_SECRET?: string;
+	TEST_EMAIL?: string;
+	TEST_EMAIL_PASSWORD?: string;
 }
 
 // Loading process.env as ENV interface
@@ -35,6 +41,10 @@ const getConfig = (): ENV => {
 		CIW_COLLECTION_NAME: process.env.CIW_COLLECTION_NAME,
 		OPENAI_APIKEY: process.env.OPENAI_APIKEY,
 		OPENAI_APIURL: process.env.OPENAI_APIURL,
+		JWT_SECRET: process.env.JWT_SECRET,
+		TEST_EMAIL: process.env.TEST_EMAIL,
+		TEST_EMAIL_PASSWORD: process.env.TEST_EMAIL_PASSWORD,
+
 	};
 };
 
