@@ -6,7 +6,7 @@ env:
 run-name: ${{ github.actor }} is asking for a pull request
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
 #  pull_request:
 #    branches: ['main']
 
