@@ -1,32 +1,44 @@
-// import user from "../models/users";
-import { Request } from "express";
+import UserModel from "../models/users";
+import { Request, Response } from "express";
 import { sendEmail } from "../utils/emailNotification";
-// import bcrypt from "bcrypt";
 import otpGenerator from "otp-generator";
-// import { authenticator } from "otplib";
 
 /* generateOtp is a function that generates an hash OTP and
  returns the hashOTP as a string， anyone who calls this function
  needs to save OTP into the database
 */
-const sendOTPViaEmail = (req: Request): void => {
-	const email = req.body.email;
-	const code = otpGenerator.generate(6, {
+const sendOTPViaEmail = async (req: Request, res: Response) => {
+	const { username, email } = req.body;
+	const OTP = otpGenerator.generate(6, {
 		upperCaseAlphabets: false,
 		specialChars: false,
 	});
-
-	const emailContent = `Your OTP is ${code}. This will expire in 1 minute!`;
+	// find the user using username, then store hashed otp into the user
+	const user = await UserModel.findOne({ username }).exec();
+	user.OTP = OTP;
+	user.save();
+	// clean OTP after 1 minute
+	setTimeout(() => {
+		user.OTP = "";
+		user.save();
+	}, 60000);
+	const emailContent = `Your OTP is ${OTP}. This will expire in 1 minute!`;
 	sendEmail("ciwgo-dev@hotmail.com", email, "CIWGO Email Verification", emailContent);
-	// const salt = await bcrypt.genSalt(10);
-	// const hashOTP = await bcrypt.hash(OTP, salt);
-	// return hashOTP.toString();
+	return res.status(200).json({ message: "Email has been sent" });
 };
 
 // when user signup need to change the isActivate to true
-// const verifyOTP = (req: Request, res: Response) => {
+const verifyOTP = async (req: Request, res: Response) => {
+	const { username, email, userInput } = req.body;
+	const user = await UserModel.findOne({ username }).exec();
+	if (userInput === user.OTP) {
+		user.email = email;
+		user.email_verified = true;
+		user.save();
+		return res.status(200).json({ message: "Email verification successful" });
+	} else {
+		return res.status(404).json({ error: "Incorrect or invalid code!" });
+	}
+};
 
-// };
-
-export { sendOTPViaEmail };
-// export { sendOTPViaEmail, verifyOTP };
+export { sendOTPViaEmail, verifyOTP };
