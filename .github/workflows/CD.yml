@@ -1,0 +1,64 @@
+name: Build and Deploy to Azure VM
+
+run-name: ${{ github.action }} is building and deploying
+
+permissions:
+  contents: read
+
+on:
+#  push:
+#    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  buildImage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+          
+      - name: import Env
+        run: |
+          echo '{{ secrets.Env }}' > .env
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Azure Container Registry Login
+        uses: Azure/docker-login@v1
+        with:
+          # Container registry username
+          username: 'ciwgodockerimage'
+          # Container registry password
+          password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
+          # Container registry server url
+          login-server: 'ciwgodockerimage.azurecr.io'
+          
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # tags: <registry server url>/<app name>:<git commit sha>
+          tags: ciwgodockerimage.azurecr.io/backend:${{ github.sha }}
+          file: ./Dockerfile
+          
+          
+  DeployToVM:
+    runs-on: ubuntu-latest
+    needs: [buildImage]
+    
+    steps:
+      - name: import sshKey
+        run: |
+          echo '{{ secrets.sshkey }}' > ciwgo-backend_key.pem
+          
+      - name: clean out the VM (container & image)
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ciwgo-backend_key.pem service@20.70.180.62 'docker stop $(docker ps -a -q)'
+          ssh -o StrictHostKeyChecking=no -i ciwgo-backend_key.pem service@20.70.180.62 'docker rmi $(docker images -q)'
+          
+      - name: Run image from Registry
+          ssh -o StrictHostKeyChecking=no -i ciwgo-backend_key.pem service@20.70.180.62 'docker run --name backend -d --rm -p 3005:3005 ciwgodockerimage.azurecr.io/backend:${{ github.sha }}'
+        
