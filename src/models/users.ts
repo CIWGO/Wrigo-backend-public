@@ -1,30 +1,31 @@
 // Code reference: https://mongoosejs.com/docs/typescript.html
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface User {
-	uid: string;
-	email: string;
-	password: string;
-	email_verified: boolean;
-	OTP?: string;
-	username: string;
-	signup_date: Date;
-	gender?: string;
-	birth?: Date;
-	country?: string;
-	study_field?: string;
-	writing_ids?: [];
-	isSubscribed: boolean;
-	isAdmin: boolean;
-	login_history: []; // Data format: [[Date, String]]
-	isActive: boolean;
-	avatar?: string;
+  uid: string;
+  email: string;
+  password: string;
+  email_verified: boolean;
+  OTP?: string;
+  username: string;
+  signup_date: Date;
+  gender?: string;
+  birth?: Date;
+  country?: string;
+  study_field?: string;
+  writing_ids?: [string];
+  isSubscribed: boolean;
+  isAdmin: boolean;
+  login_history: [[Date, string]]; // Data format: [[Date, String]]
+  isActive: boolean;
+  avatar?: string;
 }
 
 export interface UserDocument extends User, Document {
-	hashPassword: () => Promise<void>;
-	validatePassword: (password: string) => Promise<void>;
+  _id: Types.ObjectId;
+  hashPassword: () => Promise<void>;
+  validatePassword: (password: string) => Promise<boolean>;
 }
 
 const schema: Schema<UserDocument> = new Schema({
@@ -36,7 +37,6 @@ const schema: Schema<UserDocument> = new Schema({
 	email: {
 		type: String,
 		required: true,
-		unique: true,
 	},
 	password: {
 		type: String,
@@ -48,11 +48,11 @@ const schema: Schema<UserDocument> = new Schema({
 	},
 	OTP: {
 		type: String,
-		required: false,
 	},
 	username: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	signup_date: {
 		type: Date,
@@ -60,23 +60,18 @@ const schema: Schema<UserDocument> = new Schema({
 	},
 	gender: {
 		type: String,
-		required: false,
 	},
 	birth: {
 		type: Date,
-		required: false,
 	},
 	country: {
 		type: String,
-		required: false,
 	},
 	study_field: {
 		type: String,
-		required: false,
 	},
 	writing_ids: {
-		type: [],
-		required: false,
+		type: [String],
 	},
 	isSubscribed: {
 		type: Boolean,
@@ -87,17 +82,15 @@ const schema: Schema<UserDocument> = new Schema({
 		required: true,
 	},
 	login_history: {
-		type: [],
+		type: [[Date, String]],
 		required: true,
 	},
 	isActive: {
 		type: Boolean,
 		required: true,
-		unique: true,
 	},
 	avatar: {
 		type: String,
-		required: false,
 	},
 });
 
@@ -108,8 +101,13 @@ schema.methods.hashPassword = async function () {
 	this.password = await bcrypt.hash(this.password, 12);
 };
 
-schema.methods.validatePassword = async function (password) {
-	bcrypt.compare(password, this.password);
+// schema.methods.validatePassword = async function (password) {
+//   bcrypt.compare(password, this.password);
+// };
+
+schema.methods.validatePassword = async function (password): Promise<boolean> {
+	const isMatched = await bcrypt.compare(password, this.password);
+	return isMatched;
 };
 
 const user = model<UserDocument>("User", schema);
