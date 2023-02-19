@@ -11,8 +11,7 @@ const deleteUser = async (req: Request, res: Response) => {
 				$set: {isActive: isActive},
 			},
 			{ new: true }
-		// remove .exec(), 在Mongoose v5.x版本之后，.exec() 不再是必需的
-		);
+		).exec();
 		res.status(201).send("User account is deleted.");
 	} catch (error) {
 		res.status(500).send(error.message || "Unable to delete your account, please try again.");
