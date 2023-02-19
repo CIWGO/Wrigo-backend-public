@@ -11,29 +11,32 @@ export interface UserProfile {
 	country?: string;
 }
 
-const schema: Schema<UserProfile> = new Schema({
-	uid: {
-		type: String,
-		required: true,
-		unique: true,
+const schema: Schema<UserProfile> = new Schema(
+	{
+		uid: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		avatar: {
+			type: String,
+		},
+		signup_date: {
+			type: Date,
+			required: true,
+		},
+		gender: {
+			type: String,
+		},
+		birth: {
+			type: Date,
+		},
+		country: {
+			type: String,
+		},
 	},
-	avatar: {
-		type: String,
-	},
-	signup_date: {
-		type: Date,
-		required: true,
-	},
-	gender: {
-		type: String,
-	},
-	birth: {
-		type: Date,
-	},
-	country: {
-		type: String,
-	},
-});
+	{ collection: "user_profiles" }
+);
 
 const userProfile = model<UserProfile>("UserProfile", schema);
 

@@ -10,30 +10,33 @@ export interface OperationLog {
 	log_content: string;
 }
 
-const schema: Schema<OperationLog> = new Schema({
-	log_id: {
-		type: String,
-		required: true,
-		unique: true,
+const schema: Schema<OperationLog> = new Schema(
+	{
+		log_id: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		uid: {
+			type: String,
+		},
+		login_status: {
+			type: Boolean,
+		},
+		log_time: {
+			type: Date,
+			required: true,
+		},
+		log_type: {
+			type: String,
+		},
+		log_content: {
+			type: String,
+			required: true,
+		},
 	},
-	uid: {
-		type: String,
-	},
-	login_status: {
-		type: Boolean,
-	},
-	log_time: {
-		type: Date,
-		required: true,
-	},
-	log_type: {
-		type: String,
-	},
-	log_content: {
-		type: String,
-		required: true,
-	},
-});
+	{ collection: "operation_logs" }
+);
 
 const operationLog = model<OperationLog>("OperationLog", schema);
 

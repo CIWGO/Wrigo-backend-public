@@ -17,60 +17,63 @@ export interface UserPayment {
 	country: string;
 }
 
-const schema = new Schema<UserPayment>({
-	payment_id: {
-		type: String,
-		required: true,
-		unique: true,
+const schema = new Schema<UserPayment>(
+	{
+		payment_id: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		uid: {
+			type: String,
+			required: true,
+		},
+		payment_type: {
+			type: String,
+			required: true,
+		},
+		card_holder_name: {
+			type: String,
+			required: true,
+		},
+		card_number: {
+			type: String,
+			required: true,
+		},
+		expiration_date: {
+			type: String,
+			required: true,
+		},
+		unit: {
+			type: String,
+		},
+		street_number: {
+			type: String,
+			required: true,
+		},
+		street_name: {
+			type: String,
+			required: true,
+		},
+		city: {
+			type: String,
+			required: true,
+		},
+		state: {
+			type: String,
+			required: true,
+		},
+		postcode: {
+			type: String,
+			required: true,
+		},
+		country: {
+			type: String,
+			required: true,
+		},
 	},
-	uid: {
-		type: String,
-		required: true,
-	},
-	payment_type: {
-		type: String,
-		required: true,
-	},
-	card_holder_name: {
-		type: String,
-		required: true,
-	},
-	card_number: {
-		type: String,
-		required: true,
-	},
-	expiration_date: {
-		type: String,
-		required: true,
-	},
-	unit: {
-		type: String,
-	},
-	street_number: {
-		type: String,
-		required: true,
-	},
-	street_name: {
-		type: String,
-		required: true,
-	},
-	city: {
-		type: String,
-		required: true,
-	},
-	state: {
-		type: String,
-		required: true,
-	},
-	postcode: {
-		type: String,
-		required: true,
-	},
-	country: {
-		type: String,
-		required: true,
-	},
-});
+	{ collection: "user_payments" }
+);
 
 const userPayment = model<UserPayment>("UserPayment", schema);
 

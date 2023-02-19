@@ -10,6 +10,7 @@ import userAccount from "./user/userAccount";
 import userLoginHistory from "./user/userLoginHistory";
 import userOTP from "./user/userOTP";
 import userProfile from "./user/userProfile";
+import userJWT from "./user/userJWT";
 
 export {
 	topic,
@@ -21,7 +22,8 @@ export {
 	userAccount,
 	userLoginHistory,
 	userOTP,
-	userProfile
+	userProfile,
+	userJWT,
 };
 
 /* when you want to import into other folder/modules,

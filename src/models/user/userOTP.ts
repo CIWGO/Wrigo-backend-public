@@ -6,17 +6,20 @@ export interface UserOTP {
 	OTP?: string;
 }
 
-const schema: Schema<UserOTP> = new Schema({
-	uid: {
-		type: String,
-		required: true,
-		unique: true,
+const schema: Schema<UserOTP> = new Schema(
+	{
+		uid: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		OTP: {
+			type: String,
+			required: true,
+		},
 	},
-	OTP: {
-		type: String,
-		required: true,
-	},
-});
+	{ collection: "user_OTPs" }
+);
 
 const userOTP = model<UserOTP>("UserOTP", schema);
 

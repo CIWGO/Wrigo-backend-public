@@ -1,5 +1,6 @@
 // Code reference: https://mongoosejs.com/docs/typescript.html
 // user account credential data definition
+
 import { Schema, model, Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -20,41 +21,49 @@ export interface UserDocument extends User, Document {
 	validatePassword: (password: string) => Promise<void>;
 }
 
-const schema: Schema<UserDocument> = new Schema({
-	uid: {
-		type: String,
-		required: true,
-		unique: true,
+const schema: Schema<UserDocument> = new Schema(
+	{
+		uid: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		username: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		email: {
+			type: String,
+			required: true,
+			unique: false,
+		},
+		password: {
+			type: String,
+			required: true,
+		},
+		email_verified: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
+		isActive: {
+			type: Boolean,
+			required: true,
+			default: true,
+		},
+		isAdmin: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
+		isSubscribed: {
+			type: Boolean,
+			default: false,
+		},
 	},
-	username: {
-		type: String,
-		required: true,
-		unique: true,
-	},
-	email: {
-		type: String,
-		required: true,
-	},
-	password: {
-		type: String,
-		required: true,
-	},
-	email_verified: {
-		type: Boolean,
-		required: true,
-	},
-	isActive: {
-		type: Boolean,
-		required: true,
-	},
-	isAdmin: {
-		type: Boolean,
-		required: true,
-	},
-	isSubscribed: {
-		type: Boolean,
-	},
-});
+	{ collection: "user_accounts" }
+);
 
 //Do not declare methods using ES6 arrow functions (=>).
 //Arrow functions explicitly prevent binding this, so your method will not have access to the document and the above examples will not work.

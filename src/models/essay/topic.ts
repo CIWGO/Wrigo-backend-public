@@ -8,23 +8,26 @@ export interface Topic {
 	topic_difficulty?: string;
 }
 
-const schema = new Schema<Topic>({
-	topic_id: {
-		type: String,
-		required: true,
-		unique: true,
+const schema = new Schema<Topic>(
+	{
+		topic_id: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		topic_content: {
+			type: String,
+			required: true,
+		},
+		topic_category: {
+			type: String,
+		},
+		topic_difficulty: {
+			type: String,
+		},
 	},
-	topic_content: {
-		type: String,
-		required: true,
-	},
-	topic_category: {
-		type: String,
-	},
-	topic_difficulty: {
-		type: String,
-	},
-});
+	{ collection: "writing_topics" }
+);
 
 const topic = model<Topic>("Topic", schema);
 
