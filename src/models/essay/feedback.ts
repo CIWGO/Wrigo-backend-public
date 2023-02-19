@@ -68,6 +68,6 @@ const schema = new Schema<Feedback>({
 	},
 });
 
-const Feedback = model<Feedback>("Feedback", schema);
+const feedback = model<Feedback>("Feedback", schema);
 
-export default Feedback;
+export default feedback;

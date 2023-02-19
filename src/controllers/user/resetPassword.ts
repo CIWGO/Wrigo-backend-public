@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import User from "../models/userAccount";
-import { generateOTP } from "../utils/generateOTP";
-import { sendEmail } from "../utils/emailNotification";
+import User from "../../models/user/userAccount";
+import { generateOTP } from "../../utils/generateOTP";
+import { sendEmail } from "../../utils/emailNotification";
 
 const resetPassword = async (req: Request, res: Response) => {
 	const { email } = req.body;

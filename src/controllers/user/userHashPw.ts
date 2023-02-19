@@ -1,5 +1,5 @@
-import UserModel from "../models/userAccount";
-import { generateToken } from "../utils/jwt";
+import UserModel from "../../models/user/userAccount";
+import { generateToken } from "../../utils/jwt";
 import { Response, Request } from "express";
 
 const register = async (req: Request, res: Response) => {

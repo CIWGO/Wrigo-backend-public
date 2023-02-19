@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { validateToken } from "../utils/jwt";
+import { validateToken } from "../../utils/jwt";
 
 interface AuthRequest extends Request {
-  user?: any;
+	user?: any;
 }
 
 // call this middleware for functions that need to be protected by user login token

@@ -1,16 +1,16 @@
 import { Router } from "express";
-import { createUser } from "../controllers/userSignup";
-import { deleteUser } from "../controllers/userDelete";
-import { login } from "../controllers/userLogin";
+import { createUser } from "../controllers/user/userSignup";
+import { deleteUser } from "../controllers/user/userDelete";
+import { login } from "../controllers/user/userLogin";
 import {
 	showUserProfile,
 	createUserProfile,
 	updateUserProfile,
-} from "../controllers/userProfile/userProfile";
-import { verifyOtp } from "../controllers/userOtp";
-import { resetPassword } from "../controllers/resetPassword";
-import { changePassword } from "../controllers/changePassword";
-import { tokenGuard } from "../controllers/userSession";
+} from "../controllers/user/userProfile";
+import { verifyOtp } from "../controllers/user/userOtp";
+import { resetPassword } from "../controllers/user/resetPassword";
+import { changePassword } from "../controllers/user/changePassword";
+import { tokenGuard } from "../controllers/user/userSession";
 
 const userRouter = Router();
 

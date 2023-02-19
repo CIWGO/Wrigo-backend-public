@@ -1,6 +1,6 @@
-import UserModel from "../models/userAccount";
+import UserModel from "../../models/user/userAccount";
 import { Request, Response } from "express";
-import { generateToken } from "../utils/jwt";
+import { generateToken } from "../../utils/jwt";
 
 const login = async (req: Request, res: Response) => {
 	try {

@@ -1,6 +1,6 @@
 // Code source: https://www.mongodb.com/compatibility/using-typescript-with-mongodb-tutorial
 
-import UserModel from "../models/userAccount";
+import UserModel from "../../models/user/userAccount";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 
