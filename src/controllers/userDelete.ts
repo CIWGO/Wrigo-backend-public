@@ -1,5 +1,5 @@
 // Delete user is defined as set isActive = false, not deleting the targe user data in database.
-import UserModel from "../models/users";
+import UserModel from "../models/userAccount";
 import { Request, Response } from "express";
 
 const deleteUser = async (req: Request, res: Response) => {

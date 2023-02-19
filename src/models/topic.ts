@@ -1,13 +1,19 @@
-import { Schema, model, Types } from "mongoose";
+// user writing task topic definition
+import { Schema, model } from "mongoose";
 
-export interface Topic extends Document {
-  _id: Types.ObjectId;
-  topic_content: string;
-  topic_category?: string;
-  topic_difficulty?: string;
+export interface Topic {
+	topic_id: string;
+	topic_content: string;
+	topic_category?: string;
+	topic_difficulty?: string;
 }
 
 const schema = new Schema<Topic>({
+	topic_id: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 	topic_content: {
 		type: String,
 		required: true,
@@ -21,4 +27,5 @@ const schema = new Schema<Topic>({
 });
 
 const topic = model<Topic>("Topic", schema);
+
 export default topic;

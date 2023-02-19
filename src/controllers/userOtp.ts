@@ -1,4 +1,4 @@
-import user from "../models/users";
+import user from "../models/userAccount";
 import { Response, Request } from "express";
 import { sendEmail } from "../utils/emailNotification";
 import bcrypt from "bcrypt";

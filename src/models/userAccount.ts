@@ -1,35 +1,32 @@
 // Code reference: https://mongoosejs.com/docs/typescript.html
+// user account credential data definition
 import { Schema, model, Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface User {
-  uid: string;
-  email: string;
-  password: string;
-  email_verified: boolean;
-  OTP?: string;
-  username: string;
-  signup_date: Date;
-  gender?: string;
-  birth?: Date;
-  country?: string;
-  study_field?: string;
-  writing_ids?: [string];
-  isSubscribed: boolean;
-  isAdmin: boolean;
-  login_history: [[Date, string]]; // Data format: [[Date, String]]
-  isActive: boolean;
-  avatar?: string;
+	uid: string;
+	username: string;
+	email: string;
+	password: string;
+	email_verified: boolean;
+	isActive: boolean;
+	isAdmin: boolean;
+	isSubscribed: boolean;
 }
 
 export interface UserDocument extends User, Document {
-  _id: Types.ObjectId;
-  hashPassword: () => Promise<void>;
-  validatePassword: (password: string) => Promise<void>;
+	_id: Types.ObjectId;
+	hashPassword: () => Promise<void>;
+	validatePassword: (password: string) => Promise<void>;
 }
 
 const schema: Schema<UserDocument> = new Schema({
 	uid: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+	username: {
 		type: String,
 		required: true,
 		unique: true,
@@ -46,34 +43,7 @@ const schema: Schema<UserDocument> = new Schema({
 		type: Boolean,
 		required: true,
 	},
-	OTP: {
-		type: String,
-	},
-	username: {
-		type: String,
-		required: true,
-		unique: true,
-	},
-	signup_date: {
-		type: Date,
-		required: true,
-	},
-	gender: {
-		type: String,
-	},
-	birth: {
-		type: Date,
-	},
-	country: {
-		type: String,
-	},
-	study_field: {
-		type: String,
-	},
-	writing_ids: {
-		type: [String],
-	},
-	isSubscribed: {
+	isActive: {
 		type: Boolean,
 		required: true,
 	},
@@ -81,16 +51,8 @@ const schema: Schema<UserDocument> = new Schema({
 		type: Boolean,
 		required: true,
 	},
-	login_history: {
-		type: [[Date, String]],
-		required: true,
-	},
-	isActive: {
+	isSubscribed: {
 		type: Boolean,
-		required: true,
-	},
-	avatar: {
-		type: String,
 	},
 });
 

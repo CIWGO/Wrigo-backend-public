@@ -1,4 +1,4 @@
-import UserModel from "../models/users";
+import UserModel from "../models/userAccount";
 import { Request, Response } from "express";
 import { generateToken } from "../utils/jwt";
 
