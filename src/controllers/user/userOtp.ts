@@ -63,4 +63,4 @@ async function verifyOtp(req: Request, res: Response) {
 	}
 }
 
-export { verifyOtp, generateOtp };
+export { generateOtp,  verifyOtp };
