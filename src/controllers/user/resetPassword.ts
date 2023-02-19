@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../../models/user/userAccount";
+import {userAccount as User} from "../../models/index";
 import { generateOTP } from "../../utils/generateOTP";
 import { sendEmail } from "../../utils/emailNotification";
 
