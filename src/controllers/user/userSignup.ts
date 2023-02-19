@@ -1,6 +1,6 @@
 // Code source: https://www.mongodb.com/compatibility/using-typescript-with-mongodb-tutorial
 
-import UserModel from "../../models/user/userAccount";
+import {userAccount as UserModel} from "../../models/index";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +14,6 @@ const createUser = async (req: Request, res: Response) => {
 		isActive,
 		isAdmin,
 		isSubscribed,
-		signup_date,
 		email_verified,
 	} = req.body;
 
@@ -26,11 +25,11 @@ const createUser = async (req: Request, res: Response) => {
 		isActive,
 		isAdmin,
 		isSubscribed,
-		signup_date,
 		email_verified,
 	});
 
-	user.signup_date = new Date(Date.now());
+	// remove signup_date due to not in userAccount model
+	// user.signup_date = new Date(Date.now());
 	user.uid = uuidv4();
 	user.isActive = true;
 	user.isAdmin = false;
