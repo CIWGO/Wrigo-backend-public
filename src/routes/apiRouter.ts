@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { evaluateWriting } from "../controllers/essay/writing folder/writingService";
+import { evaluateWriting } from "../controllers/writing/writingService";
 
 const apiRouter = Router();
 
@@ -7,15 +7,3 @@ const apiRouter = Router();
 apiRouter.post("/evaluate", evaluateWriting);
 
 export { apiRouter };
-
-
-
-
-
-
-
-
-
-
-
-

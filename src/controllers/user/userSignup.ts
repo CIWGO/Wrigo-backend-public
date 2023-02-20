@@ -4,6 +4,18 @@ import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 
+// Revise import path accordingly if necessary
+
+/**
+ * Replace the content of this template to the actual comments
+ * Returns x raised to the n-th power.
+ * @param {number} x The number to raise.
+ * @param {number} n The power, must be a natural number.
+ * @return {number} x raised to the n-th power.
+ * if no return, you don't have to add this @return value in comments
+ * @source url
+ */
+
 // Create one user
 const createUser = async (req: Request, res: Response) => {
 	const { uid = uuidv4(), username, password, email } = req.body;

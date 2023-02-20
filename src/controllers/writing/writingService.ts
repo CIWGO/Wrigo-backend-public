@@ -1,9 +1,23 @@
-import {topic as TopicModel, writing as WritingModel} from "../../../models";
+import { topic as TopicModel, writing as WritingModel } from "../../models";
 import { Request, Response } from "express";
-import config from "../../../../config";
+import config from "../../../config";
 import axios from "axios";
 import { generatePromptForEvaluation } from "./promptOperation";
+// change name from generatePromptForEvaluation to generatePrompt
 import { v4 as uuidv4 } from "uuid";
+
+// Revise import path accordingly if necessary
+// Change the file name to writingEvaluation
+
+/**
+ * Replace the content of this template to the actual comments
+ * Returns x raised to the n-th power.
+ * @param {number} x The number to raise.
+ * @param {number} n The power, must be a natural number.
+ * @return {number} x raised to the n-th power.
+ * if no return, you don't have to add this @return value in comments
+ * @source url
+ */
 
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
@@ -45,7 +59,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 				temperature: 0.2,
 				max_tokens: 1000,
 			},
-		}).then( (response) => {
+		}).then((response) => {
 			/* if response achieved
          		parse json
          		store it in DB
@@ -69,6 +83,5 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		res.send(error || "Failed to get response");
 	}
 };
-
 
 export { evaluateWriting };

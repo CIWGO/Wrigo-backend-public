@@ -10,7 +10,7 @@ import {
 	updateUserProfile,
 	verifyOtp,
 	tokenGuard,
-} from "../controllers/user/index";
+} from "../controllers/index";
 
 const userRouter = Router();
 
