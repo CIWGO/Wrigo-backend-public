@@ -18,7 +18,7 @@ export interface User {
 export interface UserDocument extends User, Document {
 	_id: Types.ObjectId;
 	hashPassword: () => Promise<void>;
-	validatePassword: (password: string) => Promise<void>;
+	validatePassword: (password: string) => Promise<boolean>;
 }
 
 const schema: Schema<UserDocument> = new Schema(
