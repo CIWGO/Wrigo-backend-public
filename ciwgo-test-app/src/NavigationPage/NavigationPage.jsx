@@ -8,6 +8,10 @@ function NavigationPage() {
         <a href="/evaluate" className="link">
           essay evaluate page
         </a>
+
+        <a href="/signup" className="link">
+          signup page
+        </a>
       </header>
     </div>
   );

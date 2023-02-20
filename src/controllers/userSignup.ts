@@ -48,7 +48,6 @@ const createUser = async (req: Request, res: Response) => {
 		} else {
 			res.status(500).send("Username is taken");
 		}
-		
 	} catch (error) {
 		res.status(500).send(error.message || "Failed to sign up, please retry.");
 	}
