@@ -1,9 +1,9 @@
 // Index for models
 // summarise export within models module
 
-import topic from "./essay/topic";
-import feedback from "./essay/feedback";
-import writing from "./essay/writing";
+import topic from "./writing/topic";
+import feedback from "./writing/feedback";
+import writing from "./writing/writing";
 import operationLog from "./log/operationLog";
 import paymentHistory from "./payment/paymentHistory";
 import userPayment from "./payment/userPayment";
