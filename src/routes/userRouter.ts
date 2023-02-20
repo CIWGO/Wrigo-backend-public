@@ -8,8 +8,6 @@ import {
 	createUserProfile,
 	showUserProfile,
 	updateUserProfile,
-	sendOTPViaEmail,
-	verifyOTP,
 	tokenGuard,
 } from "../controllers/index";
 
@@ -20,8 +18,6 @@ userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
-userRouter.post("/sendOTP", sendOTPViaEmail);
-userRouter.post("/verifyOTP", verifyOTP);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
