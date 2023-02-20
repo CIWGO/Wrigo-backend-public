@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import config from "../../config";
+import config from "../../../config";
 
 /**
  * Replace the content of this template to the actual comments

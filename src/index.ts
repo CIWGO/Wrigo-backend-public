@@ -3,7 +3,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import app from "../app";
-import connectToDB from "./utils/dbService";
+import connectToDB from "./utils/db/dbService";
 import { v1Router } from "./routes/index";
 
 dotenv.config();
