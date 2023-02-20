@@ -13,6 +13,7 @@ import {
 
 const userRouter = Router();
 
+// router for users model
 // post
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
