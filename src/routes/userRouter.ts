@@ -1,17 +1,17 @@
 import { Router } from "express";
-import { createUser } from "../controllers/userSignup";
-import { deleteUser } from "../controllers/userDelete";
-import { login } from "../controllers/userLogin";
 import {
-	showUserProfile,
+	createUser,
+	login,
+	changePassword,
+	resetPassword,
+	deleteUser,
 	createUserProfile,
+	showUserProfile,
 	updateUserProfile,
-} from "../controllers/userProfile/userProfile";
-import { verifyOTP } from "../controllers/userOtp";
-import { sendOTPViaEmail } from "../controllers/userOtp";
-import { resetPassword } from "../controllers/resetPassword";
-import { changePassword } from "../controllers/changePassword";
-import { tokenGuard } from "../controllers/userSession";
+	sendOTPViaEmail,
+	verifyOTP,
+	tokenGuard,
+} from "../controllers/index";
 
 const userRouter = Router();
 
@@ -34,6 +34,5 @@ userRouter.get("/userProfile", tokenGuard, showUserProfile);
 // patch
 userRouter.patch("/resetPassword", resetPassword);
 userRouter.patch("/changePassword", tokenGuard, changePassword);
-
 
 export { userRouter };
