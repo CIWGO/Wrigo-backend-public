@@ -2,17 +2,18 @@ import { userOTP, userAccount } from "../../models/index";
 import { sendEmail } from "../../utils/emailNotification";
 import otpGenerator from "otp-generator";
 
-/* generateOtp is a function that generates an hash OTP and
- returns the hashOTP as a string， anyone who calls this function
- needs to save OTP into the database
-*/
+/**
+ * generate a one-time-password(OTP), store it into database and send it to user via email
+ * validity of OTP is 1 minute. After this, the OTP will be removed from DB
+ * @param {string} username username of user in userAccount
+ */
 const sendOTPViaEmail = async (username) => {
 	//const { username, email } = req.body;
 	const OTP = otpGenerator.generate(6, {
 		upperCaseAlphabets: false,
 		specialChars: false,
 	});
-	// find the user using username, then store hashed otp into the user
+	// find the user using username, then store otp into the user
 	const user = await userAccount.findOne({ username }).exec();
 	const uid = user.uid;
 	const email = user.email;
@@ -49,7 +50,7 @@ const sendOTPViaEmail = async (username) => {
 				{ uid },
 				{
 					$set: {
-						OTP: "No OTP",
+						OTP: "No OTP", // why?
 					},
 				},
 				{ new: true }
@@ -58,7 +59,12 @@ const sendOTPViaEmail = async (username) => {
 	}, 60000);
 };
 
-// when user signup need to change the isActivate to true
+/**
+ * compare if user input and OTP is the same
+ * @param {string} username username of user in userAccount
+ * @param {string} OTP the OTP user types in the input box.
+ * @return {boolean} if user input is the same as the OTP stored in DB, return true
+ */
 const verifyOTP = async (username, OTP): Promise<boolean> => {
 	const user = await userAccount.findOne({ username }).exec();
 	const uid = user.uid;
