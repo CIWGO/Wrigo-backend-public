@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userAccount as User } from "../../models/index";
-import { sendOTPViaEmail } from "./index";
+// import { sendOTPViaEmail } from "./index";
 import { verifyOTP } from "./index";
 //import { changePassword } from "./index";
 
@@ -40,7 +40,7 @@ const resetPassword = async (req: Request, res: Response) => {
 
 		// 	// Return success response
 		// 	res.send({ message: "OTP sent to your email address" });
-		sendOTPViaEmail(username);
+		// sendOTPViaEmail(username);
 	} catch (error) {
 		res
 			.status(500)

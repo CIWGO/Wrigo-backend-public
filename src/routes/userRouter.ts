@@ -20,7 +20,6 @@ userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
 
-
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 

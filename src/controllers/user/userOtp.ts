@@ -1,22 +1,20 @@
-import { userOTP, userAccount } from "../../models/index";
+import { userOTP } from "../../models/index";
 import { sendEmail } from "../../utils/emailNotification";
 import otpGenerator from "otp-generator";
 
 /**
  * generate a one-time-password(OTP), store it into database and send it to user via email
  * validity of OTP is 1 minute. After this, the OTP will be removed from DB
- * @param {string} username username of user in userAccount
+ * @param {string} uid user id
+ * @param {string} email email in user account
  */
-const sendOTPViaEmail = async (username) => {
-	//const { username, email } = req.body;
+const sendOTPViaEmail = async (uid, email) => {
+	// generate an OTP
 	const OTP = otpGenerator.generate(6, {
 		upperCaseAlphabets: false,
 		specialChars: false,
 	});
-	// find the user using username, then store otp into the user
-	const user = await userAccount.findOne({ username }).exec();
-	const uid = user.uid;
-	const email = user.email;
+	// find the userOTP using uid, then store otp into the user
 	const userOtp = await userOTP.findOne({ uid }).exec();
 	if (!userOtp) {
 		const userOtp = new userOTP({ uid, OTP });
@@ -29,8 +27,7 @@ const sendOTPViaEmail = async (username) => {
 					$set: {
 						OTP: OTP,
 					},
-				},
-				{ new: true }
+				}
 			)
 			.exec();
 	}
@@ -50,10 +47,9 @@ const sendOTPViaEmail = async (username) => {
 				{ uid },
 				{
 					$set: {
-						OTP: "No OTP", // why?
+						OTP: "",
 					},
-				},
-				{ new: true }
+				}
 			)
 			.exec();
 	}, 60000);
@@ -61,20 +57,14 @@ const sendOTPViaEmail = async (username) => {
 
 /**
  * compare if user input and OTP is the same
- * @param {string} username username of user in userAccount
+ * @param {string} uid user id
  * @param {string} OTP the OTP user types in the input box.
- * @return {boolean} if user input is the same as the OTP stored in DB, return true
+ * @return {Promise<boolean>} if user input is the same as the OTP stored in DB, return true
+ * Note: the type of this return is Promise, so it should be handled using "then" and "catch" when being used
  */
-const verifyOTP = async (username, OTP): Promise<boolean> => {
-	const user = await userAccount.findOne({ username }).exec();
-	const uid = user.uid;
+const verifyOTP = async (uid, OTP): Promise<boolean> => {
 	const storedOtp = await userOTP.findOne({ uid }).exec();
-
-	if (OTP === storedOtp.OTP) {
-		return true;
-	} else {
-		return false;
-	}
+	return OTP === storedOtp.OTP;
 };
 
 export { sendOTPViaEmail, verifyOTP };
