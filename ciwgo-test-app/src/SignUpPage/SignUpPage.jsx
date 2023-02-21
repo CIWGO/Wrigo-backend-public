@@ -1,30 +1,27 @@
 import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-function Login() {
+function SignUp() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:3005/users/login", {
+    const response = await fetch("http://localhost:3005/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, email, password }),
     });
     console.log(response);
     if (response.ok) {
-      const data = await response.json();
-      // login success
-      localStorage.setItem("token", data.token); // store the token in localStorage
-      alert("Login successful!");
-    } else if (response.status === 401) {
-      // unverified email
-      alert("unverified email");
+      alert("sign up successful");
+      // navigate("/login", { replace: true });
     } else {
-      // login failure
-      alert("Invalid username or password.");
+      alert("Error signing up");
     }
   };
 
@@ -39,6 +36,14 @@ function Login() {
         />
       </label>
       <label>
+        email:
+        <input
+          type="text"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </label>
+      <label>
         Password:
         <input
           type="password"
@@ -46,9 +51,9 @@ function Login() {
           onChange={(event) => setPassword(event.target.value)}
         />
       </label>
-      <button type="submit">Login</button>
+      <button type="submit">sign up</button>
     </form>
   );
 }
 
-export default Login;
+export default SignUp;
