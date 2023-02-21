@@ -1,15 +1,15 @@
 import { useState } from "react";
-// import { useHistory } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const history = useHistory();
+  // const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:3005/signup", {
+    const response = await fetch("http://localhost:3005/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,9 +19,9 @@ function SignUp() {
     console.log(response);
     if (response.ok) {
       alert("sign up successful");
+      // navigate("/login", { replace: true });
     } else {
       alert("Error signing up");
-      // console.error("Error signing up");
     }
   };
 

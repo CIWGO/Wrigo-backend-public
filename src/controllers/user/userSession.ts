@@ -1,46 +1,43 @@
 import { Request, Response } from "express";
 import { validateToken } from "../../utils/jwt";
+import { LocalStorage } from "node-localstorage";
 
 // Revise import path accordingly if necessary
 
 /**
- * Replace the content of this template to the actual comments
- * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
- * if no return, you don't have to add this @return value in comments
- * @source url
+ * @param {AuthRequest} AuthRequest a user type AuthRequest which contains username
+ * @return {next} store the valid user into payload and call next function.
  */
 
+interface User {
+  username: string;
+  iat: number; // time the token is generated
+  exp: number; // time the token is expired
+}
+
 interface AuthRequest extends Request {
-	user?: any; // You might want to specify the type here. A header, authorization, or just a json type?
+  user?: User;
 }
 
 // call this middleware for functions that need to be protected by user login token
 const tokenGuard = (req: AuthRequest, res: Response, next) => {
-	const authorization = req.header("Authorization");
+	// get the token from localStorage
+	const localStorage = new LocalStorage("./local-storage");
+	const authorization = localStorage.getItem("token");
+
+	// check if there is a token
 	if (!authorization) {
 		return res.status(401).json({ error: "missing the authorization header" });
 	}
 
-	// valid authorization format: Bearer {token}
-	const tokenArray = authorization.split(" ");
-	if (tokenArray.length != 2 || tokenArray[0] != "Bearer") {
-		return res
-			.status(401)
-			.json({ error: "invalid authorization header format" });
-	}
-
 	try {
-		const payload = validateToken(tokenArray[1]);
-		req.user = payload;
+		// store the the user information in the req.user and pass on to next()
+		const payload = validateToken(authorization);
+		req.user = payload as User;
 		next();
 	} catch (err) {
 		return res.status(401).json({ message: "Invalid token" });
 	}
 };
-
-// Do you need to return anything for token validating result?
 
 export { tokenGuard };
