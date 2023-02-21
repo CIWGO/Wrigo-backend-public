@@ -5,20 +5,20 @@ import { Schema, model, Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface User {
-	uid: string;
-	username: string;
-	email: string;
-	password: string;
-	email_verified: boolean;
-	isActive: boolean;
-	isAdmin: boolean;
-	isSubscribed: boolean;
+  uid: string;
+  username: string;
+  email: string;
+  password: string;
+  email_verified: boolean;
+  isActive: boolean;
+  isAdmin: boolean;
+  isSubscribed: boolean;
 }
 
 export interface UserDocument extends User, Document {
-	_id: Types.ObjectId;
-	hashPassword: () => Promise<void>;
-	validatePassword: (password: string) => Promise<boolean>;
+  _id: Types.ObjectId;
+  hashPassword: () => Promise<void>;
+  validatePassword: (password: string) => Promise<boolean>;
 }
 
 const schema: Schema<UserDocument> = new Schema(
@@ -73,7 +73,8 @@ schema.methods.hashPassword = async function () {
 };
 
 schema.methods.validatePassword = async function (password) {
-	bcrypt.compare(password, this.password);
+	const isValid = await bcrypt.compare(password, this.password);
+	return isValid;
 };
 
 const user = model<UserDocument>("User", schema);
