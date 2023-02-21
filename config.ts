@@ -14,18 +14,22 @@ interface ENV {
 	PORT?: number;
 	CONNECTION_STRING?: string;
 	CIW_COLLECTION_NAME?: string;
-	OPENAI_APIKEY?: string;
 	OPENAI_APIURL?: string;
+	OPENAI_APIKEY?: string;
 	JWT_SECRET?: string;
+	TEST_EMAIL?: string;
+	TEST_EMAIL_PASSWORD?: string;
 }
 
 interface Config {
 	PORT: number;
 	CONNECTION_STRING: string;
 	CIW_COLLECTION_NAME: string;
-	OPENAI_APIKEY: string;
 	OPENAI_APIURL: string;
+	OPENAI_APIKEY: string;
 	JWT_SECRET?: string;
+	TEST_EMAIL?: string;
+	TEST_EMAIL_PASSWORD?: string;
 }
 
 // Loading process.env as ENV interface
@@ -38,6 +42,9 @@ const getConfig = (): ENV => {
 		OPENAI_APIKEY: process.env.OPENAI_APIKEY,
 		OPENAI_APIURL: process.env.OPENAI_APIURL,
 		JWT_SECRET: process.env.JWT_SECRET,
+		TEST_EMAIL: process.env.TEST_EMAIL,
+		TEST_EMAIL_PASSWORD: process.env.TEST_EMAIL_PASSWORD,
+
 	};
 };
 

@@ -5,8 +5,8 @@ import {
 	resetPassword,
 	deleteUser,
 	login,
-	generateOtp,
-	verifyOtp,
+	sendOTPViaEmail,
+	verifyOTP,
 	showUserProfile,
 	createUserProfile,
 	updateUserProfile,
@@ -15,17 +15,21 @@ import {
 	createUser,
 } from "./user/index";
 
+import { generatePromptForEvaluation, evaluateWriting } from "./writing/index";
+
 export {
 	changePassword,
 	resetPassword,
 	deleteUser,
 	login,
-	generateOtp,
-	verifyOtp,
+	sendOTPViaEmail,
+	verifyOTP,
 	showUserProfile,
 	createUserProfile,
 	updateUserProfile,
 	register,
 	tokenGuard,
 	createUser,
+	generatePromptForEvaluation,
+	evaluateWriting,
 };

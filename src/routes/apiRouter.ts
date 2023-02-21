@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { evaluateWriting } from "../controllers/writing/writingService";
+import { evaluateWriting } from "../controllers/index";
 
 const apiRouter = Router();
 

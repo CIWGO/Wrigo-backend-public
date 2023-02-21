@@ -1,4 +1,8 @@
-import nodemailer, { SentMessageInfo } from "nodemailer";
+import nodemailer from "nodemailer";
+import config from "../../config";
+
+const TEST_EMAIL = config.TEST_EMAIL;
+const TEST_EMAIL_PASSWORD = config.TEST_EMAIL_PASSWORD;
 
 /**
  * Replace the content of this template to the actual comments
@@ -15,8 +19,8 @@ const transporter = nodemailer.createTransport({
 	port: 587,
 	secure: false,
 	auth: {
-		user: "ciwgo-dev@hotmail.com",
-		pass: "Ciwgo123",
+		user: TEST_EMAIL,
+		pass: TEST_EMAIL_PASSWORD,
 	},
 });
 
@@ -37,11 +41,11 @@ const sendEmail = (
 
 	transporter.sendMail(
 		email,
-		(error: Error | null, info: SentMessageInfo): void => {
+		(error: Error | null): void => {
 			if (error) {
 				console.log(error);
 			} else {
-				console.log("Email sent: " + info.toString());
+				console.log(`Verification code sent to ${to} at ${new Date(Date.now())}`);
 			}
 		}
 	);

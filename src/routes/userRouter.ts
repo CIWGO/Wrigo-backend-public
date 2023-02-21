@@ -8,7 +8,6 @@ import {
 	createUserProfile,
 	showUserProfile,
 	updateUserProfile,
-	verifyOtp,
 	tokenGuard,
 } from "../controllers/index";
 
@@ -18,9 +17,8 @@ const userRouter = Router();
 // post
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
-userRouter.post("/profile", createUserProfile);
-// userRouter.post("/userDelete", tokenGuard, deleteUser);
-userRouter.post("/userOtp", verifyOtp);
+userRouter.post("/userProfile", createUserProfile);
+userRouter.post("/userDelete", tokenGuard, deleteUser);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
@@ -29,11 +27,9 @@ userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 userRouter.get("/userProfile", tokenGuard, showUserProfile);
 
 // delete
-userRouter.delete("/userDelete", tokenGuard, deleteUser);
 
 // patch
 userRouter.patch("/resetPassword", resetPassword);
 userRouter.patch("/changePassword", tokenGuard, changePassword);
-
 
 export { userRouter };

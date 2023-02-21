@@ -4,7 +4,7 @@ import { changePassword } from "./changePassword";
 import { resetPassword } from "./resetPassword";
 import { deleteUser } from "./userDelete";
 import { login } from "./userLogin";
-import { generateOtp, verifyOtp } from "./userOtp";
+import { sendOTPViaEmail, verifyOTP } from "./userOtp";
 import {
 	showUserProfile,
 	createUserProfile,
@@ -19,8 +19,8 @@ export {
 	resetPassword,
 	deleteUser,
 	login,
-	generateOtp,
-	verifyOtp,
+	sendOTPViaEmail,
+	verifyOTP,
 	showUserProfile,
 	createUserProfile,
 	updateUserProfile,
