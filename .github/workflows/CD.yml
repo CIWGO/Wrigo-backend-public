@@ -1,13 +1,13 @@
 name: Build and Deploy to Azure VM
 
-run-name: ${{ github.action }} is building and deploying
+run-name: ${{ github.action }} commit is building and deploying
 
 permissions:
   contents: read
 
 on:
-#  push:
-#    branches: ['main']
+  push:
+    branches: ['main']
   workflow_dispatch:
 
 jobs:
@@ -17,11 +17,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-
-          
-      - name: import Env
-        run: |
-          echo '{{ secrets.Env }}' > .env
+              
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -50,15 +46,16 @@ jobs:
     needs: [buildImage]
     
     steps:
-      - name: import sshKey
-        run: |
-          echo '{{ secrets.sshkey }}' > ciwgo-backend_key.pem
-          
-      - name: clean out the VM (container & image)
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ciwgo-backend_key.pem service@20.70.180.62 'docker stop $(docker ps -a -q)'
-          ssh -o StrictHostKeyChecking=no -i ciwgo-backend_key.pem service@20.70.180.62 'docker rmi $(docker images -q)'
-          
-      - name: Run image from Registry
-          ssh -o StrictHostKeyChecking=no -i ciwgo-backend_key.pem service@20.70.180.62 'docker run --name backend -d --rm -p 3005:3005 ciwgodockerimage.azurecr.io/backend:${{ github.sha }}'
+    
+    - name: Connect to VM via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: 20.70.180.62
+        username: service
+        key: ${{ secrets.SSHKEY }}
+        port: 22
+        script: |
+          docker stop $(docker ps -a -q)
+          docker rmi $(docker images -q)
+          docker run --env-file ENV --name backend -d --rm -p 3005:3005 ciwgodockerimage.azurecr.io/backend:${{ github.sha }}
         
