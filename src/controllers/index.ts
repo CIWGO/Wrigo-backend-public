@@ -31,5 +31,5 @@ export {
 	tokenGuard,
 	createUser,
 	generatePromptForEvaluation,
-	evaluateWriting,
+	evaluateWriting
 };

@@ -6,7 +6,7 @@ export interface OperationLog {
 	uid?: string;
 	login_status: boolean;
 	log_time: Date;
-	log_type?: string; // userCreation, authentication, userAction, payment, ApiCall
+	log_type: string; // userCreation, authentication, userAction, payment, ApiCall
 	log_content: string;
 }
 
@@ -35,8 +35,10 @@ const schema: Schema<OperationLog> = new Schema(
 			required: true,
 		},
 	},
-	{ collection: "operation_logs" }
+	{ timestamps: true, collection: "operation_logs" }
 );
+
+schema.index({ createdAt: 1 }, { expireAfterSeconds: 6 * 30 * 24 * 60 * 60 });
 
 const operationLog = model<OperationLog>("OperationLog", schema);
 
