@@ -42,9 +42,7 @@ const resetPassword = async (req: Request, res: Response) => {
 		// 	res.send({ message: "OTP sent to your email address" });
 		// sendOTPViaEmail(username);
 	} catch (error) {
-		res
-			.status(500)
-			.send({ error: error.message || "Failed to reset password" });
+		res.status(500).send({ error: error.message || "Failed to reset password" });
 	}
 
 	const verifyOtp = verifyOTP(username, OTP);

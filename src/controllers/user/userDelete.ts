@@ -27,11 +27,7 @@ const deleteUser = async (req: Request, res: Response) => {
 		).exec();
 		res.status(201).send("User account is deleted.");
 	} catch (error) {
-		res
-			.status(500)
-			.send(
-				error.message || "Unable to delete your account, please try again."
-			);
+		res.status(500).send(error.message || "Unable to delete your account, please try again.");
 	}
 };
 
