@@ -38,6 +38,7 @@ const schema: Schema<OperationLog> = new Schema(
 	{ timestamps: true, collection: "operation_logs" }
 );
 
+// any operation log document created using this Schema will be removed from DB (operation_logs model list) automatically after 6 months
 schema.index({ createdAt: 1 }, { expireAfterSeconds: 6 * 30 * 24 * 60 * 60 });
 
 const operationLog = model<OperationLog>("OperationLog", schema);
