@@ -80,7 +80,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		});
 	} catch (error) {
 		// if error detected, return the error
-		res.send(error || "Failed to get response");
+		res.status(500).send(error || "Failed to get response");
 	}
 };
 
