@@ -8,8 +8,8 @@ import {
 	createUserProfile,
 	showUserProfile,
 	updateUserProfile,
-	tokenGuard,
 } from "../controllers/index";
+import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
 const userRouter = Router();
 
@@ -30,6 +30,11 @@ userRouter.get("/userProfile", tokenGuard, showUserProfile);
 
 // patch
 userRouter.patch("/resetPassword", resetPassword);
-userRouter.patch("/changePassword", tokenGuard, changePassword);
+userRouter.patch(
+	"/changePassword",
+	tokenGuard,
+	extractUsernameAndPassword,
+	changePassword
+);
 
 export { userRouter };

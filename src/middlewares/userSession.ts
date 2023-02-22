@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { validateToken } from "../../utils/jwt";
+import { validateToken } from "../utils/jwt";
 import { LocalStorage } from "node-localstorage";
-
-// Revise import path accordingly if necessary
 
 /**
  * @param {AuthRequest} AuthRequest a user type AuthRequest which contains username

@@ -1,34 +1,34 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
 import { sendEmail } from "../../utils/emailNotification";
+import bcrypt from "bcrypt";
 
-// Revise import path accordingly if necessary
-// remove findUserEmail as no need to verify existence of email
-// Add user token verification when user wants to change password from the user profile page after login
-// or force user to use resetPassword even if the user has logged in through email OTP, meaning no change
-// needs to be made here.
+interface RequestWithLocals extends Request {
+  locals: {
+    username?: string;
+    password?: string;
+  };
+}
 
 /**
- * Replace the content of this template to the actual comments
- * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
- * if no return, you don't have to add this @return value in comments
+ * @param {RequestWithLocals} RequestWithLocals obj extend from Request, which has a local attribute that has username and password
+ * @param {Response} Response from express
+ * @return {Response} change password in the database, return with corresponding status code and message
  * @source url
  */
-
-const changePassword = async (req: Request, res: Response) => {
+const changePassword = async (req: RequestWithLocals, res: Response) => {
 	try {
-		const { username, password } = req.body;
+		const { username, password } = req.locals;
 
 		const user = await UserModel.findOne({ username }).exec();
 		if (!user) return res.status(404).send("User not found");
+		console.log(user.password);
 
+		const newPassword = await hashPasswordWithReturn(password);
 		const email = user.email;
 		const result = await UserModel.updateOne(
 			{ username },
-			{ $set: { password: password } }
+			{ $set: { password: newPassword } }
 		);
 
 		// modifiedCount containing the number of modified documents
@@ -39,13 +39,21 @@ const changePassword = async (req: Request, res: Response) => {
 		} else {
 			const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
 			sendEmail("ciwgo-dev@hotmail.com", email, "Password Changed", msg);
-
 			return res.status(200).json({ message: "Password changed successfully" });
 		}
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(error.message || "Error changing password2");
 	}
+};
+
+/**
+ * @param {string} password (un-hashed password)
+ * @return {string} hashed password
+ */
+const hashPasswordWithReturn = async function (password: string) {
+	const hashedPassword = await bcrypt.hash(password, 12);
+	return hashedPassword;
 };
 
 export { changePassword };
