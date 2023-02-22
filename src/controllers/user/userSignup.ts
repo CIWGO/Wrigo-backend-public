@@ -20,14 +20,13 @@ import { v4 as uuidv4 } from "uuid";
 const createUser = async (req: Request, res: Response) => {
 	const { uid = uuidv4(), username, password, email } = req.body;
 
-	const user = new UserModel({
-		uid,
-		username,
-		password,
-		email,
-	});
-
 	try {
+		const user = new UserModel({
+			uid,
+			username,
+			password,
+			email,
+		});
 		await user.hashPassword();
 
 		const isExist = await UserModel.exists({ username }).exec();
@@ -36,7 +35,8 @@ const createUser = async (req: Request, res: Response) => {
 			await user.save();
 			res.status(201).json({ username, email });
 		} else {
-			res.status(500).send("Username is taken");
+			// when user is taken/occupied, resources confilict
+			res.status(409).send("Username is taken");
 		}
 	} catch (error) {
 		res.status(500).send(error.message || "Failed to sign up, please retry.");

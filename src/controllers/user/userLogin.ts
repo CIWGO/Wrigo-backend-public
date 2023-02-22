@@ -14,8 +14,8 @@ import { LocalStorage } from "node-localstorage";
  */
 
 const login = async (req: Request, res: Response) => {
+	const { username, password } = req.body;
 	try {
-		const { username, password } = req.body;
 		const user = await UserModel.findOne({ username }).exec();
 
 		// check if it is a valid user
@@ -32,16 +32,12 @@ const login = async (req: Request, res: Response) => {
 		// check if email is verified
 		if (!user.email_verified) {
 			// frontend needs to redirect to a verify email page for user
-			return res
-				.status(401)
-				.json({ error: "This user did not verified email" });
+			return res.status(401).json({ error: "This user did not verified email" });
 		}
 
 		// check isActivate to determine whether this account is deleted or not
 		if (!user.isActive) {
-			return res
-				.status(404)
-				.json({ error: "User not found, it is a deleted account" });
+			return res.status(404).json({ error: "User not found, it is a deleted account" });
 		}
 
 		// generate a token, the token is generate based on username

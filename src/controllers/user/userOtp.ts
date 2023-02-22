@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { userOTP } from "../../models/index";
 import { sendEmail } from "../../utils/emailNotification";
 import otpGenerator from "otp-generator";
@@ -8,51 +9,48 @@ import otpGenerator from "otp-generator";
  * @param {string} uid user id
  * @param {string} email email in user account
  */
-const sendOTPViaEmail = async (uid, email) => {
-	// generate an OTP
-	const OTP = otpGenerator.generate(6, {
-		upperCaseAlphabets: false,
-		specialChars: false,
-	});
-	// find the userOTP using uid, then store otp into the user
-	const userOtp = await userOTP.findOne({ uid }).exec();
-	if (!userOtp) {
-		const userOtp = new userOTP({ uid, OTP });
-		userOtp.save();
-	} else {
-		await userOTP
-			.findOneAndUpdate(
+const sendOTPViaEmail = async (uid: string, email: string, res: Response) => {
+	try {
+		// generate an OTP
+		const OTP = otpGenerator.generate(6, {
+			upperCaseAlphabets: false,
+			specialChars: false,
+		});
+		// find the userOTP using uid, then store otp into the user
+		const userOtp = await userOTP.findOne({ uid }).exec();
+		if (!userOtp) {
+			const newUserOtp = new userOTP({ uid, OTP });
+			await newUserOtp.save();
+		} else {
+			await userOTP.findOneAndUpdate(
 				{ uid },
 				{
 					$set: {
 						OTP: OTP,
 					},
 				}
-			)
-			.exec();
-	}
+			).exec();
+		}
 
-	const emailContent = `Your OTP is ${OTP}. This will expire in 1 minute.`;
-	sendEmail(
-		"ciwgo-dev@hotmail.com",
-		email,
-		"CIWGO Email Verification",
-		emailContent
-	);
+		const emailContent = `Your OTP is ${OTP}. This will expire in 1 minute.`;
+		sendEmail(
+			"ciwgo-dev@hotmail.com",
+			email,
+			"CIWGO Email Verification",
+			emailContent
+		);
 
-	// clean OTP after 1 minute
-	setTimeout(() => {
-		userOTP
-			.findOneAndUpdate(
+		// clean OTP after 1 minute
+		setTimeout(async () => {
+			await userOTP.findOneAndUpdate(
 				{ uid },
-				{
-					$set: {
-						OTP: "",
-					},
-				}
-			)
-			.exec();
-	}, 60000);
+				{ $set: { OTP: "" } }
+			).exec();
+		}, 60000);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "An error occurred while sending OTP via email" });
+	}
 };
 
 /**

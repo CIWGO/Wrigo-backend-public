@@ -18,47 +18,67 @@ import { Response, Request } from "express";
 
 const showUserProfile = async (req: Request, res: Response) => {
 	const { username } = req.params;
-	const user = await UserModel.findOne({ username }).exec();
-
-	if (!user) return res.status(404).json({ error: "user not found" });
-	res.status(200).json(user);
+	
+	try {
+		const user = await UserModel.findOne({ username }).exec();
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+		res.status(200).json(user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Failed to get user profile, please retry.");
+	}
 };
 
 const createUserProfile = async (req: Request, res: Response) => {
 	const { username } = req.params;
 	const { email, country, gender, birthday } = req.body;
-	const user = await UserModel.findOne(
-		{ username },
-		{
-			$push: {
-				user: { email, country, gender, birthday },
-			},
-		},
-		{ new: true }
-	).exec();
 
-	if (!user) return res.sendStatus(404).json({ error: "user not found" });
-	res.status(201).send(user);
+	try {
+		const user = await UserModel.findOneAndUpdate(
+			{ username },
+			{ $push: { userProfile: { email, country, gender, birthday } } },
+			{ new: true }
+		).exec();
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+		res.status(201).send(user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Failed to create user profile, please try again.");
+	}
 };
 
 const updateUserProfile = async (req: Request, res: Response) => {
 	const { username } = req.params;
 	const { email, country, gender, birthday } = req.body;
-	const user = await UserModel.findOneAndUpdate(
-		{ username },
-		{
-			$set: {
-				email: email,
-				country: country,
-				gender: gender,
-				birth: birthday,
-			},
-		},
-		{ new: true }
-	).exec();
 
-	if (!user) return res.sendStatus(404).json({ error: "user not found" });
-	res.status(200).send(user);
+	try {
+		const user = await UserModel.findOneAndUpdate(
+			{ username },
+			{
+				$set: {
+					email: email,
+					country: country,
+					gender: gender,
+					birth: birthday,
+				},
+			},
+			{ new: true }
+		).exec();
+
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+		res.status(200).send(user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Failed to update user profile" });
+	}
+	
 };
 
 export { showUserProfile, createUserProfile, updateUserProfile };

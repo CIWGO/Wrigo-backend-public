@@ -15,17 +15,21 @@ import { Response, Request } from "express";
  */
 
 const register = async (req: Request, res: Response) => {
-	// remove login function as duplicate from userLogin.ts
 	const { username, password } = req.body;
-	const user = new UserModel({ username, password });
+	
+	try {
+		const user = new UserModel({ username, password });
 
-	await user.hashPassword();
-	await user.save();
-	// import userJWT as UserModel for saving JWT token to db?
-	const token = generateToken({ id: user.id, username });
-	res.status(201).json({ username, token });
+		await user.hashPassword();
+		await user.save();
+
+		const token = generateToken({ id: user.id, username });
+
+		res.status(201).json({ username, token });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Failed to register, please retry" });
+	}
 };
-
-// rename this file and function to accurately reflect the purpose
 
 export { register };
