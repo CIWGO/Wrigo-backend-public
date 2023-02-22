@@ -1,3 +1,6 @@
-import { createOperationLog } from "./createOperationLog";
+// Index for log controllers
 
-export { createOperationLog };
+import { createOperationLog } from "./createOperationLog";
+import { findOperationLogByType, findOperationLogByUid } from "./findOperationLog";
+
+export { createOperationLog, findOperationLogByType, findOperationLogByUid };
