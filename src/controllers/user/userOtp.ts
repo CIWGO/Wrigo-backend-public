@@ -64,7 +64,7 @@ const sendOTPViaEmail = async (uid, email, userIP, userDevice) => {
  */
 const verifyOTP = async (uid, OTP, userIP, userDevice): Promise<boolean> => {
 	const storedOtp = await userOTP.findOne({ uid }).exec();
-	const verificationResult = (OTP === storedOtp.OTP);
+	const verificationResult = OTP === storedOtp.OTP;
 	// create operation log and store it to DB
 	createOperationLog(
 		true,

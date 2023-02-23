@@ -5,10 +5,10 @@ import bcrypt from "bcrypt";
 import { createOperationLog } from "../log/index";
 
 interface RequestWithLocals extends Request {
-  locals: {
-    username?: string;
-    password?: string;
-  };
+	locals: {
+		username?: string;
+		password?: string;
+	};
 }
 
 /**
@@ -77,12 +77,14 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 		createOperationLog(
 			true,
 			"userAction",
-			`User (uid: ${uid}) failed to change password. ${error.message || "Error changing password2"}`,
+			`User (uid: ${uid}) failed to change password. ${
+				error.message || "Error changing password"
+			}`,
 			req.userIP,
 			req.userDevice,
 			uid
 		);
-		return res.status(500).send(error.message || "Error changing password2");
+		return res.status(500).send(error.message || "Error changing password");
 	}
 };
 

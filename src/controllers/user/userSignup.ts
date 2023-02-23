@@ -21,14 +21,13 @@ import { createOperationLog } from "../log/index";
 const createUser = async (req: Request, res: Response) => {
 	const { uid = uuidv4(), username, password, email } = req.body;
 
-	const user = new UserModel({
-		uid,
-		username,
-		password,
-		email,
-	});
-
 	try {
+		const user = new UserModel({
+			uid,
+			username,
+			password,
+			email,
+		});
 		await user.hashPassword();
 
 		const isExist = await UserModel.exists({ username }).exec();
@@ -55,18 +54,21 @@ const createUser = async (req: Request, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(500).send("Username is taken");
+			return res.status(409).send("Username is taken");
 		}
 	} catch (error) {
 		// create operation log and store it to DB
 		createOperationLog(
 			false,
 			"userCreation",
-			`User (uid: ${uid}) creation failed. ${error.message}`, req.userIP,
+			`User (uid: ${uid}) creation failed. ${error.message}`,
+			req.userIP,
 			req.userDevice,
 			uid
 		);
-		return res.status(500).send(error.message || "Failed to sign up, please retry.");
+		return res
+			.status(500)
+			.send(error.message || "Failed to sign up, please retry.");
 	}
 };
 
