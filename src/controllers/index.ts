@@ -15,7 +15,7 @@ import {
 	createUser,
 } from "./user/index";
 
-import { generatePromptForEvaluation, evaluateWriting } from "./writing/index";
+import { generatePromptForEvaluation, evaluateWriting} from "./writing/index";
 
 export {
 	changePassword,
