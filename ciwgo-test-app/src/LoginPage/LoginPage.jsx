@@ -18,6 +18,8 @@ function Login() {
       const data = await response.json();
       // login success
       localStorage.setItem("token", data.token); // store the token in localStorage
+      localStorage.setItem("uid", data.uid); // store the uid in localStorage
+      localStorage.setItem("username", data.username); // store the username in localStorage
       alert("Login successful!");
     } else if (response.status === 401) {
       // unverified email

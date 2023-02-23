@@ -1,5 +1,6 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Response, Request } from "express";
+import { createOperationLog } from "../log/index";
 
 // Revise import path accordingly if necessary
 // Divide three functions into three separate files
@@ -17,15 +18,36 @@ import { Response, Request } from "express";
  */
 
 const showUserProfile = async (req: Request, res: Response) => {
-	const { username } = req.params;
+	const { uid, username } = req.params;
 	const user = await UserModel.findOne({ username }).exec();
 
-	if (!user) return res.status(404).json({ error: "user not found" });
-	res.status(200).json(user);
+	if (!user) {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) failed to show profile. User not found`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(404).json({ error: "user not found" });
+	} else {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) showed profile.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(200).json(user);
+	}
 };
 
 const createUserProfile = async (req: Request, res: Response) => {
-	const { username } = req.params;
+	const { uid, username } = req.params;
 	const { email, country, gender, birthday } = req.body;
 	const user = await UserModel.findOne(
 		{ username },
@@ -37,12 +59,33 @@ const createUserProfile = async (req: Request, res: Response) => {
 		{ new: true }
 	).exec();
 
-	if (!user) return res.sendStatus(404).json({ error: "user not found" });
-	res.status(201).send(user);
+	if (!user) {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) failed to create profile. User not found.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.sendStatus(404).json({ error: "user not found" });
+	} else {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) created profile successfully.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(201).send(user);
+	}
 };
 
 const updateUserProfile = async (req: Request, res: Response) => {
-	const { username } = req.params;
+	const { uid, username } = req.params;
 	const { email, country, gender, birthday } = req.body;
 	const user = await UserModel.findOneAndUpdate(
 		{ username },
@@ -57,8 +100,30 @@ const updateUserProfile = async (req: Request, res: Response) => {
 		{ new: true }
 	).exec();
 
-	if (!user) return res.sendStatus(404).json({ error: "user not found" });
-	res.status(200).send(user);
+	if (!user) {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) failed to update profile. User not found`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.sendStatus(404).json({ error: "user not found" });
+	} else {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) updated profile successfully.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(200).send(user);
+	}
+
 };
 
 export { showUserProfile, createUserProfile, updateUserProfile };

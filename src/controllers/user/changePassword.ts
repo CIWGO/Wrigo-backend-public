@@ -1,6 +1,7 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
 import { sendEmail } from "../../utils/emailNotification";
+import { createOperationLog } from "../log/index";
 
 // Revise import path accordingly if necessary
 // remove findUserEmail as no need to verify existence of email
@@ -20,10 +21,21 @@ import { sendEmail } from "../../utils/emailNotification";
 
 const changePassword = async (req: Request, res: Response) => {
 	try {
-		const { username, password } = req.body;
+		const { uid, username, password } = req.body;
 
 		const user = await UserModel.findOne({ username }).exec();
-		if (!user) return res.status(404).send("User not found");
+		if (!user) {
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"userAction",
+				`User (uid: ${uid}) failed to change password. User not found.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
+			return res.status(404).send("User not found");
+		}
 
 		const email = user.email;
 		const result = await UserModel.updateOne(
@@ -33,18 +45,44 @@ const changePassword = async (req: Request, res: Response) => {
 
 		// modifiedCount containing the number of modified documents
 		if (result.modifiedCount === 0) {
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"userAction",
+				`User (uid: ${uid}) failed to change password. Password not modified.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 			return res
 				.status(404)
 				.json({ error: "Error in changing password, Password not modified." });
 		} else {
 			const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
 			sendEmail("ciwgo-dev@hotmail.com", email, "Password Changed", msg);
-
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"userAction",
+				`User (uid: ${uid}) changed password successfully.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 			return res.status(200).json({ message: "Password changed successfully" });
 		}
 	} catch (error) {
-		console.log(error);
-		res.status(500).send(error.message || "Error changing password2");
+		const uid = req.body.uid;
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) failed to change password. ${error.message || "Error changing password2"}`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(500).send(error.message || "Error changing password2");
 	}
 };
 

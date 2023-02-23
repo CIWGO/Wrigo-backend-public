@@ -1,5 +1,6 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
+import { createOperationLog } from "../log/index";
 
 // Revise import path accordingly if necessary
 // Add user token verification (tokenGuard)
@@ -17,7 +18,7 @@ import { Request, Response } from "express";
 const deleteUser = async (req: Request, res: Response) => {
 	try {
 		// Delete user is defined as set isActive = false, not deleting the targe user data in database.
-		const { username, isActive = false } = req.body;
+		const { uid, username, isActive = false } = req.body;
 		await UserModel.findOneAndUpdate(
 			{ username },
 			{
@@ -25,9 +26,29 @@ const deleteUser = async (req: Request, res: Response) => {
 			},
 			{ new: true }
 		).exec();
-		res.status(201).send("User account is deleted.");
+
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) account deleted successfully.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(201).send("User account is deleted.");
 	} catch (error) {
-		res
+		const uid = req.body.uid;
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) failed to delete account. ${error.message || "Unknown error"}`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res
 			.status(500)
 			.send(
 				error.message || "Unable to delete your account, please try again."

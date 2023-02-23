@@ -1,11 +1,11 @@
 // Index for writing controllers
 
-import { generatePromptForEvaluation } from "./promptOperation";
-import { evaluateWriting } from "./writingService";
+// import { generatePromptForEvaluation } from "./promptOperation";
+import { evaluateWriting } from "./writingEvaluation";
 //import { responseOperation } from "./responseOperation";
 
 export {
-	generatePromptForEvaluation,
+	// generatePromptForEvaluation,
 	evaluateWriting,
 	//responseOperation
 };

@@ -15,7 +15,9 @@ import {
 	createUser,
 } from "./user/index";
 
-import { generatePromptForEvaluation, evaluateWriting } from "./writing/index";
+import { evaluateWriting } from "./writing/index";
+
+import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
 
 export {
 	changePassword,
@@ -30,6 +32,8 @@ export {
 	register,
 	tokenGuard,
 	createUser,
-	generatePromptForEvaluation,
 	evaluateWriting,
+	createOperationLog,
+	findOperationLogByType,
+	findOperationLogByUid
 };
