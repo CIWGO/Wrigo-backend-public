@@ -17,6 +17,8 @@ import {
 
 import { evaluateWriting } from "./writing/index";
 
+import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
+
 export {
 	changePassword,
 	resetPassword,
@@ -30,5 +32,8 @@ export {
 	register,
 	tokenGuard,
 	createUser,
-	evaluateWriting
+	evaluateWriting,
+	createOperationLog,
+	findOperationLogByType,
+	findOperationLogByUid
 };

@@ -6,9 +6,6 @@ import { generatePrompt } from "./promptOperation";
 import { v4 as uuidv4 } from "uuid";
 import { createOperationLog } from "../log/index";
 
-// Revise import path accordingly if necessary
-// Change the file name to writingEvaluation
-
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
 

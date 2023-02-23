@@ -7,6 +7,10 @@ import connectToDB from "./utils/db/dbService";
 import { v1Router } from "./routes/index";
 import { Request, Response, NextFunction } from "express";
 
+dotenv.config();
+const PORT = process.env.PORT;
+connectToDB();
+
 // add 2 customized properties into request
 declare module "express" {
 	interface Request {
@@ -14,13 +18,6 @@ declare module "express" {
 		userIP?: string;
 	}
 }
-
-dotenv.config();
-
-const PORT = process.env.PORT;
-
-connectToDB();
-
 /**
  * this is a global middleware. It requires every single request (no matter what type) from users have to get through this function. 
  * User IP and device type will be stored into Request.
@@ -30,7 +27,7 @@ connectToDB();
  * If you need to use IP and device type in other functions handling request, you can get these by req.userIP and req.userDevice 
  */
 app.use((req: Request, _: Response, next: NextFunction) => {
-	const ip = req.ip.replace(/^::ffff:/, "");
+	const ip = req.ip.replace(/^::ffff:/, ""); // may have to change after real deployment
 	req.userIP = ip; // store ip into userIP
 	const userDevice = req.headers["user-agent"];
 	req.userDevice = userDevice; // store userDevice into userIP
