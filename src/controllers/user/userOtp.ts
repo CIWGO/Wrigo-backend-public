@@ -1,4 +1,3 @@
-import { Response } from "express";
 import { userOTP } from "../../models/index";
 import { sendEmail } from "../../utils/emailNotification";
 import otpGenerator from "otp-generator";
@@ -32,8 +31,9 @@ const sendOTPViaEmail = async (uid, email, userIP, userDevice) => {
 						OTP: OTP,
 					},
 				}
-			).exec();
-		}
+			)
+			.exec();
+	}
 
 	// send email
 	const emailContent = `Your OTP is ${OTP}. This will expire in 1 minute.`;
@@ -64,7 +64,7 @@ const sendOTPViaEmail = async (uid, email, userIP, userDevice) => {
  */
 const verifyOTP = async (uid, OTP, userIP, userDevice): Promise<boolean> => {
 	const storedOtp = await userOTP.findOne({ uid }).exec();
-	const verificationResult = (OTP === storedOtp.OTP);
+	const verificationResult = OTP === storedOtp.OTP;
 	// create operation log and store it to DB
 	createOperationLog(
 		true,

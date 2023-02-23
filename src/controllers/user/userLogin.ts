@@ -15,7 +15,6 @@ import { createOperationLog } from "../log/index";
  */
 
 const login = async (req: Request, res: Response) => {
-	const { username, password } = req.body;
 	try {
 		const { uid, username, password } = req.body;
 		const user = await UserModel.findOne({ username }).exec();
@@ -61,7 +60,9 @@ const login = async (req: Request, res: Response) => {
 				uid
 			);
 			// frontend needs to redirect to a verify email page for user
-			return res.status(401).json({ error: "This user did not verified email" });
+			return res
+				.status(401)
+				.json({ error: "This user did not verified email" });
 		}
 
 		// check isActivate to determine whether this account is deleted or not
@@ -105,7 +106,9 @@ const login = async (req: Request, res: Response) => {
 		createOperationLog(
 			false,
 			"authentication",
-			`User (uid: ${uid}) failed to log in. ${error.message || "Server error"}.`,
+			`User (uid: ${uid}) failed to log in. ${
+				error.message || "Server error"
+			}.`,
 			req.userIP,
 			req.userDevice,
 			uid
