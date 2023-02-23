@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { validateToken } from "../utils/jwt";
 import { LocalStorage } from "node-localstorage";
-import { createOperationLog } from "../log/index";
+import { createOperationLog } from "../controllers/index";
 
 /**
  * @param {AuthRequest} AuthRequest a user type AuthRequest which contains username

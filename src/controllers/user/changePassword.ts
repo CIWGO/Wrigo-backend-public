@@ -33,7 +33,7 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 				uid
 			);
 			return res.status(404).send("User not found");
-		console.log(user.password);
+			console.log(user.password); //Is this necessary?
 		}
 
 		const newPassword = await hashPasswordWithReturn(password);
