@@ -3,6 +3,7 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
+import { createOperationLog } from "../log/index";
 
 // Revise import path accordingly if necessary
 
@@ -33,13 +34,41 @@ const createUser = async (req: Request, res: Response) => {
 
 		if (!isExist) {
 			await user.save();
-			res.status(201).json({ username, email });
+			// create operation log and store it to DB
+			createOperationLog(
+				false,
+				"userCreation",
+				`User (uid: ${uid}) has been created successfully.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
+			return res.status(201).json({ username, email });
 		} else {
-			// when user is taken/occupied, resources confilict
-			res.status(409).send("Username is taken");
+			// create operation log and store it to DB
+			createOperationLog(
+				false,
+				"userCreation",
+				`User (uid: ${uid}) creation failed. Username taken.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
+			return res.status(409).send("Username is taken");
 		}
 	} catch (error) {
-		res.status(500).send(error.message || "Failed to sign up, please retry.");
+		// create operation log and store it to DB
+		createOperationLog(
+			false,
+			"userCreation",
+			`User (uid: ${uid}) creation failed. ${error.message}`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res
+			.status(500)
+			.send(error.message || "Failed to sign up, please retry.");
 	}
 };
 
