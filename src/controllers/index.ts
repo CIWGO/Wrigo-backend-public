@@ -15,7 +15,7 @@ import {
 	createUser,
 } from "./user/index";
 
-import { generatePromptForEvaluation, evaluateWriting } from "./writing/index";
+import { evaluateWriting } from "./writing/index";
 
 export {
 	changePassword,
@@ -30,6 +30,5 @@ export {
 	register,
 	tokenGuard,
 	createUser,
-	generatePromptForEvaluation,
 	evaluateWriting
 };

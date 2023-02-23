@@ -35,18 +35,38 @@ const createUser = async (req: Request, res: Response) => {
 
 		if (!isExist) {
 			await user.save();
-			res.status(201).json({ username, email });
-			createOperationLog(true, "User Creation", `User (username: ${username}) has been created.`, uid);
-			return;
+			// create operation log and store it to DB
+			createOperationLog(
+				false,
+				"userCreation",
+				`User (username: ${uid}) has been created successfully.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
+			return res.status(201).json({ username, email });
 		} else {
-			res.status(500).send("Username is taken");
-			createOperationLog(false, "User Creation", `User (username: ${username}) creation failed. Username taken.`, uid);
-			return;
+			// create operation log and store it to DB
+			createOperationLog(
+				false,
+				"userCreation",
+				`User (username: ${uid}) creation failed. Username taken.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
+			return res.status(500).send("Username is taken");
 		}
 	} catch (error) {
-		res.status(500).send(error.message || "Failed to sign up, please retry.");
-		createOperationLog(false, "User Creation", `User (username: ${username}) creation error: ${error.message}`, uid);
-		return;
+		// create operation log and store it to DB
+		createOperationLog(
+			false,
+			"userCreation",
+			`User (username: ${uid}) creation failed. ${error.message}`, req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(500).send(error.message || "Failed to sign up, please retry.");
 	}
 };
 

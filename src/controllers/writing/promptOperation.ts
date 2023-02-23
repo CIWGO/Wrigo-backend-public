@@ -15,7 +15,7 @@ import outputFormat from "./outputFormat.json";
  * @source url
  */
 
-const generatePromptForEvaluation = (req: Request) => {
+const generatePrompt = (req: Request) => {
 	// change the name to generatePrompt
 	const instruction =
 		"Evaluate IELTS writing on nine-band scale of JSON. Return JSON following this format:";
@@ -27,4 +27,4 @@ const generatePromptForEvaluation = (req: Request) => {
 	return prompt;
 };
 
-export { generatePromptForEvaluation };
+export { generatePrompt };

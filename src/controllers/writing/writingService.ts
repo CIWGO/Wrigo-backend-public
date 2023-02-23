@@ -2,31 +2,26 @@ import { topic as TopicModel, writing as WritingModel } from "../../models";
 import { Request, Response } from "express";
 import config from "../../../config";
 import axios from "axios";
-import { generatePromptForEvaluation } from "./promptOperation";
-// change name from generatePromptForEvaluation to generatePrompt
+import { generatePrompt } from "./promptOperation";
 import { v4 as uuidv4 } from "uuid";
+import { createOperationLog } from "../log/index";
 
 // Revise import path accordingly if necessary
 // Change the file name to writingEvaluation
 
-/**
- * Replace the content of this template to the actual comments
- * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
- * if no return, you don't have to add this @return value in comments
- * @source url
- */
-
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
 
-// take topic and essay from user input and generate a prompt for evaluation
+/**
+ * take topic and essay from user input and generate a prompt for evaluation
+ * user res to send the scores and evaluation back to users
+ * @param {Request} req request from users
+ * @param {Response} res respond to users
+ */
 const evaluateWriting = async (req: Request, res: Response) => {
 	try {
-		const { topic, content } = req.body;
-		const prompt = generatePromptForEvaluation(req); // generate a prompt for evaluation
+		const { uid, topic, content } = req.body;
+		const prompt = generatePrompt(req); // generate a prompt for evaluation
 
 		const topicDoc = new TopicModel({
 			topic_id: uuidv4(),
@@ -44,6 +39,15 @@ const evaluateWriting = async (req: Request, res: Response) => {
 
 		await topicDoc.save();
 		await writingDoc.save();
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"ApiCall",
+			`User (ID: ${uid}) writing evaluation service.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
 
 		// send axios request to api
 		axios({
@@ -61,9 +65,9 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			},
 		}).then((response) => {
 			/* if response achieved
-         		parse json
-         		store it in DB
-         		then return it to user (postman)*/
+					parse json
+					store it in DB
+					then return it to user (postman)*/
 			const comment = JSON.parse(response.data.choices[0].text);
 
 			// find writingDoc and update the comment received from API
@@ -79,6 +83,16 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			res.status(200).json(comment);
 		});
 	} catch (error) {
+		const uid = req.body.uid;
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"ApiCall",
+			`Failed to get API response. ${error || "Failed to get response"}`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
 		// if error detected, return the error
 		res.send(error || "Failed to get response");
 	}

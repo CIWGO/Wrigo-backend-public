@@ -3,11 +3,13 @@ import { Schema, model } from "mongoose";
 
 export interface OperationLog {
 	log_id: string;
-	uid?: string;
+	uid: string;
 	login_status: boolean;
 	log_time: Date;
 	log_type: string; // userCreation, authentication, userAction, payment, ApiCall
 	log_content: string;
+	ip: string;
+	device: string;
 }
 
 const schema: Schema<OperationLog> = new Schema(
@@ -33,6 +35,13 @@ const schema: Schema<OperationLog> = new Schema(
 		log_content: {
 			type: String,
 			required: true,
+		},
+		ip: {
+			type: String,
+			required: true,
+		},
+		device: {
+			type: String,
 		},
 	},
 	{ timestamps: true, collection: "operation_logs" }
