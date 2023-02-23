@@ -47,7 +47,7 @@ const sendOTPViaEmail = async (uid, email, userIP, userDevice) => {
 	// create operation log and store it to DB
 	createOperationLog(
 		true,
-		"userAction",
+		"authentication",
 		`OTP email sent to user (uid: ${uid}, email: ${email}) successfully.`,
 		userIP,
 		userDevice,
@@ -68,7 +68,7 @@ const verifyOTP = async (uid, OTP, userIP, userDevice): Promise<boolean> => {
 	// create operation log and store it to DB
 	createOperationLog(
 		true,
-		"userAction",
+		"authentication",
 		`User (uid: ${uid}) OTP verification is ${verificationResult}.`,
 		userIP,
 		userDevice,

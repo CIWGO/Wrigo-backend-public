@@ -39,7 +39,7 @@ const createUser = async (req: Request, res: Response) => {
 			createOperationLog(
 				false,
 				"userCreation",
-				`User (username: ${uid}) has been created successfully.`,
+				`User (uid: ${uid}) has been created successfully.`,
 				req.userIP,
 				req.userDevice,
 				uid
@@ -50,7 +50,7 @@ const createUser = async (req: Request, res: Response) => {
 			createOperationLog(
 				false,
 				"userCreation",
-				`User (username: ${uid}) creation failed. Username taken.`,
+				`User (uid: ${uid}) creation failed. Username taken.`,
 				req.userIP,
 				req.userDevice,
 				uid
@@ -62,7 +62,7 @@ const createUser = async (req: Request, res: Response) => {
 		createOperationLog(
 			false,
 			"userCreation",
-			`User (username: ${uid}) creation failed. ${error.message}`, req.userIP,
+			`User (uid: ${uid}) creation failed. ${error.message}`, req.userIP,
 			req.userDevice,
 			uid
 		);

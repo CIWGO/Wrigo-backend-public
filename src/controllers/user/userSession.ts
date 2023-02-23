@@ -33,7 +33,7 @@ const tokenGuard = (req: AuthRequest, res: Response, next) => {
 		createOperationLog(
 			false,
 			"authentication",
-			`User (username: ${uid}) token authentication failed. Missing the authorization header.`,
+			`User (uid: ${uid}) token authentication failed. Missing the authorization header.`,
 			req.userIP,
 			req.userDevice,
 			uid
@@ -49,7 +49,7 @@ const tokenGuard = (req: AuthRequest, res: Response, next) => {
 		createOperationLog(
 			false,
 			"authentication",
-			`User (username: ${uid}) token authentication succeeded.`,
+			`User (uid: ${uid}) token authentication succeeded.`,
 			req.userIP,
 			req.userDevice,
 			uid
@@ -60,7 +60,7 @@ const tokenGuard = (req: AuthRequest, res: Response, next) => {
 		createOperationLog(
 			false,
 			"authentication",
-			`User (username: ${uid}) token authentication failed. Invalid token.`,
+			`User (uid: ${uid}) token authentication failed. Invalid token.`,
 			req.userIP,
 			req.userDevice,
 			uid

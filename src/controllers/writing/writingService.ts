@@ -43,7 +43,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		createOperationLog(
 			true,
 			"ApiCall",
-			`User (ID: ${uid}) writing evaluation service.`,
+			`User (uid: ${uid}) writing evaluation service.`,
 			req.userIP,
 			req.userDevice,
 			uid
@@ -88,7 +88,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		createOperationLog(
 			true,
 			"ApiCall",
-			`Failed to get API response. ${error || "Failed to get response"}`,
+			`User (uid: ${uid}) failed to get API response. ${error || "Failed to get response"}`,
 			req.userIP,
 			req.userDevice,
 			uid
