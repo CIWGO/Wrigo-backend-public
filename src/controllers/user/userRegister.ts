@@ -25,10 +25,10 @@ const register = async (req: Request, res: Response) => {
 
 		const token = generateToken({ id: user.id, username });
 
-		res.status(201).json({ username, token });
+		return res.status(201).json({ username, token });
 	} catch (error) {
 		console.error(error);
-		res.status(500).json({ message: "Failed to register, please retry" });
+		return res.status(500).json({ error: error.message || "Failed to register, please retry" });
 	}
 };
 

@@ -26,7 +26,7 @@ const resetPassword = async (req: Request, res: Response) => {
 		const user = await UserModel.findOne({ username });
 
 		if (!user) {
-			return res.status(404).send({ error: "User not found" });
+			return res.status(404).json({ error: "User not found" });
 		}
 
 		// Generate OTP and save it to user document
@@ -42,7 +42,7 @@ const resetPassword = async (req: Request, res: Response) => {
 			return res.status(401).send({ error: "Invalid OTP" });
 		}
 	} catch (error) {
-		res.status(500).send({ error: error.message || "Failed to reset password" });
+		res.status(500).json({ error: error.message || "Failed to reset password" });
 	}
 };
 
