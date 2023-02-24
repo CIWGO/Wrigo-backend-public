@@ -3,6 +3,8 @@ import EssayInputPage from "./EssayInputPage/EssayInputPage";
 import NavigationPage from "./NavigationPage/NavigationPage";
 import SignUpPage from "./SignUpPage/SignUpPage";
 import LoginPage from "./LoginPage/LoginPage";
+import VerifyEmailPage from "./VerifyEmailPage/VerifyEmailPage";
+import ResetPasswordPage from "./ResetPasswordPage/ResetPasswordPage";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/evaluate" element={<EssayInputPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verifyEmail" element={<VerifyEmailPage />} />
+        <Route path="/resetPassword" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );
