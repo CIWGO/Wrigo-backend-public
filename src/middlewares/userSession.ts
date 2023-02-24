@@ -63,7 +63,7 @@ const tokenGuard = (req: AuthRequest, res: Response, next) => {
 			req.userDevice,
 			uid
 		);
-		return res.status(401).json({ message: "Invalid token" });
+		return res.status(401).json({ error: "Invalid token" });
 	}
 };
 
