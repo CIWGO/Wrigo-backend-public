@@ -1,19 +1,21 @@
 import { Request, Response } from "express";
-import { userAccount as User } from "../../models/index";
-// import { sendOTPViaEmail } from "./index";
-// import { verifyOTP } from "./index";
-//import { changePassword } from "./index";
+import { userAccount as UserModel } from "../../models/index";
+import { changePassword } from "./changePassword";
+import { sendOTPViaEmail, verifyOTP } from "./userOtp";
 
-// Revise import path accordingly if necessary
+interface RequestWithLocals extends Request {
+	locals: {
+		username?: string;
+		password?: string;
+	};
+}
 
 /**
- * Replace the content of this template to the actual comments
- * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
- * if no return, you don't have to add this @return value in comments
- * @source url
+ * Resets the password of a user by verifying the OTP sent to their email.
+ * @param {RequestWithLocals} req The HTTP request object containing the user's email, OTP, and new password.
+ * @param {Response} res The HTTP response object used to send a response to the client.
+ * @return {Promise<void>} A promise that resolves when the password is reset successfully, or rejects with an error if the password reset fails.
+ * @source url： N/A
  */
 
 const resetPassword = async (req: Request, res: Response) => {
@@ -21,34 +23,27 @@ const resetPassword = async (req: Request, res: Response) => {
 
 	try {
 		// Find user in the database
-		const user = await User.findOne({ username });
+		const user = await UserModel.findOne({ username });
 
 		if (!user) {
-			return res.status(404).send({ error: "User not found" });
+			return res.status(404).json({ error: "User not found" });
 		}
 
 		// Generate OTP and save it to user document
-		// 	const OTP = sendOTPViaEmail(email);
+		const OTP = await sendOTPViaEmail(user._id, user.email, req.ip, req.headers["user-agent"]);
 
-		// 	// Save OTP to the user document
-		// 	user.set({ OTP });
-		// 	await user.save();
+		// Verify OTP
+		const isVerified = await verifyOTP(user._id, OTP, req.ip, req.headers["user-agent"]);
 
-		// 	// Send the OTP to the user's email address
-		// 	const msg = `Your OTP for resetting your password is: ${OTP}`;
-		// 	await sendEmail("ciwgo-dev@hotmail.com", email, "Password Reset OTP", msg);
-
-		// 	// Return success response
-		// 	res.send({ message: "OTP sent to your email address" });
-		// sendOTPViaEmail(username);
+		if (isVerified) {
+			// Change password
+			await changePassword(req as RequestWithLocals, res);
+		} else {
+			return res.status(401).send({ error: "Invalid OTP" });
+		}
 	} catch (error) {
-		res.status(500).send({ error: error.message || "Failed to reset password" });
+		res.status(500).json({ error: error.message || "Failed to reset password" });
 	}
-
-	// const verifyOtp = verifyOTP(username, OTP);
-	// if ((await verifyOtp) === true) {
-	// 	//changePassword();
-	// }
 };
 
 export { resetPassword };

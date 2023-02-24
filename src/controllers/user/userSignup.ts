@@ -54,7 +54,7 @@ const createUser = async (req: Request, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(409).send("Username is taken");
+			return res.status(409).json({message: "Username is taken"});
 		}
 	} catch (error) {
 		// create operation log and store it to DB
@@ -68,7 +68,7 @@ const createUser = async (req: Request, res: Response) => {
 		);
 		return res
 			.status(500)
-			.send(error.message || "Failed to sign up, please retry.");
+			.json({error: error.message || "Failed to sign up, please retry."});
 	}
 };
 

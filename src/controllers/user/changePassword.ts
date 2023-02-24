@@ -32,7 +32,7 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(404).send("User not found");
+			return res.status(404).json({error: "User not found"});
 			console.log(user.password); //Is this necessary?
 		}
 
@@ -84,7 +84,7 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 			req.userDevice,
 			uid
 		);
-		return res.status(500).send(error.message || "Error changing password");
+		return res.status(500).json({error:error.message || "Error changing password"});
 	}
 };
 
