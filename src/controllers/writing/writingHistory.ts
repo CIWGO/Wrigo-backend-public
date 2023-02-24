@@ -25,18 +25,25 @@ const logHistory = async (from, to, uid) => {
 
 const viewHistory = async (req:Request, res:Response) => {
 	const {type} = req.body;
-	if (type === "feedback") {
-		const {writing_id} = req.body;
-		res.status(200).json(feedbackHistory(writing_id));
-	} else if (type === "writingHistory"){
-		const {from, to} = req.body;
-		res.status(200).json(writingHistory(from, to));
-	} else if(type === "logHistory") {
-		const {from, to, uid} = req.body;
-		res.status(200).json(logHistory(from, to, uid));
-	} else {
-		res.status(404).json("Input type not supported");
-	}
+    try {
+        if (type === "feedback") {
+            const {writing_id} = req.body;
+            const feedback = feedbackHistory(writing_id)
+            return res.status(200).json(feedback);
+        } else if (type === "writingHistory"){
+            const {from, to} = req.body;
+            const writings = writingHistory(from, to)
+            return res.status(200).json(writings);
+        } else if(type === "logHistory") {
+            const {from, to, uid} = req.body;
+            const logs = logHistory(from, to, uid)
+            return res.status(200).json(logs);
+        } else {
+            return res.status(404).json({error: "Input type not supported"});
+        }   
+    } catch (error) {
+        return res.status(500).json({error: error.message ||"Fail to response"});
+    }
 };
 
 export {viewHistory};
