@@ -11,7 +11,7 @@ import {
 	updateUserProfile,
 } from "./userProfile";
 import { register } from "./userRegister";
-import { tokenGuard } from "./userSession";
+import { tokenGuard } from "../../middlewares/userSession";
 import { createUser } from "./userSignup";
 
 export {

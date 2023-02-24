@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { userAccount as User } from "../../models/index";
 // import { sendOTPViaEmail } from "./index";
-import { verifyOTP } from "./index";
+// import { verifyOTP } from "./index";
 //import { changePassword } from "./index";
 
 // Revise import path accordingly if necessary
@@ -17,7 +17,7 @@ import { verifyOTP } from "./index";
  */
 
 const resetPassword = async (req: Request, res: Response) => {
-	const { username, OTP } = req.body;
+	const { username } = req.body;
 
 	try {
 		// Find user in the database
@@ -42,15 +42,13 @@ const resetPassword = async (req: Request, res: Response) => {
 		// 	res.send({ message: "OTP sent to your email address" });
 		// sendOTPViaEmail(username);
 	} catch (error) {
-		res
-			.status(500)
-			.send({ error: error.message || "Failed to reset password" });
+		res.status(500).send({ error: error.message || "Failed to reset password" });
 	}
 
-	const verifyOtp = verifyOTP(username, OTP);
-	if ((await verifyOtp) === true) {
-		//changePassword();
-	}
+	// const verifyOtp = verifyOTP(username, OTP);
+	// if ((await verifyOtp) === true) {
+	// 	//changePassword();
+	// }
 };
 
 export { resetPassword };

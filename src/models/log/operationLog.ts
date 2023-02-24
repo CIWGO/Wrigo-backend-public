@@ -3,11 +3,13 @@ import { Schema, model } from "mongoose";
 
 export interface OperationLog {
 	log_id: string;
-	uid?: string;
+	uid: string;
 	login_status: boolean;
 	log_time: Date;
-	log_type?: string; // userCreation, authentication, userAction, payment, ApiCall
+	log_type: string; // userCreation, authentication, userAction, payment, ApiCall
 	log_content: string;
+	ip: string;
+	device: string;
 }
 
 const schema: Schema<OperationLog> = new Schema(
@@ -34,9 +36,19 @@ const schema: Schema<OperationLog> = new Schema(
 			type: String,
 			required: true,
 		},
+		ip: {
+			type: String,
+			required: true,
+		},
+		device: {
+			type: String,
+		},
 	},
-	{ collection: "operation_logs" }
+	{ timestamps: true, collection: "operation_logs" }
 );
+
+// any operation log document created using this Schema will be removed from DB (operation_logs model list) automatically after 6 months
+schema.index({ createdAt: 1 }, { expireAfterSeconds: 6 * 30 * 24 * 60 * 60 });
 
 const operationLog = model<OperationLog>("OperationLog", schema);
 
