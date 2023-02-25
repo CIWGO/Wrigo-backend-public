@@ -1,3 +1,4 @@
+import { Response, Request } from "express";
 import { userOTP } from "../../models/index";
 import { sendEmail } from "../../utils/emailNotification";
 import otpGenerator from "otp-generator";
@@ -8,51 +9,41 @@ import { createOperationLog } from "../log/index";
  * validity of OTP is 1 minute. After this, the OTP will be removed from DB
  * @param {string} uid user id
  * @param {string} email email in user account
- * @param {string} userIP req.userIP
- * @param {string} userDevice req.userDevice
  */
-const sendOTPViaEmail = async (uid, email, userIP, userDevice) => {
-	// generate an OTP
-	const OTP = otpGenerator.generate(6, {
-		upperCaseAlphabets: false,
-		specialChars: false,
-	});
-	// find the userOTP using uid, then store otp into the user
-	const userOtp = await userOTP.findOne({ uid }).exec();
-	if (!userOtp) {
-		const userOtp = new userOTP({ uid, OTP });
-		userOtp.save();
-	} else {
-		await userOTP
-			.findOneAndUpdate(
-				{ uid },
-				{
-					$set: {
-						OTP: OTP,
-					},
-				}
-			)
-			.exec();
+const sendOTPViaEmail = async (req: Request, res: Response) => {
+	const { uid, email } = req.body;
+
+	try {
+		// generate an OTP
+		const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+
+		// find the userOTP using uid, then store otp into the user
+		await userOTP.findOneAndUpdate({ uid }, { OTP: otp }, { upsert: true, new: true });
+
+		// send email
+		const emailContent = `Your OTP is ${otp}. This will expire in 1 minute.`;
+		sendEmail(
+			"ciwgo-dev@hotmail.com",
+			email,
+			"CIWGO Email Verification",
+			emailContent
+		);
+
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"authentication",
+			`OTP email sent to user (uid: ${uid}, email: ${email}) successfully.`,
+			req.ip,
+			req.headers["user-agent"],
+			uid
+		);
+
+		res.status(200).json({ message: "OTP sent successfully" });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Something went wrong" });
 	}
-
-	// send email
-	const emailContent = `Your OTP is ${OTP}. This will expire in 1 minute.`;
-	sendEmail(
-		"ciwgo-dev@hotmail.com",
-		email,
-		"CIWGO Email Verification",
-		emailContent
-	);
-
-	// create operation log and store it to DB
-	createOperationLog(
-		true,
-		"authentication",
-		`OTP email sent to user (uid: ${uid}, email: ${email}) successfully.`,
-		userIP,
-		userDevice,
-		uid
-	);
 };
 
 /**
@@ -62,19 +53,34 @@ const sendOTPViaEmail = async (uid, email, userIP, userDevice) => {
  * @return {Promise<boolean>} if user input is the same as the OTP stored in DB, return true
  * Note: the type of this return is Promise, so it should be handled using "then" and "catch" when being used
  */
-const verifyOTP = async (uid, OTP, userIP, userDevice): Promise<boolean> => {
-	const storedOtp = await userOTP.findOne({ uid }).exec();
-	const verificationResult = OTP === storedOtp.OTP;
-	// create operation log and store it to DB
-	createOperationLog(
-		true,
-		"authentication",
-		`User (uid: ${uid}) OTP verification is ${verificationResult}.`,
-		userIP,
-		userDevice,
-		uid
-	);
-	return verificationResult;
+const verifyOTP = async (req: Request, res: Response) : Promise<boolean> => {
+	const { uid, otp } = req.body;
+
+	try {
+		// find OTP from userOTP db
+		const userOtpRecord = await userOTP.findOne({ uid });
+
+		// verify OTP
+		if (userOtpRecord && userOtpRecord.OTP === otp) {
+			// create log when successful
+			const logContent = `Verified OTP for user ${uid}`;
+			await createOperationLog(false, "Verify OTP", logContent, req.ip, req.headers["user-agent"], uid);
+
+			res.status(200).json({ message: "OTP verified successfully" });
+			return true;
+		} else {
+			// create log when failed
+			const logContent = `Invalid OTP for user ${uid}`;
+			await createOperationLog(false, "Verify OTP", logContent, req.ip, req.headers["user-agent"], uid);
+
+			res.status(401).json({ message: "Invalid OTP" });
+			return false;
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Something went wrong" });
+		return false;
+	}
 };
 
 export { sendOTPViaEmail, verifyOTP };
