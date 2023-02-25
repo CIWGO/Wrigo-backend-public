@@ -36,7 +36,7 @@ const deleteUser = async (req: Request, res: Response) => {
 			req.userDevice,
 			uid
 		);
-		return res.status(201).send("User account is deleted.");
+		return res.status(204).json({message: "User account is deleted."});
 	} catch (error) {
 		const uid = req.body.uid;
 		// create operation log and store it to DB
@@ -50,9 +50,9 @@ const deleteUser = async (req: Request, res: Response) => {
 		);
 		return res
 			.status(500)
-			.send(
-				error.message || "Unable to delete your account, please try again."
-			);
+			.json({
+				error: error.message || "Unable to delete your account, please try again."
+			});
 	}
 };
 

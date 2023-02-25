@@ -18,7 +18,7 @@ const extractUsernameAndPassword = (
 		req.locals = { username, password };
 		next();
 	} catch (err) {
-		return res.status(404).json({ message: "Invalid input" });
+		return res.status(400).json({ error: "Invalid input" });
 	}
 };
 
