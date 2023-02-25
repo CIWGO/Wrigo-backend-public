@@ -7,11 +7,11 @@
             "GRA":0.0
         },
         "feedback": {
-            "TR":[],
-            "CC":[],
-            "LR":[],
-            "GRA":[],
-            "Overall":[]
+            "TR":"",
+            "CC":"",
+            "LR":"",
+            "GRA":"",
+            "Overall":""
         }
     }
 }
