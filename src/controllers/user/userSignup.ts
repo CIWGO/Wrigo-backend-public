@@ -4,7 +4,7 @@ import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { createOperationLog } from "../log/index";
-
+import { createUserProfile } from "../index";
 // Revise import path accordingly if necessary
 
 /**
@@ -34,6 +34,8 @@ const createUser = async (req: Request, res: Response) => {
 
 		if (!isExist) {
 			await user.save();
+			//create new userProfile
+			await createUserProfile(uid,username);
 			// create operation log and store it to DB
 			createOperationLog(
 				false,

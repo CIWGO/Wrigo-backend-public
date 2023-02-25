@@ -1,7 +1,7 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
 import { generateToken } from "../../utils/jwt";
-import { LocalStorage } from "node-localstorage";
+// import { LocalStorage } from "node-localstorage";
 import { createOperationLog } from "../log/index";
 
 /**
@@ -84,12 +84,13 @@ const login = async (req: Request, res: Response) => {
 		// generate a token, the token is generate based on username
 		const payload = { username: user.username, uid: user.uid };
 		const token = generateToken(payload);
-		const localStorage = new LocalStorage("./local-storage");
-		// Store token in localStorage
-		localStorage.setItem("token", token);
-		localStorage.setItem("username", username);
-		localStorage.setItem("uid", user.uid);
-
+		// const localStorage = new LocalStorage("./local-storage");
+		// // Store token in localStorage
+		// localStorage.setItem("token", token);
+		// localStorage.setItem("username", username);
+		// localStorage.setItem("uid", user.uid);
+		const userlog={token:token,username:username,uid:user.uid};
+		console.log(user.uid);
 		// create operation log and store it to DB
 		createOperationLog(
 			false,
@@ -99,7 +100,7 @@ const login = async (req: Request, res: Response) => {
 			req.userDevice,
 			uid
 		);
-		return res.status(200).json({ message: "Login successful", token });
+		return res.status(200).json({ message: "Login successful", ...userlog });
 	} catch (error) {
 		const uid = req.body.uid;
 		// create operation log and store it to DB

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { BrowserRouter, Link } from 'react-router-dom';
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +19,9 @@ function Login() {
       // login success
       localStorage.setItem("token", data.token); // store the token in localStorage
       localStorage.setItem("uid", data.uid); // store the uid in localStorage
-      localStorage.setItem("username", data.username); // store the username in localStorage
+      localStorage.setItem("username", data.username);
+      const dat=localStorage.getItem("uid");
+      console.log(dat); // store the username in localStorage
       alert("Login successful!");
     } else if (response.status === 401) {
       // unverified email
@@ -48,7 +50,9 @@ function Login() {
           onChange={(event) => setPassword(event.target.value)}
         />
       </label>
+      <Link to="/userProfile">
       <button type="submit">Login</button>
+      </Link>
     </form>
   );
 }
