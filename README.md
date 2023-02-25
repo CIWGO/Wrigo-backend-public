@@ -64,6 +64,12 @@ npm run dev
 control + c
 ```
 
+### ESLint fix
+
+```
+npm run lint -- --fix
+```
+
 ## Run as Docker (Need .env as well)
 
 - Build image:
