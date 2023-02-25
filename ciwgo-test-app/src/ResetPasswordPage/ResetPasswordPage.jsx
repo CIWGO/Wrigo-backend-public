@@ -1,9 +1,18 @@
+import { useState } from "react";
+
 function ResetPassword() {
+  const [password, setPassword] = useState("");
+
   return (
-    <form action="">
+    <form>
       <label>
         New password:
-        <input type="password" required />
+        <input
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          required
+        />
       </label>
       <br />
       <label>
