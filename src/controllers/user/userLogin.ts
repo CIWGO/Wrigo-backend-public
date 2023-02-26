@@ -90,7 +90,6 @@ const login = async (req: Request, res: Response) => {
 		// localStorage.setItem("username", username);
 		// localStorage.setItem("uid", user.uid);
 		const userlog={token:token,username:username,uid:user.uid};
-		console.log(user.uid);
 		// create operation log and store it to DB
 		createOperationLog(
 			false,

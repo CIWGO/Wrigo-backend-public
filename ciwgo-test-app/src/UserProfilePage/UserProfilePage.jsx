@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import "./UserProfilePage.css";
 function UserProfile() {
   const [users, setUsers] = useState([]);
-  // const [uid, setuid] = useState('');
-  
-  // const handleuidChange = (event) => {
-  //   setuid(event.target.value);
-  // }
-  
+
   const fetchUsers = () => {
     // eslint-disable-next-line no-unused-expressions
-    // const dat=localStorage.getItem("uid")
-    // console.log(dat)
     const uid = localStorage.getItem("uid");
     axios.post('http://localhost:3005/users/getUserProfile',
   {uid} 
@@ -35,12 +28,7 @@ function UserProfile() {
   
   return (
     <div className='container'>
-      {/* <input
-        className='search_input'
-          type="text"
-          value={uid}
-          onChange={handleuidChange}
-        /> */}
+
       <button onClick={fetchUsers} >
         {'get user profile by uid'}
       </button>

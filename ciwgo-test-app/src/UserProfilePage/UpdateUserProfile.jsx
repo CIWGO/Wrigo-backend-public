@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
-
 import"./UpdateUserProfile.css"
 function UpdateUserProfile() {
   const [birth, setBirthday] = useState('');
@@ -16,7 +15,6 @@ function UpdateUserProfile() {
     birth,gender,country,study_field
     })
     .then((response) => {
-      console.log(response.data);
       navigate('/userProfile');
     })
     .catch((error) => {
@@ -28,14 +26,7 @@ function UpdateUserProfile() {
     <div className="container">
       <h1 className="heading">user profile</h1>
       <form onSubmit={handleFormSubmit}>
-      {/* <label>
-        uid:
-        <input
-          type="text"
-          value={uid}
-          onChange={(event) => setUid(event.target.value)}
-        />
-      </label>  */}
+
       <label>
         Birthday:
         <input
@@ -76,8 +67,7 @@ function UpdateUserProfile() {
         </label>
         
         <button type="submit">Submit</button>
-        {/* <Link to="/userProfile">
-        </Link> */}
+
       </form>
       </div>
   );
