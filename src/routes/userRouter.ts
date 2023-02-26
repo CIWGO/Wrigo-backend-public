@@ -3,11 +3,12 @@ import {
 	createUser,
 	login,
 	changePassword,
-	resetPassword,
 	deleteUser,
 	createUserProfile,
 	showUserProfile,
 	updateUserProfile,
+	sendOTPViaEmail,
+	verifyOTP,
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -29,7 +30,11 @@ userRouter.get("/userProfile", tokenGuard, showUserProfile);
 // delete
 
 // patch
-userRouter.patch("/resetPassword", resetPassword);
+
+// reset password: /resetPassword/sendOTPViaEmail-->/resetPassword/verifyOTP-->changePassword
+userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
+userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+
 userRouter.patch(
 	"/changePassword",
 	tokenGuard,

@@ -138,13 +138,13 @@ Ciwgo123
 ## Error Handling
 
 Status Code:
-400(Bad Request): The request could not be understood or was missing required parameters
-401(Unauthorized): Authentication failed or user does not have permissions for the requested operation
-403(Forbidden): Access denied
-404(Not Found): Resource was not found
-405(Method Not Allowed): Requested method is not supported for the specified resource
-409(Conflict): Request could not be completed due to a conflict with the current state of the resource
-500(Internal Server Error): An error occurred on the server side while processing the request.
+- 400(Bad Request): The request could not be understood or was missing required parameters
+- 401(Unauthorized): Authentication failed or user does not have permissions for the requested operation
+- 403(Forbidden): Access denied
+- 404(Not Found): Resource was not found
+- 405(Method Not Allowed): Requested method is not supported for the specified resource
+- 409(Conflict): Request could not be completed due to a conflict with the current state of the resource
+- 500(Internal Server Error): An error occurred on the server side while processing the request.
 
 ## Version History
 

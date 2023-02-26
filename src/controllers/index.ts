@@ -2,7 +2,6 @@
 
 import {
 	changePassword,
-	resetPassword,
 	deleteUser,
 	login,
 	sendOTPViaEmail,
@@ -21,7 +20,6 @@ import { createOperationLog, findOperationLogByType, findOperationLogByUid } fro
 
 export {
 	changePassword,
-	resetPassword,
 	deleteUser,
 	login,
 	sendOTPViaEmail,
