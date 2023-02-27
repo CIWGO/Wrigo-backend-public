@@ -82,7 +82,11 @@ const login = async (req: Request, res: Response) => {
 		}
 
 		// generate a token, the token is generate based on username
-		const payload = { username: user.username, uid: user.uid };
+		const payload = {
+			username: user.username,
+			uid: user.uid,
+			email: user.email,
+		};
 		const token = generateToken(payload);
 		// const localStorage = new LocalStorage("./local-storage");
 		// // Store token in localStorage

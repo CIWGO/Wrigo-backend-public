@@ -5,6 +5,7 @@ import axios from "axios";
 import { generatePrompt } from "./promptOperation";
 import { v4 as uuidv4 } from "uuid";
 import { createOperationLog } from "../log/index";
+import { feedbackOperation } from "./feedbackOperation";
 
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
@@ -26,7 +27,8 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		});
 
 		const writingDoc = new WritingModel({
-			uid: uuidv4(),
+			uid: req.body.uid,
+			writing_id: uuidv4(),
 			create_time: "1970-01-01", // this date will be changed later with other tickets
 			isSubmitted: true,
 			submit_time: new Date(Date.now()),
@@ -65,19 +67,11 @@ const evaluateWriting = async (req: Request, res: Response) => {
 					parse json
 					store it in DB
 					then return it to user (postman)*/
-			const comment = JSON.parse(response.data.choices[0].text);
 
 			// find writingDoc and update the comment received from API
-			WritingModel.findOneAndUpdate(
-				{ uid: writingDoc.uid },
-				{
-					feedback_id: uuidv4(),
-					feedback: comment.feedback,
-					score: comment.Scores,
-				}
-			);
+			feedbackOperation(response, writingDoc.writing_id);
 
-			return res.status(200).json(comment);
+			return res.status(200).json(JSON.parse(response.data.choices[0].text));
 		});
 	} catch (error) {
 		const uid = req.body.uid;
