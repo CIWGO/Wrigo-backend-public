@@ -9,6 +9,7 @@ export interface UserProfile {
 	gender?: string;
 	birth?: Date;
 	country?: string;
+	study_field?: string;
 }
 
 const schema: Schema<UserProfile> = new Schema(
@@ -18,12 +19,17 @@ const schema: Schema<UserProfile> = new Schema(
 			required: true,
 			unique: true,
 		},
+		username: {
+			type: String,
+			reqired: false,
+			unique:true,
+		},
 		avatar: {
 			type: String,
 		},
 		signup_date: {
 			type: Date,
-			required: true,
+			required: false,
 		},
 		gender: {
 			type: String,
@@ -34,6 +40,9 @@ const schema: Schema<UserProfile> = new Schema(
 		country: {
 			type: String,
 		},
+		study_field: {
+			type: String,
+		}
 	},
 	{ collection: "user_profiles" }
 );

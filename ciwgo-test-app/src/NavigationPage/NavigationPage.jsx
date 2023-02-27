@@ -14,6 +14,12 @@ function NavigationPage() {
         <a href="/login" className="link">
           login page
         </a>
+        <a href="/userProfile" className="link">
+        userProfile page
+        </a>
+        <a href="/updateUserProfile" className="link">
+        update UserProfile page
+        </a>
       </header>
     </div>
   );

@@ -5,6 +5,8 @@ import SignUpPage from "./SignUpPage/SignUpPage";
 import LoginPage from "./LoginPage/LoginPage";
 import VerifyEmailPage from "./VerifyEmailPage/VerifyEmailPage";
 import ChangePassword from "./ChangePasswordPage/ChangePasswordPage";
+import UpdateUserProfile from "./UserProfilePage/UpdateUserProfile";
+import UserProfile from "./UserProfilePage/UserProfilePage";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/verifyEmail" element={<VerifyEmailPage />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/UserProfile" element={<UserProfile />} />
+        <Route path="/UpdateUserProfile" element={<UpdateUserProfile />} />
       </Routes>
     </BrowserRouter>
   );

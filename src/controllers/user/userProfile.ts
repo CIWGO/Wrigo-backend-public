@@ -1,4 +1,4 @@
-import { userAccount as UserModel } from "../../models/index";
+import { userProfile as UserModel } from "../../models/index";
 import { Response, Request } from "express";
 import { createOperationLog } from "../log/index";
 
@@ -10,18 +10,17 @@ import { createOperationLog } from "../log/index";
 /**
  * Replace the content of this template to the actual comments
  * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
+ * @param {string} uid Uid is the request body for crud requests.
+ * @return {json} user User data are returned by 3 crud functions,which contains the date from user profile. 
  * if no return, you don't have to add this @return value in comments
  * @source url
  */
 
 const showUserProfile = async (req: Request, res: Response) => {
-	const { uid, username } = req.params;
+	const { uid } = req.body;
 
 	try {
-		const user = await UserModel.findOne({ username }).exec();
+		const user = await UserModel.findOne({ uid }).exec();
 		if (!user) {
 			{
 				// create operation log and store it to DB
@@ -53,64 +52,37 @@ const showUserProfile = async (req: Request, res: Response) => {
 	}
 };
 
-const createUserProfile = async (req: Request, res: Response) => {
-	const { uid, username } = req.params;
-	const { email, country, gender, birthday } = req.body;
-
+const createUserProfile = async (uid, username) => {
 	try {
-		const user = await UserModel.findOneAndUpdate(
-			{ username },
-			{ $push: { userProfile: { email, country, gender, birthday } } },
-			{ new: true }
-		).exec();
-
-		if (!user) {
-			{
-				// create operation log and store it to DB
-				createOperationLog(
-					true,
-					"userAction",
-					`User (uid: ${uid}) failed to create profile. User not found.`,
-					req.userIP,
-					req.userDevice,
-					uid
-				);
-				return res.status(404).json({ error: "User not found" });
-			}
+		const user = await UserModel.findOne({ uid });
+		if (user) {
+			throw new Error("User already exists");
 		} else {
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"userAction",
-				`User (uid: ${uid}) created profile successfully.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
-			return res.status(201).json(user);
+			
+			const newUser = new UserModel({ uid, username, country: "", birth: undefined, gender: "", study_field: "" });
+			await newUser.save();
+			return newUser;
 		}
+
+
 	} catch (error) {
-		console.error(error);
-		return res.status(500).json({error: error.message ||"Failed to create user profile, please try again."});
+		throw new Error(error.message || "Failed to create user profile");
 	}
+	
 };
 
 const updateUserProfile = async (req: Request, res: Response) => {
-	const { uid, username } = req.params;
-	const { email, country, gender, birthday } = req.body;
+	const {uid, country, birth, gender, study_field } = req.body;
 
 	try {
 		const user = await UserModel.findOneAndUpdate(
-			{ username },
+			{ uid },
 			{
 				$set: {
-					email: email,
-					country: country,
-					gender: gender,
-					birth: birthday,
+					country,gender,birth,study_field
 				},
 			},
-			{ new: true }
+			{ upsert: true, new: true },
 		).exec();
 
 		if (!user) {

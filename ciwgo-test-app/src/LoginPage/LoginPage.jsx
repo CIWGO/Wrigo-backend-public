@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate  } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate ();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,14 +15,16 @@ function Login() {
       },
       body: JSON.stringify({ username, password }),
     });
-    console.log(response);
     if (response.ok) {
+      
       const data = await response.json();
       // login success
       localStorage.setItem("token", data.token); // store the token in localStorage
       localStorage.setItem("uid", data.uid); // store the uid in localStorage
       localStorage.setItem("username", data.username); // store the username in localStorage
       alert("Login successful!");
+      navigate('/userProfile');
+
     } else if (response.status === 401) {
       // unverified email
       alert("unverified email");

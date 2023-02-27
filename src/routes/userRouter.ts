@@ -25,7 +25,7 @@ userRouter.post("/userDelete", tokenGuard, deleteUser);
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
 // get
-userRouter.get("/userProfile", tokenGuard, showUserProfile);
+userRouter.post("/getUserProfile", tokenGuard,showUserProfile);
 
 // delete
 
