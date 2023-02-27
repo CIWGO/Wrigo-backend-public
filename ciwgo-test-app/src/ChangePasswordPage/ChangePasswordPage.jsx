@@ -23,8 +23,8 @@ function ChangePassword() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        uid: "45f23e97-7ab4-4c33-ba44-c1361f878d91",
-        username: "chang019",
+        uid: "45f23e97-7ab4-4c33-ba44-c1361f878d91", // temporarily use my own id
+        username: "chang019", // temporarily use my own username
         password: password,
       }),
     });
