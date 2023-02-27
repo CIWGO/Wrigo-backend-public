@@ -144,6 +144,7 @@ Ciwgo123
 ## Error Handling
 
 Status Code:
+
 - 400(Bad Request): The request could not be understood or was missing required parameters
 - 401(Unauthorized): Authentication failed or user does not have permissions for the requested operation
 - 403(Forbidden): Access denied

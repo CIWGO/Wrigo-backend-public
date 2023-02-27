@@ -1,8 +1,11 @@
 import { userAccount as UserModel } from "../../models/index";
 import { Request, Response } from "express";
-import { sendEmail } from "../../utils/emailNotification";
+// import { sendEmail } from "../../utils/emailNotification";
 import bcrypt from "bcrypt";
 import { createOperationLog } from "../log/index";
+// import config from "../../../config";
+
+// const TEST_EMAIL = config.TEST_EMAIL;
 
 interface RequestWithLocals extends Request {
 	locals: {
@@ -32,12 +35,11 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(404).json({error: "User not found"});
-			console.log(user.password); //Is this necessary?
+			return res.status(404).json({ error: "User not found" });
 		}
 
 		const newPassword = await hashPasswordWithReturn(password);
-		const email = user.email;
+		// const email = user.email;
 		const result = await UserModel.updateOne(
 			{ username },
 			{ $set: { password: newPassword } }
@@ -58,8 +60,10 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 				.status(404)
 				.json({ error: "Error in changing password, Password not modified." });
 		} else {
-			const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
-			sendEmail("ciwgo-dev@hotmail.com", email, "Password Changed", msg);
+			// temporarily commented (too many emails sent will lock the account)
+			// const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
+			// sendEmail(TEST_EMAIL, email, "Password Changed", msg);
+
 			// create operation log and store it to DB
 			createOperationLog(
 				true,
@@ -77,14 +81,13 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 		createOperationLog(
 			true,
 			"userAction",
-			`User (uid: ${uid}) failed to change password. ${
-				error.message || "Error changing password"
+			`User (uid: ${uid}) failed to change password. ${error.message || "Error changing password"
 			}`,
 			req.userIP,
 			req.userDevice,
 			uid
 		);
-		return res.status(500).json({error:error.message || "Error changing password"});
+		return res.status(500).json({ error: error.message || "Error changing password" });
 	}
 };
 
