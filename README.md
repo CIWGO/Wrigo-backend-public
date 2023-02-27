@@ -141,11 +141,6 @@ ciwgo-test@hotmail.com
 Ciwgo123
 ```
 
-```
-neverlocked666@proton.me
-Ciwgo123
-```
-
 ## Error Handling
 
 Status Code:
