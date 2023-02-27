@@ -18,11 +18,11 @@ const schema: Schema<UserOTP> = new Schema(
 			required: true,
 		},
 	},
-	{ timestamps: true, collection: "user_OTPs" }
+	{ collection: "user_OTPs" }
 );
 
 // any OTP created using this Schema will be removed from DB (user_OTPs model list) automatically after 1 minute
-schema.index({ createdAt: 1 }, { expireAfterSeconds: 60 });
+// schema.index({ createdAt: 1 }, { expireAfterSeconds: 60 });
 
 const userOTP = model<UserOTP>("UserOTP", schema);
 
