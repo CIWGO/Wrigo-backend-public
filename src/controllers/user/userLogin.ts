@@ -87,12 +87,9 @@ const login = async (req: Request, res: Response) => {
 			uid: user.uid,
 			email: user.email,
 		};
+		
 		const token = generateToken(payload);
-		// const localStorage = new LocalStorage("./local-storage");
-		// // Store token in localStorage
-		// localStorage.setItem("token", token);
-		// localStorage.setItem("username", username);
-		// localStorage.setItem("uid", user.uid);
+
 		const userlog={token:token,username:username,uid:user.uid};
 		// create operation log and store it to DB
 		createOperationLog(

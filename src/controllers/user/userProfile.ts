@@ -10,9 +10,8 @@ import { createOperationLog } from "../log/index";
 /**
  * Replace the content of this template to the actual comments
  * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
+ * @param {string} uid Uid is the request body for crud requests.
+ * @return {json} user User data are returned by 3 crud functions,which contains the date from user profile. 
  * if no return, you don't have to add this @return value in comments
  * @source url
  */

@@ -23,7 +23,6 @@ userRouter.post("/userDelete", tokenGuard, deleteUser);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
-// userRouter.put("/userProfile", updateUserProfile);
 
 // get
 userRouter.post("/getUserProfile", tokenGuard,showUserProfile);
