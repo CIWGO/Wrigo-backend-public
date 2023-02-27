@@ -9,8 +9,9 @@ function UserProfile() {
   const fetchUsers = () => {
     // eslint-disable-next-line no-unused-expressions
     const uid = localStorage.getItem("uid");
+    const token = localStorage.getItem("token");
     axios.post('http://localhost:3005/users/getUserProfile',
-  {uid} 
+  {uid,token} 
     )
       .then(response => {
         const dateString = response.data.user.birth===undefined ?  "": new Date(response.data.user.birth).toISOString().substr(0, 10);

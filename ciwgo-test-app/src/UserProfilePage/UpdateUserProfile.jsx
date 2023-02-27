@@ -11,7 +11,8 @@ function UpdateUserProfile() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const uid = localStorage.getItem("uid");
-    axios.put('http://localhost:3005/users/userProfile', {uid,
+    const token = localStorage.getItem("token");
+    axios.put('http://localhost:3005/users/userProfile', {uid,token,
     birth,gender,country,study_field
     })
     .then((response) => {

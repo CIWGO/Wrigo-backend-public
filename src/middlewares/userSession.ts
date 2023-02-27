@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { validateToken } from "../utils/jwt";
-import { LocalStorage } from "node-localstorage";
 import { createOperationLog } from "../controllers/index";
 
 /**
@@ -21,10 +20,9 @@ interface AuthRequest extends Request {
 // call this middleware for functions that need to be protected by user login token
 const tokenGuard = (req: AuthRequest, res: Response, next) => {
 	const uid = req.body.uid;
-	// get the token from localStorage
-	const localStorage = new LocalStorage("./local-storage");
-	const authorization = localStorage.getItem("token");
-
+	// get the token from req.body
+	const authorization = req.body.token;
+	
 	// check if there is a token
 	if (!authorization) {
 		// create operation log and store it to DB
