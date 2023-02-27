@@ -109,8 +109,7 @@ const login = async (req: Request, res: Response) => {
 		createOperationLog(
 			false,
 			"authentication",
-			`User (uid: ${uid}) failed to log in. ${
-				error.message || "Server error"
+			`User (uid: ${uid}) failed to log in. ${error.message || "Server error"
 			}.`,
 			req.userIP,
 			req.userDevice,

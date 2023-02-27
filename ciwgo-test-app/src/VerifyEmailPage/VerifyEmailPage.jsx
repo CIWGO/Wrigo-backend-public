@@ -24,8 +24,8 @@ function VerifyEmail() {
     );
 
     if (response.ok) {
-      alert("Successful verification. Redirecting...");
-      navigate("/resetPassword");
+      alert("Successful verification. Redirecting to change password page...");
+      navigate("/changePassword");
     } else if (response.status === 401) {
       alert("Invalid code");
     } else {
@@ -64,7 +64,7 @@ function VerifyEmail() {
       }
     );
     if (emailResponse.ok) {
-      alert("send email successful!");
+      alert("send email successful! Check your mailbox for the code!");
     } else if (emailResponse.status === 500) {
       alert("send fail 500 (Something went wrong)");
     } else {

@@ -4,7 +4,7 @@ import NavigationPage from "./NavigationPage/NavigationPage";
 import SignUpPage from "./SignUpPage/SignUpPage";
 import LoginPage from "./LoginPage/LoginPage";
 import VerifyEmailPage from "./VerifyEmailPage/VerifyEmailPage";
-import ResetPasswordPage from "./ResetPasswordPage/ResetPasswordPage";
+import ChangePassword from "./ChangePasswordPage/ChangePasswordPage";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/verifyEmail" element={<VerifyEmailPage />} />
-        <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
       </Routes>
     </BrowserRouter>
   );

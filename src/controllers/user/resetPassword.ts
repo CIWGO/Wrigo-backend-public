@@ -30,10 +30,10 @@ const resetPassword = async (req: Request, res: Response) => {
 		}
 
 		// Generate OTP and save it to user document
-		const OTP = await sendOTPViaEmail(user._id, user.email, req.userIP, req.userDevice);
+		// const OTP = await sendOTPViaEmail(req, res);
 
 		// Verify OTP
-		const isVerified = await verifyOTP(user._id, OTP, req.userIP, req.userDevice);
+		const isVerified = await verifyOTP(req, res);
 
 		if (isVerified) {
 			// Change password

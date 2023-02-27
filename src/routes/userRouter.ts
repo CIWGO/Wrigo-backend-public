@@ -34,6 +34,7 @@ userRouter.get("/userProfile", tokenGuard, showUserProfile);
 // reset password: /resetPassword/sendOTPViaEmail-->/resetPassword/verifyOTP-->changePassword
 userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
 userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+userRouter.post("/changePassword", changePassword);
 
 userRouter.patch(
 	"/changePassword",
