@@ -41,23 +41,23 @@ const resetPassword = async (req: Request, res: Response) => {
 			await changePassword(req as RequestWithLocals, res);
 			// create operation log and store it to DB
 			createOperationLog(
-                true,
-                "userAction",
-                `User (uid: ${uid}) password changed successfully.`,
-                req.userIP,
-                req.userDevice,
-                uid
-            );
+				true,
+				"userAction",
+				`User (uid: ${uid}) password changed successfully.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 		} else {
 			// create operation log and store it to DB
 			createOperationLog(
-                true,
-                "userAction",
-                `User (uid: ${uid}) OTP verification failed when resetting password.`,
-                req.userIP,
-                req.userDevice,
-                uid
-            );
+				true,
+				"userAction",
+				`User (uid: ${uid}) OTP verification failed when resetting password.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 			return res.status(401).send({ error: "Invalid OTP" });
 		}
 	} catch (error) {

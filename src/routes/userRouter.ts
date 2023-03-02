@@ -3,6 +3,7 @@ import {
 	createUser,
 	login,
 	changePassword,
+	changeEmail,
 	deleteUser,
 	createUserProfile,
 	showUserProfile,
@@ -20,27 +21,28 @@ userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
+userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
+userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+userRouter.post("/changePassword", changePassword);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
+
 // get
-userRouter.post("/getUserProfile", tokenGuard,showUserProfile);
+userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 
 // delete
 
 // patch
 
 // reset password: /resetPassword/sendOTPViaEmail-->/resetPassword/verifyOTP-->changePassword
-userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
-userRouter.post("/resetPassword/verifyOTP", verifyOTP);
-userRouter.post("/changePassword", changePassword);
-
 userRouter.patch(
 	"/changePassword",
 	tokenGuard,
 	extractUsernameAndPassword,
 	changePassword
 );
+userRouter.patch("/changeEmail", changeEmail);
 
 export { userRouter };
