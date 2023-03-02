@@ -14,7 +14,7 @@ import {
 	createUser,
 } from "./user/index";
 
-import { evaluateWriting } from "./writing/index";
+import { evaluateWriting, viewHistory } from "./writing/index";
 
 import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
 
@@ -33,5 +33,6 @@ export {
 	evaluateWriting,
 	createOperationLog,
 	findOperationLogByType,
-	findOperationLogByUid
+	findOperationLogByUid,
+	viewHistory
 };
