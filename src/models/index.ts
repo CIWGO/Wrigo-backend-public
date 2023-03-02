@@ -10,7 +10,6 @@ import userPayment from "./payment/userPayment";
 import userAccount from "./user/userAccount";
 import userOTP from "./user/userOTP";
 import userProfile from "./user/userProfile";
-import userJWT from "./user/userJWT";
 
 export {
 	topic,
@@ -22,7 +21,6 @@ export {
 	userAccount,
 	userOTP,
 	userProfile,
-	userJWT,
 };
 
 /* when you want to import into other folder/modules,
