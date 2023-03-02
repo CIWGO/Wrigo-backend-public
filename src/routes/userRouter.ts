@@ -10,6 +10,7 @@ import {
 	updateUserProfile,
 	sendOTPViaEmail,
 	verifyOTP,
+	viewHistory,
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -31,6 +32,7 @@ userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
 // get
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
+userRouter.post("/viewHistory", viewHistory);
 
 // delete
 
