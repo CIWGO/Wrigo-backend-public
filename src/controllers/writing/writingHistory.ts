@@ -10,13 +10,13 @@ sorted by timestamp, from recent to oldest
 //Given writing_id will get all its feedbacks, sorted by timestamp
 const feedbackHistory = async (writing_id) => {
 	const feedback =  await FeedbackModel.find({writing_id}).sort({created_time:-1}).exec();
-	return feedback
+	return feedback;
 };
 
 //Given time period, will get all writing but not containing any feedback
 const writingHistory = async (from, to, uid) => {
-	const writingHistory = await WritingModel.find({uid, submit_time:{$gte:from, $lte:to}}).sort({submit_time:-1}).exec();;
-	return writingHistory
+	const writingHistory = await WritingModel.find({uid, submit_time:{$gte:from, $lte:to}}).sort({submit_time:-1}).exec();
+	return writingHistory;
 };
 
 // Given time period, will get all log history
@@ -72,7 +72,7 @@ const viewHistory = async (req:Request, res:Response) => {
 			createOperationLog(
 				false,
 				"getHistory",
-				`Get history failed. Input type not supported`,
+				"Get history failed. Input type not supported",
 				req.userIP,
 				req.userDevice,
 				uid
