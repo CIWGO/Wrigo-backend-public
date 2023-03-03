@@ -57,10 +57,10 @@ const evaluateWriting = async (req: Request, res: Response) => {
 				Authorization: `Bearer ${apiKey}`,
 			},
 			data: {
-				model: "text-davinci-003",
-				prompt: prompt,
-				temperature: 0.2,
-				max_tokens: 1000,
+				model: "gpt-3.5-turbo",
+				messages: prompt,
+				temperature: 1.5,
+				max_tokens: 2000,
 			},
 		}).then((response) => {
 			/* if response achieved
@@ -71,7 +71,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			// find writingDoc and update the comment received from API
 			feedbackOperation(response, writingDoc.writing_id);
 
-			return res.status(200).json(JSON.parse(response.data.choices[0].text));
+			return res.status(200).json(JSON.parse(response.data.choices[0].message.content));
 		});
 	} catch (error) {
 		const uid = req.body.uid;
