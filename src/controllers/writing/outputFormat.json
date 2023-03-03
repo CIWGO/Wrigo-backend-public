@@ -1,10 +1,10 @@
 {
     "evaluateOutputFormat": {
         "scores": {
-            "TR":0.0,
-            "CC":0.0,
-            "LR":0.0,
-            "GRA":0.0
+            "TaskResponse":0.0,
+            "CoherenceAndCohesion":0.0,
+            "LexicalResource":0.0,
+            "GrammarRangeAndAccuracy":0.0
         },
         "feedback": {
             "TR":"",
