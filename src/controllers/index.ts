@@ -12,6 +12,7 @@ import {
 	register,
 	tokenGuard,
 	createUser,
+	changeEmail
 } from "./user/index";
 
 import { evaluateWriting, viewHistory } from "./writing/index";
@@ -30,6 +31,7 @@ export {
 	register,
 	tokenGuard,
 	createUser,
+	changeEmail,
 	evaluateWriting,
 	createOperationLog,
 	findOperationLogByType,
