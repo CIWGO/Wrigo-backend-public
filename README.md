@@ -116,7 +116,7 @@ Create a file named .env under project root folder and paste the following into 
 PORT = 3005
 CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
 CIW_COLLECTION_NAME = "CIWGO"
-OPENAI_APIURL = "https://api.openai.com/v1/completions"
+OPENAI_APIURL = "https://api.openai.com/v1/chat/completions"
 OPENAI_APIKEY = "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"
 JWT_SECRET = "yoursecretkey"
 TEST_EMAIL = "ciwgo-dev@hotmail.com"

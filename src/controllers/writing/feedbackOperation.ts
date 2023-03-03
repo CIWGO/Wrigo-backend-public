@@ -10,7 +10,7 @@ import { feedback as FeedbackModel } from "../../models";
  */
 
 const feedbackOperation = (response:any, writing_id: string) => {
-	const evaluateOutput = JSON.parse(response.data.choices[0].text);
+	const evaluateOutput = JSON.parse(response.data.choices[0].message.content);
 	const feedbackDoc = new FeedbackModel({
 		feedback_id: uuidv4(),
 		writing_id: writing_id,
@@ -20,10 +20,10 @@ const feedbackOperation = (response:any, writing_id: string) => {
 		feedback_LR: evaluateOutput.feedback.LR,
 		feedback_GRA: evaluateOutput.feedback.GRA,
 		feedback_overall: evaluateOutput.feedback.Overall,
-		score_TR: evaluateOutput.scores.TR,
-		score_CC: evaluateOutput.scores.CC,
-		score_LR: evaluateOutput.scores.LR,
-		score_GRA: evaluateOutput.scores.GRA,
+		score_TR: evaluateOutput.scores.TaskResponse,
+		score_CC: evaluateOutput.scores.CoherenceAndCohesion,
+		score_LR: evaluateOutput.scores.LexicalResource,
+		score_GRA: evaluateOutput.scores.GrammarRangeAndAccuracy,
 	});
 
 	feedbackDoc.save();
