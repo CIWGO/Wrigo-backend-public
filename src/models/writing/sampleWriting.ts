@@ -3,8 +3,9 @@ import { Schema, model } from "mongoose";
 
 export interface SampleWriting {
 	topic_id: string;
-	writing_id: string;
-	feedback_id: string;
+	sampleWriting_id: string;
+	sampleWriting_content: string;
+	sampleWriting_feedback: string;
 }
 
 const schema = new Schema<SampleWriting>(
@@ -14,12 +15,17 @@ const schema = new Schema<SampleWriting>(
 			required: true,
 			unique: true,
 		},
-		writing_id: {
+		sampleWriting_id: {
 			type: String,
 			required: true,
 			unique: true,
 		},
-		feedback_id: {
+		sampleWriting_content: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		sampleWriting_feedback: {
 			type: String,
 			required: true,
 			unique: true,
