@@ -12,6 +12,7 @@ import {
 import { register } from "./userRegister";
 import { tokenGuard } from "../../middlewares/userSession";
 import { createUser } from "./userSignup";
+import { changeEmail } from "./changeEmail";
 
 export {
 	changePassword,
@@ -25,4 +26,5 @@ export {
 	register,
 	tokenGuard,
 	createUser,
+	changeEmail
 };

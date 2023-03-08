@@ -1,11 +1,10 @@
-import { topic as TopicModel, writing as WritingModel } from "../../models";
 import { Request, Response } from "express";
 import config from "../../../config";
 import axios from "axios";
 import { generatePrompt } from "./promptOperation";
-import { v4 as uuidv4 } from "uuid";
 import { createOperationLog } from "../log/index";
 import { feedbackOperation } from "./feedbackOperation";
+import { writingOperation } from "./writingOperation";
 
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
@@ -18,35 +17,11 @@ const apiKey = config.OPENAI_APIKEY;
  */
 const evaluateWriting = async (req: Request, res: Response) => {
 	try {
-		const { uid, topic, content } = req.body;
+		const { uid } = req.body;
 		const prompt = generatePrompt(req); // generate a prompt for evaluation
 
-		const topicDoc = new TopicModel({
-			topic_id: uuidv4(),
-			topic_content: topic,
-		});
-
-		const writingDoc = new WritingModel({
-			uid: req.body.uid,
-			writing_id: uuidv4(),
-			create_time: "1970-01-01", // this date will be changed later with other tickets
-			isSubmitted: true,
-			submit_time: new Date(Date.now()),
-			task_topic: topic,
-			writing_content: content,
-		});
-
-		await topicDoc.save();
-		await writingDoc.save();
-		// create operation log and store it to DB
-		createOperationLog(
-			true,
-			"ApiCall",
-			`User (uid: ${uid}) writing evaluation service.`,
-			req.userIP,
-			req.userDevice,
-			uid
-		);
+		// import writingOperation() to check if there is a new writingDoc
+		const writingDoc = writingOperation(req);
 
 		// send axios request to api
 		axios({
@@ -57,21 +32,31 @@ const evaluateWriting = async (req: Request, res: Response) => {
 				Authorization: `Bearer ${apiKey}`,
 			},
 			data: {
-				model: "text-davinci-003",
-				prompt: prompt,
-				temperature: 0.2,
-				max_tokens: 1000,
+				model: "gpt-3.5-turbo",
+				messages: prompt,
+				temperature: 1.5,
+				max_tokens: 2000,
 			},
-		}).then((response) => {
+		}).then(async (response) => {
 			/* if response achieved
-					parse json
-					store it in DB
-					then return it to user (postman)*/
-
+			parse json
+			store it in DB
+			then return it to user (postman)*/
+			
 			// find writingDoc and update the comment received from API
-			feedbackOperation(response, writingDoc.writing_id);
+			feedbackOperation(response, (await writingDoc).writing_id);
+			
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"ApiCall",
+				`User (uid: ${uid}) writing evaluation service.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 
-			return res.status(200).json(JSON.parse(response.data.choices[0].text));
+			return res.status(200).json(JSON.parse(response.data.choices[0].message.content));
 		});
 	} catch (error) {
 		const uid = req.body.uid;

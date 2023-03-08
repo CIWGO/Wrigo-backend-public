@@ -6,23 +6,20 @@ import { createOperationLog } from "../log/index";
 // Add user token verification (tokenGuard)
 
 /**
- * Replace the content of this template to the actual comments
- * Returns x raised to the n-th power.
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
- * if no return, you don't have to add this @return value in comments
- * @source url
+ * Delete user is defined as set isActive = false, not deleting the targe user data in database.
+ * @param {Request} req The HTTP request object containing the user's uid.
+ * @param {Response} res The HTTP response object used to send a response to the client.
+ * @return {Promise<void>} A promise that resolves when the isActive value is set to false, or rejects with an error if the value update fails.
+ * @source url： N/A
  */
 
 const deleteUser = async (req: Request, res: Response) => {
 	try {
-		// Delete user is defined as set isActive = false, not deleting the targe user data in database.
-		const { uid, username, isActive = false } = req.body;
+		const { uid } = req.body;
 		await UserModel.findOneAndUpdate(
-			{ username },
+			{ uid },
 			{
-				$set: { isActive: isActive },
+				$set: { isActive: false },
 			},
 			{ new: true }
 		).exec();

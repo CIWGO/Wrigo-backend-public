@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { userAccount as UserModel } from "../../models/index";
 import { changePassword } from "./changePassword";
-import { sendOTPViaEmail, verifyOTP } from "./userOtp";
+import { verifyOTP } from "./userOtp";
+import { createOperationLog } from "../log/index";
 
 interface RequestWithLocals extends Request {
 	locals: {
@@ -19,7 +20,7 @@ interface RequestWithLocals extends Request {
  */
 
 const resetPassword = async (req: Request, res: Response) => {
-	const { username } = req.body;
+	const { uid, username } = req.body;
 
 	try {
 		// Find user in the database
@@ -38,10 +39,37 @@ const resetPassword = async (req: Request, res: Response) => {
 		if (isVerified) {
 			// Change password
 			await changePassword(req as RequestWithLocals, res);
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"userAction",
+				`User (uid: ${uid}) password changed successfully.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 		} else {
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"userAction",
+				`User (uid: ${uid}) OTP verification failed when resetting password.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 			return res.status(401).send({ error: "Invalid OTP" });
 		}
 	} catch (error) {
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) failed to reset password. ${error.message || "Unknown error"}`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
 		res.status(500).json({ error: error.message || "Failed to reset password" });
 	}
 };
