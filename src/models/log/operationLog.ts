@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 
 export interface OperationLog {
 	log_id: string;
-	uid: string;
+	uid?: string;
 	login_status: boolean;
 	log_time: Date;
 	log_type: string; // userCreation, authentication, userAction, payment, ApiCall
