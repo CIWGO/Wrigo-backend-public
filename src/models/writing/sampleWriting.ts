@@ -13,7 +13,6 @@ const schema = new Schema<SampleWriting>(
 		topic_id: {
 			type: String,
 			required: true,
-			unique: true,
 		},
 		sampleWriting_id: {
 			type: String,
@@ -22,13 +21,9 @@ const schema = new Schema<SampleWriting>(
 		},
 		sampleWriting_content: {
 			type: String,
-			required: true,
-			unique: true,
 		},
 		sampleWriting_feedback: {
 			type: String,
-			required: true,
-			unique: true,
 		},
 	},
 	{ collection: "sample_writing" }
