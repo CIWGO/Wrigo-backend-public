@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { generateToken } from "../../utils/jwt";
 // import { LocalStorage } from "node-localstorage";
 import { createOperationLog } from "../log/index";
+import findUidByUsername from "../../utils/db/findUidByUsername";
 
 /**
  * Replace the content of this template to the actual comments
@@ -16,7 +17,7 @@ import { createOperationLog } from "../log/index";
 
 const login = async (req: Request, res: Response) => {
 	try {
-		const { uid, username, password } = req.body;
+		const { username, password } = req.body;
 		const user = await UserModel.findOne({ username }).exec();
 
 		// check if it is a valid user
@@ -25,14 +26,14 @@ const login = async (req: Request, res: Response) => {
 			createOperationLog(
 				false,
 				"authentication",
-				`User (uid: ${uid}) failed to log in. User not found.`,
+				`User (username: ${username}) failed to log in. User not found.`,
 				req.userIP,
-				req.userDevice,
-				uid
+				req.userDevice
 			);
 			return res.status(404).json({ error: "User not found" });
 		}
 
+		const uid = await findUidByUsername(username);
 		// check if it is a valid password
 		const isMatch = await user.validatePassword(password);
 		if (!isMatch) {
@@ -62,7 +63,7 @@ const login = async (req: Request, res: Response) => {
 			// frontend needs to redirect to a verify email page for user
 			return res
 				.status(401)
-				.json({ error: "This user did not verified email" });
+				.json({ message: "This user did not verified email", uid, username });
 		}
 
 		// check isActivate to determine whether this account is deleted or not

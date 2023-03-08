@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
  * (5) ApiCall
  * @return void, this function only stores the operation log created into DB
  */
-const createOperationLog = async (login_status: boolean, log_type: string, log_content: string, ip: string, device: string, uid: string,) => {
+const createOperationLog = async (login_status: boolean, log_type: string, log_content: string, ip: string, device: string, uid?: string,) => {
 	// create a new operation log
 	const operationLog = new operationLogModel({
 		log_id: uuidv4(),
