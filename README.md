@@ -40,7 +40,7 @@ npm ci
 
 - Install MongoDB for VS Code extension
 
-### .env Variables
+### Create .env Variables
 
 Create a file named .env under project root folder and paste the following into this file.
 
@@ -58,7 +58,8 @@ TEST_EMAIL_PASSWORD = "Ciwgo123"
 ### Create .aws/credentials
 
 Send emails to user's email address using AWS SES. To use this function. 
-- make sure to add .aws/credentials with valid AWS credentials in credentials file at the root of this project. 
+- make sure to add .aws/credentials with valid AWS credentials in credentials file at the root of this project.
+- .aws is a folder at the root. 
 - credentials file does not have a file extension. 
 - Paste the following AWS credentials with exact format into credentials file and save. 
 
