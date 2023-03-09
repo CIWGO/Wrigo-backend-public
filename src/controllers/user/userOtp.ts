@@ -1,12 +1,12 @@
 import { Response, Request } from "express";
+import { sendEmail } from "../../utils/ses_sendEmail";
 import { userOTP, userAccount } from "../../models/index";
-import { sendEmail } from "../../utils/emailNotification";
 import otpGenerator from "otp-generator";
 import { createOperationLog } from "../log/index";
 import { userAccount as UserModel } from "../../models/index";
-import config from "../../../config";
+// import config from "../../../config";
 
-const TEST_EMAIL = config.TEST_EMAIL;
+// const TEST_EMAIL = config.TEST_EMAIL;
 
 /**
  * generate a one-time-password(OTP), store it into database and send it to user via email
@@ -27,11 +27,11 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 		await userOTP.findOneAndUpdate({ uid }, { OTP: otp }, { upsert: true, new: true });
 
 		// send email
-		const emailContent = `Your OTP is ${otp}. This will expire in 1 minute.`;
+		const emailContent = `Your verification code is ${otp}. It will expire in 1 minute.`;
 		sendEmail(
-			TEST_EMAIL,
-			email,
-			"CIWGO Email Verification",
+			//TEST_EMAIL,
+			[email],
+			"Wrigo - Email Verification",
 			emailContent
 		);
 
