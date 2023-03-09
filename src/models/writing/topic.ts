@@ -6,6 +6,7 @@ export interface Topic {
 	topic_content: string;
 	topic_category?: string;
 	topic_difficulty?: string;
+	popularity?: number;
 }
 
 const schema = new Schema<Topic>(
@@ -24,6 +25,9 @@ const schema = new Schema<Topic>(
 		},
 		topic_difficulty: {
 			type: String,
+		},
+		popularity: {
+			type: Number,
 		},
 	},
 	{ collection: "writing_topics" }
