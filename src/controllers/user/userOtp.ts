@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
-import { userOTP } from "../../models/index";
 import { sendEmail } from "../../utils/ses_sendEmail";
+import { userOTP, userAccount } from "../../models/index";
 import otpGenerator from "otp-generator";
 import { createOperationLog } from "../log/index";
 import { userAccount as UserModel } from "../../models/index";
@@ -53,7 +53,7 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 };
 
 /**
- * compare if user input and OTP is the same
+ * compare if user input and OTP are the same, if they are, change email verified into true
  * @param {string} uid user id
  * @param {string} OTP the OTP user types in the input box.
  * @return {Promise<boolean>} if user input is the same as the OTP stored in DB, return true
@@ -77,6 +77,8 @@ const verifyOTP = async (req: Request, res: Response): Promise<boolean> => {
 				req.userDevice,
 				uid
 			);
+			// find the userOTP using uid, then change email_verified into true
+			await userAccount.findOneAndUpdate({ uid }, { email_verified: true });
 
 			res.status(200).json({ message: "OTP verified successfully" });
 			return true;
