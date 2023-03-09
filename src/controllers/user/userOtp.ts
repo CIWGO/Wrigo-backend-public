@@ -27,7 +27,7 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 		await userOTP.findOneAndUpdate({ uid }, { OTP: otp }, { upsert: true, new: true });
 
 		// send email
-		const emailContent = `Your OTP is ${otp}. It will expire in 1 minute.`;
+		const emailContent = `Your verification code is ${otp}. It will expire in 1 minute.`;
 		sendEmail(
 			//TEST_EMAIL,
 			[email],
