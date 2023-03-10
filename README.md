@@ -40,6 +40,35 @@ npm ci
 
 - Install MongoDB for VS Code extension
 
+### Create .env Variables
+
+Create a file named .env under project root folder and paste the following into this file.
+
+```
+PORT = 3005
+CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
+CIW_COLLECTION_NAME = "CIWGO"
+OPENAI_APIURL = "https://api.openai.com/v1/chat/completions"
+OPENAI_APIKEY = "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"
+JWT_SECRET = "yoursecretkey"
+TEST_EMAIL = "ciwgo-dev@hotmail.com"
+TEST_EMAIL_PASSWORD = "Ciwgo123"
+```
+
+### Create .aws/credentials
+
+Send emails to user's email address using AWS SES. To use this function. 
+- make sure to add .aws/credentials with valid AWS credentials in credentials file at the root of this project.
+- .aws is a folder at the root. 
+- credentials file does not have a file extension. 
+- Paste the following AWS credentials with exact format into credentials file and save. 
+
+```
+[default]
+aws_access_key_id = AKIAWGK2IH57JM24CDQ4
+aws_secret_access_key = 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
+```
+
 ### Executing program
 
 - Run the project
@@ -108,27 +137,6 @@ https://api.openai.com/v1/completions
 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
 ```
 
-## .env Variables
-
-Create a file named .env under project root folder and paste the following into this file.
-
-```
-PORT = 3005
-CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
-CIW_COLLECTION_NAME = "CIWGO"
-OPENAI_APIURL = "https://api.openai.com/v1/chat/completions"
-OPENAI_APIKEY = "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"
-JWT_SECRET = "yoursecretkey"
-TEST_EMAIL = "ciwgo-dev@hotmail.com"
-TEST_EMAIL_PASSWORD = "Ciwgo123"
-```
-
-## Program Flow Chart
-
-```
-https://lucid.app/lucidchart/bdc56173-a829-40ab-9e06-65a9ac4fe73a/edit?viewport_loc=-11%2C181%2C1752%2C1075%2C0_0&invitationId=inv_486e4eeb-9c68-4fba-88ce-d4f2d7566492
-```
-
 ## Test Emails
 
 ```
@@ -155,7 +163,7 @@ Status Code:
 
 ## Version History
 
-- 1.0 Initial functions
+- 2.0 Additional functions
 
 ## Author
 
@@ -168,6 +176,7 @@ Status Code:
 - Lucas Lin dl.world@hotmail.com
 - Albert Yu yuzhiqiang3014@gmail.com
 - Yinghe Zhou zhouyinghe0821@gmail.com
+- Zizhen Luo zizhenluo2328@gmail.com
 - Hai Yang leoyh.97@gmail.com
 - Haixin Zhang haixin.zhang.777@gmail.com
 
