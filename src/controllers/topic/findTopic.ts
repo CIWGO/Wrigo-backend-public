@@ -4,7 +4,7 @@ import { Response, Request } from "express";
 
 
 const findTopic = async (req:Request, res:Response) => {
-	const {type,uid} = req.body;
+	const {type} = req.body;
 	try {
 		//get all topics
 		if (type === "allTopics") {
