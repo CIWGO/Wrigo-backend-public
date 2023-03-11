@@ -14,29 +14,29 @@ import { createOperationLog } from "../log/index";
  */
 
 const getUserAccount =async (req: Request, res: Response) => {
-    const { username } = req.body;
+	const { username } = req.body;
     
-    try {
-        const user = await UserModel.findOne({ username }).exec();
+	try {
+		const user = await UserModel.findOne({ username }).exec();
         
-        if (user) {
-            // create operation log and store it to DB
-            createOperationLog(
-                true,
-                "userAction",
-                `User (uid: ${username}) is fetched.`,
-                req.userIP,
-                req.userDevice
-            );
+		if (user) {
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"userAction",
+				`User (uid: ${username}) is fetched.`,
+				req.userIP,
+				req.userDevice
+			);
 
-            return res.status(200).json({ message: "User account fetched successful.", user});
-        } else {
-            throw new Error("User is not exist");
-        }
+			return res.status(200).json({ message: "User account fetched successful.", user});
+		} else {
+			throw new Error("User is not exist");
+		}
         
-    } catch (error) {
-        return res.status(500).json({error: error.message || "User is not exist"});
-    }
+	} catch (error) {
+		return res.status(500).json({error: error.message || "User is not exist"});
+	}
 };
 
 export { getUserAccount };
