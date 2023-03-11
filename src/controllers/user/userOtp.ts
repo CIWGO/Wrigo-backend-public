@@ -15,14 +15,22 @@ import { userAccount as UserModel } from "../../models/index";
  * @param {string} email email in user account
  */
 const sendOTPViaEmail = async (req: Request, res: Response) => {
-	const { uid, username } = req.body;
+	const { uid, username, newEmail } = req.body;
 
 	try {
 		// generate an OTP
 		const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
-		const user = await UserModel.findOne({ username }).exec();
-		const email = user.email;
+		let email = "";
 
+		// If user is changing email, the otp will be sent to new email. Else the opt will
+		// be sent to the email saved in user account. 
+		if (newEmail) {
+			email = newEmail;
+		} else {
+			const user = await UserModel.findOne({ username }).exec();
+			email = user.email;
+		}
+		
 		// find the userOTP using uid, then store otp into the user
 		await userOTP.findOneAndUpdate({ uid }, { OTP: otp }, { upsert: true, new: true });
 
