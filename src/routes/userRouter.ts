@@ -23,8 +23,10 @@ userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
-userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
-userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+userRouter.post("/sendOTP", sendOTPViaEmail);
+userRouter.post("/verifyOTP", verifyOTP);
+// userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
+// userRouter.post("/resetPassword/verifyOTP", verifyOTP);
 userRouter.post("/changePassword", changePassword);
 
 // put
