@@ -12,10 +12,11 @@ import {
 	register,
 	tokenGuard,
 	createUser,
+	getUserAccount,
 	changeEmail
 } from "./user/index";
 
-import { evaluateWriting, viewHistory } from "./writing/index";
+import { evaluateWriting, viewHistory, WritingStatistics } from "./writing/index";
 
 import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
 
@@ -31,10 +32,12 @@ export {
 	register,
 	tokenGuard,
 	createUser,
+	getUserAccount,
 	changeEmail,
 	evaluateWriting,
 	createOperationLog,
 	findOperationLogByType,
 	findOperationLogByUid,
-	viewHistory
+	viewHistory,
+	WritingStatistics
 };

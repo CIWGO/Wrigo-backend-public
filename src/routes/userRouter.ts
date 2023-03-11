@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
 	createUser,
+	getUserAccount,
 	login,
 	changePassword,
 	changeEmail,
@@ -33,6 +34,7 @@ userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 // get
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
+userRouter.get("/getUser", getUserAccount);
 
 // delete
 
