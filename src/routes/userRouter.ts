@@ -34,7 +34,7 @@ userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 // get
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
-userRouter.get("/getUser", getUserAccount);
+userRouter.post("/getUser", getUserAccount);
 
 // delete
 
