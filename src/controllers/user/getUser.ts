@@ -17,24 +17,35 @@ const getUserAccount =async (req: Request, res: Response) => {
 	const { username } = req.body;
     
 	try {
-		const user = await UserModel.findOne({ username }).exec();
+		let user = await UserModel.findOne({ username }).exec();
         
 		if (user) {
 			// create operation log and store it to DB
 			createOperationLog(
 				true,
 				"userAction",
-				`User (uid: ${username}) is fetched.`,
+				`User ${username} is fetched.`,
 				req.userIP,
 				req.userDevice
 			);
 
-			return res.status(200).json({ message: "User account fetched successful.", user});
+            // delete the password before response for security.
+            user.password = "";
+
+			return res.status(201).json({ message: "User account fetched successful.", user });
 		} else {
 			throw new Error("User is not exist");
 		}
         
 	} catch (error) {
+        // create operation log and store it to DB
+        createOperationLog(
+            true,
+            "userAction",
+            `Unable to fetch user ${username}).`,
+            req.userIP,
+            req.userDevice
+        );
 		return res.status(500).json({error: error.message || "User is not exist"});
 	}
 };

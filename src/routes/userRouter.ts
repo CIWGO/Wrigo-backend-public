@@ -21,7 +21,6 @@ const userRouter = Router();
 // post
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
-userRouter.post("/getUser", getUserAccount);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
 userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
@@ -35,6 +34,7 @@ userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 // get
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
+userRouter.get("/getUser", getUserAccount);
 
 // delete
 
