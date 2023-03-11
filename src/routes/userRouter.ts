@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
 	createUser,
+	getUserAccount,
 	login,
 	changePassword,
 	changeEmail,
@@ -20,6 +21,7 @@ const userRouter = Router();
 // post
 userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
+userRouter.post("/getUser", getUserAccount);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
 userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
