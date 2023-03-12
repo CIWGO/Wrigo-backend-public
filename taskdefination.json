@@ -1,0 +1,84 @@
+{
+    "family": "Backend",
+    "containerDefinitions": [
+        {
+            "name": "backend",
+            "image": "425927917438.dkr.ecr.ap-southeast-2.amazonaws.com/ciwgo-backend:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "backend-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                },
+                {
+                    "name": "backend-3005-tcp",
+                    "containerPort": 3005,
+                    "hostPort": 3005,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "OPENAI_APIURL",
+                    "value": "https://api.openai.com/v1/chat/completions"
+                },
+                {
+                    "name": "CONNECTION_STRING",
+                    "value": "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
+                },
+                {
+                    "name": "TEST_EMAIL_PASSWORD",
+                    "value": "Ciwgo123"
+                },
+                {
+                    "name": "OPENAI_APIKEY",
+                    "value": "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"
+                },
+                {
+                    "name": "PORT",
+                    "value": "3005"
+                },
+                {
+                    "name": "CIW_COLLECTION_NAME",
+                    "value": "CIWGO"
+                },
+                {
+                    "name": "JWT_SECRET",
+                    "value": "yoursecretkey"
+                },
+                {
+                    "name": "TEST_EMAIL",
+                    "value": "ciwgo-dev@hotmail.com"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/Backend",
+                    "awslogs-region": "ap-southeast-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "executionRoleArn": "arn:aws:iam::425927917438:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}
