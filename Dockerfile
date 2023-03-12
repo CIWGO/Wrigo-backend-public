@@ -8,6 +8,9 @@ ARG JWT_SECRET
 ARG TEST_EMAIL
 ARG TEST_EMAIL_PASSWORD
 
+# Use an official Node.js runtime as a parent image
+FROM node:16-alpine
+
 ENV CONNECTION_STRING=$CONNECTION_STRING
 ENV PORT=$PORT
 ENV retryWrites=$retryWrites
@@ -17,9 +20,6 @@ ENV OPENAI_APIKEY=$OPENAI_APIKEY
 ENV JWT_SECRET=$JWT_SECRET
 ENV TEST_EMAIL=$TEST_EMAIL
 ENV TEST_EMAIL_PASSWORD=$TEST_EMAIL_PASSWORD
-
-# Use an official Node.js runtime as a parent image
-FROM node:16-alpine
 
 # Set the working directory to /app
 WORKDIR /app
