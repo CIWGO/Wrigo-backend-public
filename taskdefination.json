@@ -1,5 +1,5 @@
 {
-    "family": "Backend",
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:425927917438:task-definition/Backend_1:1",
     "containerDefinitions": [
         {
             "name": "backend",
@@ -22,56 +22,99 @@
                 }
             ],
             "essential": true,
-            "environment": [
-                {
-                    "name": "OPENAI_APIURL",
-                    "value": "https://api.openai.com/v1/chat/completions"
-                },
-                {
-                    "name": "CONNECTION_STRING",
-                    "value": "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
-                },
-                {
-                    "name": "TEST_EMAIL_PASSWORD",
-                    "value": "Ciwgo123"
-                },
-                {
-                    "name": "OPENAI_APIKEY",
-                    "value": "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"
-                },
-                {
-                    "name": "PORT",
-                    "value": "3005"
-                },
-                {
-                    "name": "CIW_COLLECTION_NAME",
-                    "value": "CIWGO"
-                },
-                {
-                    "name": "JWT_SECRET",
-                    "value": "yoursecretkey"
-                },
-                {
-                    "name": "TEST_EMAIL",
-                    "value": "ciwgo-dev@hotmail.com"
-                }
-            ],
+            "environment": [],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "PORT",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "CONNECTION_STRING",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "retryWrites",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "CIW_COLLECTION_NAME",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "OPENAI_APIURL",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "OPENAI_APIKEY",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "JWT_SECRET",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "TEST_EMAIL",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                },
+                {
+                    "name": "TEST_EMAIL_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                }
+            ],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/Backend",
+                    "awslogs-group": "/ecs/Backend_1",
                     "awslogs-region": "ap-southeast-2",
                     "awslogs-stream-prefix": "ecs"
                 }
             }
         }
     ],
+    "family": "Backend_1",
     "executionRoleArn": "arn:aws:iam::425927917438:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
+    "revision": 1,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.secrets.asm.environment-variables"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
@@ -80,5 +123,8 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    }
+    },
+    "registeredAt": "2023-03-12T06:20:36.552Z",
+    "registeredBy": "arn:aws:iam::425927917438:user/garyxiong",
+    "tags": []
 }
