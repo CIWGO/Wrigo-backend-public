@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
 	createUser,
+	getUserAccount,
 	login,
 	changePassword,
 	changeEmail,
@@ -11,6 +12,7 @@ import {
 	sendOTPViaEmail,
 	verifyOTP,
 	viewHistory,
+	findTopic
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -22,17 +24,21 @@ userRouter.post("/signup", createUser);
 userRouter.post("/login", login);
 userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
-userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
-userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+userRouter.post("/sendOTP", sendOTPViaEmail);
+userRouter.post("/verifyOTP", verifyOTP);
+// userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
+// userRouter.post("/resetPassword/verifyOTP", verifyOTP);
 userRouter.post("/changePassword", changePassword);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
 
-// get
+// get (use post)
+userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
+userRouter.post("/getTopic", findTopic);
 
 // delete
 
