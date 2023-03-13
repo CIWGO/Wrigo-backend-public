@@ -9,7 +9,7 @@ import { createUserProfile } from "../index";
  * @param {Request} req The HTTP request object containing the user's uid, username, password, and email.
  * @param {Response} res The HTTP response object used to send a response to the client.
  * @return {Promise<void>} A promise that resolves when the user creation is successful, or rejects with an error if the user creation fails.
- * @source url: https://www.mongodb.com/compatibility/using-typescript-with-mongodb-tutorial
+ * @source url：https://www.mongodb.com/compatibility/using-typescript-with-mongodb-tutorial
  */
 
 // Create one user
