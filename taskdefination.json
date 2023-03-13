@@ -29,39 +29,35 @@
             "secrets": [
                 {
                     "name": "PORT",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:PORT::"
                 },
                 {
                     "name": "CONNECTION_STRING",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
-                },
-                {
-                    "name": "retryWrites",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:CONNECTION_STRING::"
                 },
                 {
                     "name": "CIW_COLLECTION_NAME",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:CIW_COLLECTION_NAME::"
                 },
                 {
                     "name": "OPENAI_APIURL",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:OPENAI_APIURL::"
                 },
                 {
                     "name": "OPENAI_APIKEY",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:OPENAI_APIKEY::"
                 },
                 {
                     "name": "JWT_SECRET",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:JWT_SECRET::"
                 },
                 {
                     "name": "TEST_EMAIL",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:TEST_EMAIL::"
                 },
                 {
                     "name": "TEST_EMAIL_PASSWORD",
-                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:environmentfile-srVvdJ"
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:TEST_EMAIL_PASSWORD::"
                 }
             ],
             "logConfiguration": {
