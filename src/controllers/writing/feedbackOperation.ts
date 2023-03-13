@@ -9,24 +9,33 @@ import { feedback as FeedbackModel } from "../../models";
  * @param {string} writing_id the id of writingDoc.
  */
 
-const feedbackOperation = (response:any, writing_id: string) => {
-	const evaluateOutput = JSON.parse(response.data.choices[0].message.content);
-	const feedbackDoc = new FeedbackModel({
-		feedback_id: uuidv4(),
-		writing_id: writing_id,
-		created_time: new Date(Date.now()),
-		feedback_TR: evaluateOutput.feedback.TR,
-		feedback_CC: evaluateOutput.feedback.CC,
-		feedback_LR: evaluateOutput.feedback.LR,
-		feedback_GRA: evaluateOutput.feedback.GRA,
-		feedback_overall: evaluateOutput.feedback.Overall,
-		score_TR: evaluateOutput.scores.TaskResponse,
-		score_CC: evaluateOutput.scores.CoherenceAndCohesion,
-		score_LR: evaluateOutput.scores.LexicalResource,
-		score_GRA: evaluateOutput.scores.GrammarRangeAndAccuracy,
-	});
+const feedbackOperation = async (response:any, writing_id: string) => {
+	let comment = response.data.choices[0].message.content;
+	const startBracket = comment.indexOf("{");
+	if (startBracket !== -1) {
+		const endBracket = comment.lastIndexOf("}");
+		if (endBracket !== -1) {
+			comment = await comment.slice(0, endBracket + 1);
 
-	feedbackDoc.save();
+			const evaluateOutput = JSON.parse(comment);
+			const feedbackDoc = new FeedbackModel({
+				feedback_id: uuidv4(),
+				writing_id: writing_id,
+				created_time: new Date(Date.now()),
+				feedback_TR: evaluateOutput.feedback.TR,
+				feedback_CC: evaluateOutput.feedback.CC,
+				feedback_LR: evaluateOutput.feedback.LR,
+				feedback_GRA: evaluateOutput.feedback.GRA,
+				feedback_overall: evaluateOutput.feedback.Overall,
+				score_TR: evaluateOutput.scores.TaskResponse,
+				score_CC: evaluateOutput.scores.CoherenceAndCohesion,
+				score_LR: evaluateOutput.scores.LexicalResource,
+				score_GRA: evaluateOutput.scores.GrammarRangeAndAccuracy,
+			});
+
+			feedbackDoc.save();
+		}
+	}
 };
 
 export { feedbackOperation };
