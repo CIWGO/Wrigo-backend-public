@@ -10,14 +10,15 @@ import { feedback as FeedbackModel } from "../../models";
  */
 
 const feedbackOperation = async (response:any, writing_id: string) => {
+	// pick up only JSON format data from response
 	let comment = response.data.choices[0].message.content;
 	const startBracket = comment.indexOf("{");
 	if (startBracket !== -1) {
 		const endBracket = comment.lastIndexOf("}");
 		if (endBracket !== -1) {
 			comment = await comment.slice(0, endBracket + 1);
-
 			const evaluateOutput = JSON.parse(comment);
+			
 			const feedbackDoc = new FeedbackModel({
 				feedback_id: uuidv4(),
 				writing_id: writing_id,
