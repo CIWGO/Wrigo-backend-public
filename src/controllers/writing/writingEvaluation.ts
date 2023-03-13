@@ -6,6 +6,7 @@ import { createOperationLog } from "../log/index";
 import { feedbackOperation } from "./feedbackOperation";
 import { writingOperation } from "./writingOperation";
 
+
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
 
@@ -21,7 +22,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		const prompt = generatePrompt(req); // generate a prompt for evaluation
 
 		// import writingOperation() to check if there is a new writingDoc
-		const writingDoc = writingOperation(req);
+		const writingDoc = await writingOperation(req);
 
 		// send axios request to api
 		axios({
@@ -42,9 +43,9 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			parse json
 			store it in DB
 			then return it to user (postman)*/
-			
+
 			// find writingDoc and update the comment received from API
-			feedbackOperation(response, (await writingDoc).writing_id);
+			feedbackOperation(response, writingDoc.writing_id);
 			
 			// create operation log and store it to DB
 			createOperationLog(
