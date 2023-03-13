@@ -1,0 +1,86 @@
+{
+    "family": "Backend_1",
+    "containerDefinitions": [
+        {
+            "name": "backend",
+            "image": "425927917438.dkr.ecr.ap-southeast-2.amazonaws.com/ciwgo-backend:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "backend-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                },
+                {
+                    "name": "backend-3005-tcp",
+                    "containerPort": 3005,
+                    "hostPort": 3005,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "PORT",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:PORT::"
+                },
+                {
+                    "name": "CONNECTION_STRING",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:CONNECTION_STRING::"
+                },
+                {
+                    "name": "CIW_COLLECTION_NAME",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:CIW_COLLECTION_NAME::"
+                },
+                {
+                    "name": "OPENAI_APIURL",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:OPENAI_APIURL::"
+                },
+                {
+                    "name": "OPENAI_APIKEY",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:OPENAI_APIKEY::"
+                },
+                {
+                    "name": "JWT_SECRET",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:JWT_SECRET::"
+                },
+                {
+                    "name": "TEST_EMAIL",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:TEST_EMAIL::"
+                },
+                {
+                    "name": "TEST_EMAIL_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:425927917438:secret:efile:TEST_EMAIL_PASSWORD::"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/Backend_1",
+                    "awslogs-region": "ap-southeast-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::425927917438:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::425927917438:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}
