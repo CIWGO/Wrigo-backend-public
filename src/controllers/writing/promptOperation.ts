@@ -18,35 +18,18 @@ import outputFormat from "./outputFormat.json";
 const generatePrompt = (req: Request) => {
 	// change the name to generatePrompt
 	const instruction =
-    "Evaluate IELTS writing on nine-band scale of JSON. Return JSON following this format:";
+		"Evaluate IELTS writing on nine-band scale of JSON. Return JSON following this format:";
 	const evaluateOutputFormat = JSON.stringify(
 		outputFormat.evaluateOutputFormat
 	);
 	const userInput = JSON.stringify(req.body.topic + req.body.content);
 	// const prompt = instruction + evaluateOutputFormat + userInput;
-	const prompt = [
-		{
-			role: "user",
-			content: instruction + evaluateOutputFormat + userInput,
-		},
-	];
+	const prompt = [{
+		"role": "user",
+		"content": instruction + evaluateOutputFormat + userInput,
+	}];
 
 	return prompt;
 };
 
-// generate sample writing and feedback
-const generateSamplePrompt = (req: Request) => {
-	// prompt to generate sample writing AND evaluation
-	const instruction =
-    "Generate a IELTS task-2 7.5 band writing sample of about 250 words according to the topic, and evaluate the writing sample on nine-band scale of JSON. Return JSON following this format:";
-	const sampleFeedback = JSON.stringify(outputFormat);
-	const userInput = JSON.stringify(req.body.topic);
-	const prompt = [
-		{
-			role: "user",
-			content: userInput + instruction + sampleFeedback,
-		},
-	];
-	return prompt;
-};
-export { generatePrompt, generateSamplePrompt};
+export { generatePrompt };
