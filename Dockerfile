@@ -24,14 +24,11 @@ ENV STRIPE_SECRET_KEY=$STRIPE
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json into the container
-COPY package*.json ./
+# Copy the application code into the container
+COPY . .
 
 # Install dependencies
 RUN npm install
-
-# Copy the application code into the container
-COPY . .
 
 # Expose port 3005
 EXPOSE 3005
