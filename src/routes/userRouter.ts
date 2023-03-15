@@ -39,7 +39,6 @@ userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
 userRouter.post("/getTopic", findTopic);
-
 // delete
 
 // patch
