@@ -14,7 +14,9 @@ env:
   ECR_REGISTRY: 425927917438.dkr.ecr.ap-southeast-1.amazonaws.com
   IMAGE_NAME: ciwgo2023
   AWS_REGION: ap-southeast-1
-
+  ECS_CLUSTER: CiwgoBackendCluster
+  ECS_SERVICE: CiwgoBackendService
+  
 jobs:
   buildImage:
     runs-on: ubuntu-latest
