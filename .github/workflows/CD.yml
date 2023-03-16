@@ -47,6 +47,13 @@ jobs:
                 -t $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }} \
                 --build-arg CONNECTION=$CONNECTION_S \
                 --build-arg STRIPE=$STRIPE_S \
-                --build-arg OPENAI=$OPENAI_A .
-                
+                --build-arg OPENAI=$OPENAI_A .     
           docker push $ECR_REGISTRY/$IMAGE_NAME
+
+      - name: Update ECS task
+        run: |
+          aws ecs update-service \
+            --cluster $ECS_CLUSTER \
+            --service $ECS_SERVICE \
+            --task-definition CiwgoBackendTask:2 \
+            --force-new-deployment
