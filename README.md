@@ -66,9 +66,7 @@ Send emails to user's email address using AWS SES. To use this function.
 - Paste the following AWS credentials with exact format into credentials file and save. 
 
 ```
-[default]
-aws_access_key_id = AKIAWGK2IH57JM24CDQ4
-aws_secret_access_key = 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
+Refer to group chat notice for keys
 ```
 
 ### Executing program
