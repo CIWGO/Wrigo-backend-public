@@ -46,7 +46,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 
 			// find writingDoc and update the comment received from API
 			feedbackOperation(response, writingDoc.writing_id);
-			
+
 			// create operation log and store it to DB
 			createOperationLog(
 				true,
@@ -71,7 +71,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			uid
 		);
 		// if error detected, return the error
-		return res.status(500).json({error: error.message || "Failed to get response"});
+		return res.status(500).json({ error: error.message || "Failed to get response" });
 	}
 };
 
