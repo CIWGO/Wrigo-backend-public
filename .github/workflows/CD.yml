@@ -14,7 +14,9 @@ env:
   ECR_REGISTRY: 425927917438.dkr.ecr.ap-southeast-1.amazonaws.com
   IMAGE_NAME: ciwgo2023
   AWS_REGION: ap-southeast-1
-
+  ECS_CLUSTER: CiwgoBackendCluster
+  ECS_SERVICE: CiwgoBackendService
+  
 jobs:
   buildImage:
     runs-on: ubuntu-latest
@@ -47,6 +49,13 @@ jobs:
                 -t $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }} \
                 --build-arg CONNECTION=$CONNECTION_S \
                 --build-arg STRIPE=$STRIPE_S \
-                --build-arg OPENAI=$OPENAI_A .
-                
+                --build-arg OPENAI=$OPENAI_A .     
           docker push $ECR_REGISTRY/$IMAGE_NAME
+
+      - name: Update ECS task
+        run: |
+          aws ecs update-service \
+            --cluster $ECS_CLUSTER \
+            --service $ECS_SERVICE \
+            --task-definition CiwgoBackendTask:2 \
+            --force-new-deployment

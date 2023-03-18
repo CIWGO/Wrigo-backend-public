@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import config from "../../../config";
-import axios from "axios";
 import { generatePrompt } from "./promptOperation";
 import { createOperationLog } from "../log/index";
 import { feedbackOperation } from "./feedbackOperation";
 import { writingOperation } from "./writingOperation";
+import { openAIRequest } from "../../utils/openAIRequest";
 
+// import config from "../../../config";
 
-const URL = config.OPENAI_APIURL;
-const apiKey = config.OPENAI_APIKEY;
+// const URL = config.OPENAI_APIURL;
+// const apiKey = config.OPENAI_APIKEY;
 
 /**
  * take topic and essay from user input and generate a prompt for evaluation
@@ -24,30 +24,12 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		// import writingOperation() to check if there is a new writingDoc
 		const writingDoc = await writingOperation(req);
 
-		// send axios request to api
-		axios({
-			method: "POST",
-			url: URL,
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${apiKey}`,
-			},
-			data: {
-				model: "gpt-3.5-turbo",
-				messages: prompt,
-				temperature: 1.5,
-				max_tokens: 2000,
-			},
-		}).then(async (response) => {
-			/* if response achieved
-			parse json
-			store it in DB
-			then return it to user (postman)*/
-
-			// find writingDoc and update the comment received from API
+		const response = await openAIRequest(prompt, 3);
+		if (response instanceof Error) {
+			throw new Error("Cannot get response");
+		} else {
 			feedbackOperation(response, writingDoc.writing_id);
-			
-			// create operation log and store it to DB
+
 			createOperationLog(
 				true,
 				"ApiCall",
@@ -58,7 +40,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			);
 
 			return res.status(200).json(JSON.parse(response.data.choices[0].message.content));
-		});
+		}
 	} catch (error) {
 		const uid = req.body.uid;
 		// create operation log and store it to DB
