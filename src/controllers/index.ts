@@ -20,7 +20,7 @@ import { evaluateWriting, viewHistory, WritingStatistics } from "./writing/index
 
 import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
 
-import { findTopic } from "./topic/index";
+import { findTopic,searchAllTopics,searchUserTopics } from "./topic/index";
 
 export {
 	changePassword,
@@ -42,5 +42,7 @@ export {
 	findOperationLogByUid,
 	viewHistory,
 	WritingStatistics,
-	findTopic
+	findTopic,
+	searchAllTopics,
+	searchUserTopics
 };
