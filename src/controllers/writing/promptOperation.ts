@@ -17,16 +17,15 @@ import outputFormat from "./outputFormat.json";
 
 const generatePrompt = (req: Request) => {
 	// change the name to generatePrompt
-	const instruction =
-		"Evaluate provided IELTS essay on nine-band scale of JSON. Return JSON stricly following this format. Don't leave any field black or return anything that is not part of the provided format:";
+	const instruction = "Act as an IELTS grader. Evaluate this writing on nine-band scale of JSON. Return JSON following this format:";
 	const evaluateOutputFormat = JSON.stringify(
 		outputFormat.evaluateOutputFormat
 	);
 	const userInput = JSON.stringify(req.body.topic + req.body.content);
 	// const prompt = instruction + evaluateOutputFormat + userInput;
 	const prompt = [{
-		"role": "user",
-		"content":userInput + instruction + evaluateOutputFormat,
+		"role": "user", 
+    "content": userInput + instruction + evaluateOutputFormat,
 	}];
 
 	return prompt;

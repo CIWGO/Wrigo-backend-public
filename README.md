@@ -51,8 +51,10 @@ CIW_COLLECTION_NAME = "CIWGO"
 OPENAI_APIURL = "https://api.openai.com/v1/chat/completions"
 OPENAI_APIKEY = "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"
 JWT_SECRET = "yoursecretkey"
-TEST_EMAIL = "ciwgo-dev@hotmail.com"
-TEST_EMAIL_PASSWORD = "Ciwgo123"
+STRIPE_PUBLIC_KEY = "pk_test_51Ml43uJm2vMPXBBfJpBJLlYZYDaniI3qbpAkx5cqHakuqkRbQQIJ71gD3LL1oI4S3CiiImhFjfKpoMfqnOWgG0wF00zVRlQOvT"
+STRIPE_SECRET_KEY = "sk_test_51Ml43uJm2vMPXBBfPBKnmLijGLwkMtJReVEpZd0foRz2pJW0N1D8xIt1ZmEAjUaiSgvFRc31VVb4tm6eYMbdwIt300IGfq0hVW"
+STRIPE_PRODUCT_ID = "price_1Ml4JRJm2vMPXBBf8YgX4Aqa"
+STRIPE_PAYMENT_URL = "https://buy.stripe.com/test_eVa6rM8swblAely7ss"
 ```
 
 ### Create .aws/credentials
@@ -64,9 +66,7 @@ Send emails to user's email address using AWS SES. To use this function.
 - Paste the following AWS credentials with exact format into credentials file and save. 
 
 ```
-[default]
-aws_access_key_id = AKIAWGK2IH57JM24CDQ4
-aws_secret_access_key = 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
+Refer to group chat notice for keys
 ```
 
 ### Executing program

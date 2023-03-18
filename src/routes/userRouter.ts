@@ -12,6 +12,7 @@ import {
 	sendOTPViaEmail,
 	verifyOTP,
 	viewHistory,
+	findTopic
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -33,10 +34,11 @@ userRouter.post("/changePassword", changePassword);
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
 
-// get
+// get (use post)
+userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
-userRouter.post("/getUser", getUserAccount);
+userRouter.post("/getTopic", findTopic);
 
 // delete
 
