@@ -43,7 +43,7 @@ export {
 	viewHistory,
 	WritingStatistics,
 	searchAllTopics,
-	searchUserTopics
+	searchUserTopics,
 	writingSubmissions,
 	findTopic
 };
