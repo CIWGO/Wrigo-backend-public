@@ -25,7 +25,7 @@ const generatePrompt = (req: Request) => {
 	// const prompt = instruction + evaluateOutputFormat + userInput;
 	const prompt = [{
 		"role": "user", 
-    "content": userInput + instruction + evaluateOutputFormat,
+		"content": userInput + instruction + evaluateOutputFormat,
 	}];
 
 	return prompt;
