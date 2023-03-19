@@ -16,7 +16,7 @@ import {
 	changeEmail
 } from "./user/index";
 
-import { evaluateWriting, viewHistory, WritingStatistics } from "./writing/index";
+import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions } from "./writing/index";
 
 import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
 
@@ -42,7 +42,8 @@ export {
 	findOperationLogByUid,
 	viewHistory,
 	WritingStatistics,
-	findTopic,
 	searchAllTopics,
 	searchUserTopics
+	writingSubmissions,
+	findTopic
 };
