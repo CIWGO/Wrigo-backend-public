@@ -19,10 +19,24 @@ const writingHistory = async (from, to, uid) => {
 	return writingHistory;
 };
 
-//Given time period, will get all submitted writing but not containing any feedback
-const getSubmittedWritingHistoryByPeriod = async (from, to, uid) => {
-	const submittedWritingHistory = await WritingModel.find({ uid, submit_time: { $gte: from, $lte: to }, isSubmitted: true }).sort({ submit_time: -1 }).exec();
-	return submittedWritingHistory;
+//Given time year and month, will get all submitted writing but not containing any feedback
+const getSubmittedWritingHistoryByMonth = async (year, month, uid) => {
+	const targetDate = new Date(year, month - 1, 1); // Month parameter is 0-indexed, so we subtract 1
+	const nextMonth = new Date(year, month, 1); // This will give the first day of the next month
+
+	try {
+		const submissions = await WritingModel.find({
+			uid,
+			submit_time: {
+				$gte: targetDate,
+				$lt: nextMonth,
+			},
+			isSubmitted: true,
+		});
+		return submissions;
+	} catch (error) {
+		console.error("Error fetching submissions:", error);
+	}
 };
 
 // Given time period, will get all log history
@@ -98,4 +112,4 @@ const viewHistory = async (req: Request, res: Response) => {
 	}
 };
 
-export { viewHistory, getSubmittedWritingHistoryByPeriod };
+export { viewHistory, getSubmittedWritingHistoryByMonth };
