@@ -32,7 +32,6 @@ const findTopic = async (req:Request, res:Response) => {
 			return res.status(200).json({ singleTopic, oneSampleWithFeedback });
 		} else if (type === "getPopularTopics") {
 			const popularTopics = await TopicModel.find({}).sort({ popularity: -1 }).limit(4);
-			console.log(popularTopics);
 			return res.status(200).json({ popularTopics});
 		}
 		else {
