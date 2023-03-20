@@ -2,7 +2,6 @@ import { Request } from "express";
 import { topic as TopicModel, writing as WritingModel } from "../../models/index";
 import { v4 as uuidv4 } from "uuid";
 
-
 const writingOperation = async (req: Request) => {
 	const { writing_id, topic, content } = req.body;
 
@@ -10,7 +9,7 @@ const writingOperation = async (req: Request) => {
 	if (writingDoc) {
 		writingDoc.submit_time = new Date(Date.now());
 		writingDoc.writing_content = content;
-		writingDoc.task_topic = topic;
+		writingDoc.task_topic = topic; // topic should not be updated after initial creation
 		await writingDoc.save();
 		return writingDoc;
 	} else {
@@ -29,18 +28,8 @@ const writingOperation = async (req: Request) => {
 		});
 		await writingDoc.save();
 		await topicDoc.save();
-
-
 	}
-
 	return writingDoc;
 };
-
-
-
-
-
-
-
 
 export { writingOperation };

@@ -3,7 +3,7 @@ import { getSubmittedWritingHistoryByMonth } from "./writingHistory";
 
 const writingSubmissions = async (req: Request, res: Response) => {
 	try {
-		const {year, uid} = req.body;
+		const { year, uid } = req.body;
 		const data = {
 			[`${year}-Jan`]: (await getSubmittedWritingHistoryByMonth(year, 1, uid)).length,
 			[`${year}-Feb`]: (await getSubmittedWritingHistoryByMonth(year, 2, uid)).length,
@@ -18,7 +18,7 @@ const writingSubmissions = async (req: Request, res: Response) => {
 			[`${year}-Nov`]: (await getSubmittedWritingHistoryByMonth(year, 11, uid)).length,
 			[`${year}-Dec`]: (await getSubmittedWritingHistoryByMonth(year, 12, uid)).length
 		};
-		
+
 		res.json(data);
 	} catch (err) {
 		console.error(err);
@@ -26,4 +26,4 @@ const writingSubmissions = async (req: Request, res: Response) => {
 	}
 };
 
-export default writingSubmissions;
+export { writingSubmissions };
