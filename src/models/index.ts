@@ -7,6 +7,7 @@ import writing from "./writing/writing";
 import sampleWriting from "./writing/sampleWriting";
 import operationLog from "./log/operationLog";
 import paymentHistory from "./payment/paymentHistory";
+import paymentInvoice from "./payment/paymentInvoice";
 import userPayment from "./payment/userPayment";
 import userAccount from "./user/userAccount";
 import userOTP from "./user/userOTP";
@@ -24,6 +25,7 @@ export {
 	userAccount,
 	userOTP,
 	userProfile,
+	paymentInvoice
 };
 
 /* when you want to import into other folder/modules,
