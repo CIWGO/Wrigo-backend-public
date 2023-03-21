@@ -1,52 +1,28 @@
 // user payment history data definition
 import { Schema, model } from "mongoose";
+import  Invoice  from "./paymentInvoice";
 
 export interface UserPaymentHistory {
-	transaction_id: string;
-	uid: string;
-	payment_type: string; // visa master amex...
-	card_holder_name: string;
-	card_number: string;
-	payment_amount: number;
-	payment_time: Date;
-	purchase_description: string; // name of purchased service
+	userId: string;
+	customerId: string;
+	subscriptionId: string;
+  invoices: (typeof Invoice)["prototype"]["_id"][];
 }
 
 const schema = new Schema<UserPaymentHistory>(
 	{
-		transaction_id: {
+		userId: {
 			type: String,
-			required: true,
-			unique: true,
+			required: true
 		},
-		uid: {
+		customerId: {
 			type: String,
-			required: true,
+			required: true
 		},
-		payment_type: {
+		subscriptionId: {
 			type: String,
-			required: true,
 		},
-		card_holder_name: {
-			type: String,
-			required: true,
-		},
-		card_number: {
-			type: String,
-			required: true,
-		},
-		payment_amount: {
-			type: Number,
-			required: true,
-		},
-		payment_time: {
-			type: Date,
-			required: true,
-		},
-		purchase_description: {
-			type: String,
-			required: true,
-		},
+		invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }],
 	},
 	{ collection: "payment_histories" }
 );

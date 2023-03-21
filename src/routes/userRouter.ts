@@ -13,7 +13,9 @@ import {
 	verifyOTP,
 	viewHistory,
 	writingDraft,
-	findTopic
+	findTopic,
+	searchAllTopics,
+	searchUserTopics
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -39,6 +41,8 @@ userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
 userRouter.post("/viewHistory", viewHistory);
 userRouter.post("/getTopic", findTopic);
+userRouter.post("/searchAllTopics", searchAllTopics);
+userRouter.post("/searchUserTopics", searchUserTopics);
 
 // delete
 
