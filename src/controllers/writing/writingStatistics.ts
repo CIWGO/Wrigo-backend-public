@@ -7,7 +7,7 @@ import { writing as Writing, feedback as Feedback } from "../../models/index";
  * @param {Response} res 7 arrays will be returned:
  * res[0-4]: arrays for the line chart, the return order is tr,cc,lr,gra,mean
  * res[5]: array for the radar chart: element order in the array is tr,cc,lr,gra
- * res[6]: array for the display number Chart, element order in the array is hight, median, improved, submission times
+ * res[6]: array for the display number Chart, element order in the array is highest, median, improved, submission times
  */
 
 const WritingStatistics = async (req: Request, res: Response) => {
