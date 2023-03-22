@@ -30,7 +30,11 @@ const findTopic = async (req:Request, res:Response) => {
 			const singleTopic = await TopicModel.findOne({ topic_id }).exec();
 			const oneSampleWithFeedback = await SampleWritingModel.findOne({ topic_id }).exec();
 			return res.status(200).json({ singleTopic, oneSampleWithFeedback });
-		} else {
+		} else if (type === "getPopularTopics") {
+			const popularTopics = await TopicModel.find({}).sort({ popularity: -1 }).limit(4);
+			return res.status(200).json({ popularTopics});
+		}
+		else {
 			return res.status(404).json({error: "Input type not supported"});
 		}
 	} catch (error) {
