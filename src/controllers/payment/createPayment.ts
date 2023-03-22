@@ -1,14 +1,12 @@
-// import { Request, Response } from "express";
-import { Request,Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Stripe } from "stripe";
-// import { userAccount} from "../../models/index";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 	apiVersion: "2022-11-15",
 });
 
-
-const createPayment = async (req: Request, res: Response) => {
-	
+const createPayment = async (req: Request, res: Response,next: NextFunction) => {
+	const url = process.env.FRONT_END;
 	try {
 		const { items,planId } = req.body;
 
@@ -22,10 +20,10 @@ const createPayment = async (req: Request, res: Response) => {
 					quantity: 1,
 				},
 			],
-			success_url: "http://localhost:3000/user/success/success",
-			cancel_url: "http://localhost:3000/user/success/cancel",
+			success_url:`${url}/user/paymentSuccess`,
 		});
 		res.status(200).json({ url: session.url });
+		next();
 	} catch (error) {
 		res.status(500).send(error);
 	}
