@@ -3,10 +3,22 @@ import { Response, Request } from "express";
 import { createOperationLog } from "../log/index";
 
 /*
-Get different types of history: types containing: feedback, writingHistory,	logHistory
+Get different types of history: types containing: feedback, writingHistory,	logHistory, writingDoc 
 sorted by timestamp, from recent to oldest
 */
-
+//get single writing by writing_id, 
+const getWritingDoc = async (writing_id) => {
+	try {
+		const writingDoc = await WritingModel.findOne({ writing_id }).exec();
+		if (!writingDoc) {
+			throw new Error("Writing not found");
+		}
+		return writingDoc;
+	} catch (error) {
+		console.error("Error fetching writing:", error);
+		throw error;
+	}
+};
 //Given writing_id will get all its feedbacks, sorted by timestamp
 const feedbackHistory = async (writing_id) => {
 	const feedback = await FeedbackModel.find({ writing_id }).sort({ created_time: -1 }).exec();
@@ -45,10 +57,12 @@ const logHistory = async (from, to, uid) => {
 	return logs;
 };
 
+
 /* feedback req: type == "feedback", writing_id
    writingHistory: type == "writingHistory", from: date, to: date, uid: string
    logHistory: type == "logHistory", from: date, to: date, uid: string
 */
+
 const viewHistory = async (req: Request, res: Response) => {
 	const { type, uid } = req.body;
 	try {
@@ -88,6 +102,18 @@ const viewHistory = async (req: Request, res: Response) => {
 				uid
 			);
 			return res.status(200).json(logs);
+		}else if (type === "writingDoc") {
+			const { writing_id } = req.body;
+			const writingDoc = await getWritingDoc(writing_id);
+			createOperationLog(
+				true,
+				"getWritingDoc",
+				`Get writing document (writing_id: ${writing_id}, uid: ${uid}) successfully.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
+			return res.status(200).json(writingDoc);
 		} else {
 			createOperationLog(
 				false,
