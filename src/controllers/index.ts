@@ -16,11 +16,11 @@ import {
 	changeEmail
 } from "./user/index";
 
-import { evaluateWriting, viewHistory, WritingStatistics } from "./writing/index";
+import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions } from "./writing/index";
 
 import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
 
-import { findTopic } from "./topic/index";
+import { findTopic,searchAllTopics,searchUserTopics } from "./topic/index";
 
 import { createPayment } from "./payment/index";
 
@@ -44,6 +44,10 @@ export {
 	findOperationLogByUid,
 	viewHistory,
 	WritingStatistics,
+	searchAllTopics,
+	searchUserTopics,
+	writingSubmissions,
 	findTopic,
-	createPayment
+  createPayment
+
 };

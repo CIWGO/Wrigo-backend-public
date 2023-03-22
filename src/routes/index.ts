@@ -19,7 +19,7 @@ v1Router.get("/", async (_req: Request, res: Response) => {
 		res.status(200).send(healthCheck);
 	} catch (error) {
 		healthCheck.message = error;
-		res.status(503).send();
+		res.status(503).send(healthCheck);
 	}
 });
 
