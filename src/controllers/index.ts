@@ -48,6 +48,6 @@ export {
 	searchUserTopics,
 	writingSubmissions,
 	findTopic,
-  createPayment
+	createPayment
 
 };
