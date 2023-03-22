@@ -6,6 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 	apiVersion: "2022-11-15",
 });
 
+// this middleware has not been tested
 const createCustomer = async (req: Request, next: NextFunction) => {
 	const {id, planId} = req.body;
   
