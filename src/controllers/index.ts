@@ -22,6 +22,8 @@ import { createOperationLog, findOperationLogByType, findOperationLogByUid } fro
 
 import { findTopic,searchAllTopics,searchUserTopics } from "./topic/index";
 
+import { createPayment } from "./payment/index";
+
 export {
 	changePassword,
 	deleteUser,
@@ -46,5 +48,7 @@ export {
 	searchUserTopics,
 	writingSubmissions,
 	writingDraft,
-	findTopic
+	findTopic,
+	createPayment
+
 };
