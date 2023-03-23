@@ -27,8 +27,6 @@ const monitorMonthlyPay = async (req: Request, res: Response) => {
 		default:
 			console.log(`Unhandled event type: ${event.type}`);
 		}
-
-		res.sendStatus(200);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(error);
