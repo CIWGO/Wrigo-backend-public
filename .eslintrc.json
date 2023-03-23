@@ -17,6 +17,7 @@
     "quotes": ["warn", "double"],
     "max-len": [0, 120, 4],
     "no-tabs": 0,
-    "indent": ["error", "tab"]
+    "indent": ["error", "tab"],
+    "no-mixed-spaces-and-tabs": 0 // disable rule
   }
 }
