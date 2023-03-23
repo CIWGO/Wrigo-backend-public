@@ -16,7 +16,7 @@ const monitorMonthlyPay = async (req: Request, res: Response) => {
       };
     };
   }
-
+  //  this is to ensure data comes from webHookEvent
   const stripeEvent = req.body as MyWebhookEvent;
 
   try {
