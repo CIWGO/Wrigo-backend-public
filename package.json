@@ -31,7 +31,7 @@
     "morgan": "^1.10.0",
     "otp-generator": "^4.0.1",
     "pm2": "^5.2.2",
-    "stripe": "^11.14.0"
+    "stripe": "^11.15.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

@@ -1,20 +1,21 @@
 import { Router } from "express";
 import {
-	createUser,
-	getUserAccount,
-	login,
-	changePassword,
-	changeEmail,
-	deleteUser,
-	createUserProfile,
-	showUserProfile,
-	updateUserProfile,
-	sendOTPViaEmail,
-	verifyOTP,
-	viewHistory,
-	findTopic,
-	searchAllTopics,
-	searchUserTopics
+  createUser,
+  getUserAccount,
+  login,
+  changePassword,
+  changeEmail,
+  deleteUser,
+  createUserProfile,
+  showUserProfile,
+  updateUserProfile,
+  sendOTPViaEmail,
+  verifyOTP,
+  viewHistory,
+  findTopic,
+  searchAllTopics,
+  searchUserTopics,
+  monitorMonthlyPay,
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -35,7 +36,6 @@ userRouter.post("/changePassword", changePassword);
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
-
 // get (use post)
 userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
@@ -50,11 +50,14 @@ userRouter.post("/searchUserTopics", searchUserTopics);
 
 // reset password: /resetPassword/sendOTPViaEmail-->/resetPassword/verifyOTP-->changePassword
 userRouter.patch(
-	"/changePassword",
-	tokenGuard,
-	extractUsernameAndPassword,
-	changePassword
+  "/changePassword",
+  tokenGuard,
+  extractUsernameAndPassword,
+  changePassword
 );
 userRouter.patch("/changeEmail", changeEmail);
+
+// monitor monthly payment
+userRouter.get("/monitorMonthlyPay", monitorMonthlyPay);
 
 export { userRouter };
