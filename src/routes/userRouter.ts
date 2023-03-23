@@ -12,6 +12,7 @@ import {
 	sendOTPViaEmail,
 	verifyOTP,
 	viewHistory,
+	writingDraft,
 	findTopic,
 	searchAllTopics,
 	searchUserTopics
@@ -28,8 +29,7 @@ userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
 userRouter.post("/sendOTP", sendOTPViaEmail);
 userRouter.post("/verifyOTP", verifyOTP);
-// userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
-// userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+userRouter.post("/writingDraft", writingDraft);
 userRouter.post("/changePassword", changePassword);
 
 // put
@@ -47,8 +47,6 @@ userRouter.post("/searchUserTopics", searchUserTopics);
 // delete
 
 // patch
-
-// reset password: /resetPassword/sendOTPViaEmail-->/resetPassword/verifyOTP-->changePassword
 userRouter.patch(
 	"/changePassword",
 	tokenGuard,

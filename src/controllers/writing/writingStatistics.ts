@@ -49,4 +49,4 @@ const WritingStatistics = async (req: Request, res: Response) => {
 
 };
 
-export default WritingStatistics;
+export { WritingStatistics };
