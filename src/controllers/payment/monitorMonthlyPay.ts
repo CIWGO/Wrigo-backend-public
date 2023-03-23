@@ -1,3 +1,4 @@
+// https://stripe.com/docs/payments/payment-intents/verifying-status
 import { Request, Response } from "express";
 import { Stripe } from "stripe";
 
