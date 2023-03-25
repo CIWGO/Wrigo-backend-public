@@ -26,7 +26,7 @@ const monitorMonthlyPay = async (req, res) => {
         process.env.STRIPE_WEBHOOK_SECRET
       );
     } catch (err) {
-      console.log(`⚠️  Webhook signature verification failed.`, err.message);
+      console.log("⚠️  Webhook signature verification failed.", err.message);
       return res.sendStatus(400);
     }
     const succeededInvoice = event.data.object as Invoice;
