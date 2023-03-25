@@ -4,16 +4,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 
+interface Invoice {
+  subscription: string;
+}
+
 // require the following data:
 // invoice.paid=true  OR  invoice.paid=false
 // subscription.status=active invoice.status=paid
 // OR
 // subscription.status=incomplete invoice.status=open
 const monitorMonthlyPay = async (req, res) => {
-  const event = req.body;
-  const succeededInvoice = event.data.object;
+  const event = stripe.webhooks.constructEvent(
+    req.body,
+    req.headers["stripe-signature"],
+    process.env.STRIPE_WEBHOOK_SECRET
+  );
+  const succeededInvoice = event.data.object as Invoice;
   const succeededSubscriptionId = succeededInvoice.subscription;
-  const failedInvoice = event.data.object;
+  const failedInvoice = event.data.object as Invoice;
   const failedSubscriptionId = failedInvoice.subscription;
   try {
     switch (event.type) {
@@ -32,7 +40,7 @@ const monitorMonthlyPay = async (req, res) => {
         break;
     }
 
-    // res.status(200).send("OK");
+    res.status(200).send("OK");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
