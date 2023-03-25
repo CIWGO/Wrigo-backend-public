@@ -39,8 +39,6 @@ const monitorMonthlyPay = async (req, res) => {
         // Unexpected event type
         break;
     }
-
-    res.status(200).send("OK");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
