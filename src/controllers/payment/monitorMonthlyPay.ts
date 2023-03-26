@@ -38,13 +38,16 @@ const monitorMonthlyPay = async (req, res) => {
       // get invoice
       //
       switch (event.type) {
+        // Handle successful payment and active subscription
         case "invoice.payment_succeeded":
           await stripe.subscriptions.retrieve(succeededSubscriptionId);
-          // Handle successful payment and active subscription
+          // TODO: send email receipt
           break;
+        // Handle failed payment and incomplete subscription
         case "invoice.payment_failed":
           await stripe.subscriptions.retrieve(failedSubscriptionId);
-          // Handle failed payment and incomplete subscription
+          // TODO: send email reminder
+          // TODO: Delete customer ID,subscribe ID, invoice paid field, update User.isSubscirbed to false
           break;
         case "customer.subscription.updated":
           break;
