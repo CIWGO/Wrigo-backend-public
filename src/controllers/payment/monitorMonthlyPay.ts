@@ -1,10 +1,10 @@
 import { Stripe } from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const endpointSecret = "whsec_...";
+
+const stripe = new Stripe(endpointSecret, {
   apiVersion: "2022-11-15",
 });
-
-const endpointSecret = "whsec_...";
 
 interface Invoice {
   subscription: string;
@@ -19,11 +19,12 @@ const monitorMonthlyPay = async (req, res) => {
   let event = req.body;
   if (endpointSecret) {
     // Get the signature sent by Stripe
+    const signature = req.headers;
     try {
       event = stripe.webhooks.constructEvent(
         req.body,
-        req.headers["stripe-signature"],
-        process.env.STRIPE_WEBHOOK_SECRET
+        signature,
+        endpointSecret
       );
     } catch (err) {
       console.log("⚠️  Webhook signature verification failed.", err.message);
@@ -34,6 +35,8 @@ const monitorMonthlyPay = async (req, res) => {
     const failedInvoice = event.data.object as Invoice;
     const failedSubscriptionId = failedInvoice.subscription;
     try {
+      // get invoice
+      //
       switch (event.type) {
         case "invoice.payment_succeeded":
           await stripe.subscriptions.retrieve(succeededSubscriptionId);
@@ -56,7 +59,8 @@ const monitorMonthlyPay = async (req, res) => {
   }
 };
 
-// reference
+// references
+// https://stripe.com/docs/webhooks
 // https://stripe.com/docs/webhooks/quickstart
 
 export { monitorMonthlyPay };
