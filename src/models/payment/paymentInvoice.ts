@@ -2,10 +2,11 @@
 import { Schema, model } from "mongoose";
 
 export interface Invoice {
-  invoiceId: string;
-  createdDate: Date;
+	invoiceId: string;
+	createdDate: Date;
 	paymentMethod: string;
 	paymentAmount: number;
+	status: string;
 }
 
 const invoiceSchema: Schema<Invoice> = new Schema(
@@ -25,6 +26,10 @@ const invoiceSchema: Schema<Invoice> = new Schema(
 		},
 		paymentAmount: {
 			type: Number,
+			required: true
+		},
+		status: {
+			type: String,
 			required: true
 		}
 	},
