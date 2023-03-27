@@ -12,10 +12,12 @@ import {
 	sendOTPViaEmail,
 	verifyOTP,
 	viewHistory,
+	writingDraft,
 	findTopic,
 	searchAllTopics,
 	searchUserTopics,
 	monitorMonthlyPay,
+	viewPastPayment
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -29,9 +31,9 @@ userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
 userRouter.post("/sendOTP", sendOTPViaEmail);
 userRouter.post("/verifyOTP", verifyOTP);
-// userRouter.post("/resetPassword/sendOTPViaEmail", sendOTPViaEmail);
-// userRouter.post("/resetPassword/verifyOTP", verifyOTP);
+userRouter.post("/writingDraft", writingDraft);
 userRouter.post("/changePassword", changePassword);
+userRouter.post("/viewPastPayment", tokenGuard,viewPastPayment);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
@@ -47,8 +49,6 @@ userRouter.post("/searchUserTopics", searchUserTopics);
 // delete
 
 // patch
-
-// reset password: /resetPassword/sendOTPViaEmail-->/resetPassword/verifyOTP-->changePassword
 userRouter.patch(
 	"/changePassword",
 	tokenGuard,

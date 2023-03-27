@@ -1,17 +1,17 @@
 // user payment history data definition
 import { Schema, model } from "mongoose";
-import  Invoice  from "./paymentInvoice";
+import Invoice from "./paymentInvoice";
 
 export interface UserPaymentHistory {
-	userId: string;
+	uid: string;
 	customerId: string;
 	subscriptionId: string;
-  invoices: (typeof Invoice)["prototype"]["_id"][];
+	invoices: (typeof Invoice)["prototype"]["_id"][];
 }
 
 const schema = new Schema<UserPaymentHistory>(
 	{
-		userId: {
+		uid: {
 			type: String,
 			required: true
 		},

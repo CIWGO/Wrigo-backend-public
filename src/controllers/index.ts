@@ -14,14 +14,10 @@ import {
 	createUser,
 	getUserAccount,
 	changeEmail,
+	viewPastPayment
 } from "./user/index";
 
-import {
-	evaluateWriting,
-	viewHistory,
-	WritingStatistics,
-	writingSubmissions,
-} from "./writing/index";
+import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions, writingDraft } from "./writing/index";
 
 import {
 	createOperationLog,
@@ -36,6 +32,7 @@ import {
 	createCustomer,
 	monitorMonthlyPay,
 } from "./payment/index";
+
 
 export {
 	changePassword,
@@ -60,8 +57,10 @@ export {
 	searchAllTopics,
 	searchUserTopics,
 	writingSubmissions,
+	writingDraft,
 	findTopic,
 	createPayment,
 	createCustomer,
 	monitorMonthlyPay,
+	viewPastPayment
 };
