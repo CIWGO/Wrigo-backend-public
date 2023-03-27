@@ -29,8 +29,7 @@ import { findTopic, searchAllTopics, searchUserTopics } from "./topic/index";
 
 import {
 	createPayment,
-	createCustomer,
-	monitorMonthlyPay,
+	createCustomer
 } from "./payment/index";
 
 
@@ -61,6 +60,5 @@ export {
 	findTopic,
 	createPayment,
 	createCustomer,
-	monitorMonthlyPay,
 	viewPastPayment
 };
