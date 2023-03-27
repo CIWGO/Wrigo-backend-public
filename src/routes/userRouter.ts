@@ -15,7 +15,8 @@ import {
 	writingDraft,
 	findTopic,
 	searchAllTopics,
-	searchUserTopics
+	searchUserTopics,
+	viewPastPayment
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -31,6 +32,7 @@ userRouter.post("/sendOTP", sendOTPViaEmail);
 userRouter.post("/verifyOTP", verifyOTP);
 userRouter.post("/writingDraft", writingDraft);
 userRouter.post("/changePassword", changePassword);
+userRouter.post("/viewPastPayment", tokenGuard,viewPastPayment);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
