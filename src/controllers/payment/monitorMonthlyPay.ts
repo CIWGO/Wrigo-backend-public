@@ -1,6 +1,6 @@
 import { Stripe } from "stripe";
 import { MongoClient } from "mongodb";
-import sgMail from '@sendgrid/mail';
+import sgMail from "@sendgrid/mail";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const MONGODB_URI = "mongodb://localhost:27017/mydatabase";
 const DB_NAME = "mydatabase";
