@@ -89,6 +89,30 @@ const monitorMonthlyPay = async (req, res) => {
 
               return paymentHistory;
             };
+            // 4. paymentHistory: update/create payment history, add invoice into array
+            const addPaymentToHistory = async (uid, invoice) => {
+              const paymentHistoryCollection = await getPaymentHistoryCollection();
+            
+              // Find the payment history for the user
+              const paymentHistory = await paymentHistoryCollection.findOne({ uid });
+            
+              // If payment history exists, update it
+              if (paymentHistory) {
+                paymentHistory.invoices.push(invoice);
+                await paymentHistoryCollection.updateOne(
+                  { uid },
+                  { $set: { invoices: paymentHistory.invoices } }
+                );
+              }
+              // If payment history doesn't exist, create it
+              else {
+                await paymentHistoryCollection.insertOne({
+                  uid,
+                  invoices: [invoice],
+                });
+              }
+            };
+            
           }
           break;
         // Handle failed payment and incomplete subscription
