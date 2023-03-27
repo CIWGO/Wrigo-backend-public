@@ -8,13 +8,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 // this middleware has not been tested
 const createCustomer = async (req: Request, next: NextFunction) => {
-	const {id, planId} = req.body;
-  
-	const userEmail = await findEmailByUid(id);
+	const { uid, planId } = req.body;
+
+	const userEmail = await findEmailByUid(uid);
 
 	try {
 		const customer = await stripe.customers.create({
 			email: userEmail,
+			metadata: {
+				uid
+			},
 		});
 
 		const subscription = await stripe.subscriptions.create({
@@ -26,7 +29,8 @@ const createCustomer = async (req: Request, next: NextFunction) => {
 			expand: ["latest_invoice.payment_intent"],
 		});
 		const requestBody = {
-			...req.body, 
+			...req.body,
+			customerId: customer.id,
 			subscriptionId: subscription.id,
 		};
 		req.body = requestBody;
