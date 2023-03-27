@@ -1,5 +1,7 @@
 import { Stripe } from "stripe";
 import { MongoClient } from "mongodb";
+const MONGODB_URI = "mongodb://localhost:27017/mydatabase";
+const DB_NAME = "mydatabase";
 
 const endpointSecret = "whsec_...";
 
@@ -11,13 +13,9 @@ interface Invoice {
   subscription: string;
   status: string;
   id: string;
+  customer: string;
 }
 
-// require the following data:
-// invoice.paid=true  OR  invoice.paid=false
-// subscription.status=active invoice.status=paid
-// OR
-// subscription.status=incomplete invoice.status=open
 const monitorMonthlyPay = async (req, res) => {
   let event = req.body;
   if (endpointSecret) {
@@ -30,6 +28,7 @@ const monitorMonthlyPay = async (req, res) => {
         endpointSecret
       );
     } catch (err) {
+      // Failed to get Stripe signature
       console.log("⚠️  Webhook signature verification failed.", err.message);
       return res.sendStatus(400);
     }
@@ -53,25 +52,43 @@ const monitorMonthlyPay = async (req, res) => {
             succeededSubscription.status === "active" &&
             succeededInvoice.status === "paid"
           ) {
-            invoice = await stripe.invoices.retrieve(succeededInvoice.id);
-            // SEND INVOICE TO DATABASE
-            // need to replace MongoDB details
-            const URI = "mongodb://localhost:27017";
-            const client = new MongoClient(URI);
-            await client.connect();
-            const database = client.db("invoices");
-            const collection = database.collection("invoices");
-            // Insert the invoice into the database
-            await collection.insertOne(invoice);
-            // Close the MongoDB connection
-            await client.close();
-            // SEND EMAIL RECEIPT TO CUSTOMER
-            // const customer = await stripe.customers.retrieve(
-            //   invoice.customer.toString()
-            // );
-            // await stripe.invoices.sendInvoice(invoice.id, {
-            //   customer: customer.id,
-            // });
+            // 1.get uid, customer id and subscription id
+            const uid = req.uid; // Assuming uid is available in the request
+            const customerId = succeededInvoice.customer;
+            const subscriptionId = succeededSubscription.id;
+            //  2. use uid to find/create payment history
+            const getPaymentHistoryCollection = async () => {
+              const client = await MongoClient.connect(MONGODB_URI, {});
+              const db = client.db(DB_NAME);
+              return db.collection("payment_history");
+            };
+            // 3. paymentInvoice: create payment invoice with incoming stripe data
+            const createPaymentInvoice = async (
+              customer,
+              subscription,
+              invoice
+            ) => {
+              const paymentHistoryCollection =
+                await getPaymentHistoryCollection();
+              const uid = customer.metadata.firebaseUID;
+              const customer_id = customer.id;
+              const subscription_id = subscription.id;
+              const amount_paid = invoice.amount_paid;
+              const invoice_id = invoice.id;
+
+              const paymentHistory = {
+                uid,
+                customer_id,
+                subscription_id,
+                amount_paid,
+                invoice_id,
+                created_at: new Date(),
+              };
+
+              await paymentHistoryCollection.insertOne(paymentHistory);
+
+              return paymentHistory;
+            };
           }
           break;
         // Handle failed payment and incomplete subscription
