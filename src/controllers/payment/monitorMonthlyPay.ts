@@ -1,7 +1,13 @@
 import { Stripe } from "stripe";
 import { MongoClient } from "mongodb";
+import sgMail from '@sendgrid/mail';
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const MONGODB_URI = "mongodb://localhost:27017/mydatabase";
 const DB_NAME = "mydatabase";
+const recipientEmail = "example@example.com";
+const senderEmail = "example@example.com";
+const customerName = "John Doe";
+
 
 const endpointSecret = "whsec_...";
 
@@ -14,6 +20,9 @@ interface Invoice {
   status: string;
   id: string;
   customer: string;
+  amount_paid: number;
+  currency: string;
+  created: number;
 }
 
 const monitorMonthlyPay = async (req, res) => {
@@ -70,7 +79,7 @@ const monitorMonthlyPay = async (req, res) => {
             ) => {
               const paymentHistoryCollection =
                 await getPaymentHistoryCollection();
-              const uid = customer.metadata.firebaseUID;
+              const uid = customer.metadata.userId;
               const customer_id = customer.id;
               const subscription_id = subscription.id;
               const amount_paid = invoice.amount_paid;
@@ -90,29 +99,118 @@ const monitorMonthlyPay = async (req, res) => {
               return paymentHistory;
             };
             // 4. paymentHistory: update/create payment history, add invoice into array
-            const addPaymentToHistory = async (uid, invoice) => {
-              const paymentHistoryCollection = await getPaymentHistoryCollection();
-            
-              // Find the payment history for the user
-              const paymentHistory = await paymentHistoryCollection.findOne({ uid });
-            
-              // If payment history exists, update it
+            if (
+              succeededSubscription.status === "active" &&
+              succeededInvoice.status === "paid"
+            ) {
+              const uid = req.uid;
+              const customerId = succeededSubscription.customer.toString();
+              const subscriptionId = succeededSubscription.id.toString();
+              const invoiceId = succeededInvoice.id.toString();
+              const invoiceAmount = succeededInvoice.amount_paid;
+              const invoiceCurrency = succeededInvoice.currency;
+              const invoiceDate = new Date(succeededInvoice.created * 1000);
+
+              const paymentHistoryCollection =
+                await getPaymentHistoryCollection();
+              const paymentHistory = await paymentHistoryCollection.findOne({
+                uid,
+              });
+
               if (paymentHistory) {
-                paymentHistory.invoices.push(invoice);
+                const updatedPaymentHistory = {
+                  ...paymentHistory,
+                  invoices: [
+                    ...paymentHistory.invoices,
+                    {
+                      invoiceId,
+                      amount: invoiceAmount,
+                      currency: invoiceCurrency,
+                      date: invoiceDate,
+                    },
+                  ],
+                };
                 await paymentHistoryCollection.updateOne(
                   { uid },
-                  { $set: { invoices: paymentHistory.invoices } }
+                  { $set: updatedPaymentHistory }
                 );
-              }
-              // If payment history doesn't exist, create it
-              else {
-                await paymentHistoryCollection.insertOne({
+              } else {
+                const newPaymentHistory = {
                   uid,
-                  invoices: [invoice],
-                });
+                  customerId,
+                  subscriptionId,
+                  invoices: [
+                    {
+                      invoiceId,
+                      amount: invoiceAmount,
+                      currency: invoiceCurrency,
+                      date: invoiceDate,
+                    },
+                  ],
+                };
+                await paymentHistoryCollection.insertOne(newPaymentHistory);
               }
-            };
-            
+
+              // 5. userAccount: set user isSubscribe to TRUE
+              const updateUserIsSubscribe = async (uid) => {
+                const client = await MongoClient.connect(MONGODB_URI, {
+                  // useNewUrlParser: true,
+                  // useUnifiedTopology: true,
+                });
+                const db = client.db(DB_NAME);
+                const usersCollection = db.collection("users");
+
+                try {
+                  const result = await usersCollection.updateOne(
+                    { uid },
+                    { $set: { isSubscribe: true } }
+                  );
+
+                  console.log(`Updated ${result.modifiedCount} document.`);
+                } catch (error) {
+                  console.log(error);
+                } finally {
+                  client.close();
+                }
+              };
+              // 6. send successful email
+
+              
+
+              // Assuming you have a template in SendGrid for the successful payment email
+              const SUCCESSFUL_PAYMENT_TEMPLATE_ID = "<YOUR_TEMPLATE_ID>";
+
+              const sendSuccessfulPaymentEmail = async (customerEmail) => {
+                const message = {
+                  to: recipientEmail,
+                  from: senderEmail,
+                  templateId: "your-template-id",
+                  dynamicTemplateData: {
+                    customerName: customerName,
+                    invoiceAmount: "$" + (invoiceAmount / 100).toFixed(2),
+                  },
+                };
+                
+
+                try {
+                  await sgMail.send(message);
+                  console.log("Successful payment email sent");
+                } catch (error) {
+                  console.error(error);
+                }
+              };
+
+              // Call this function when a successful payment is made
+              if (
+                succeededSubscription.status === "active" &&
+                succeededInvoice.status === "paid"
+              ) {
+                // Assuming you have the customer email available in the subscription metadata
+                const customerEmail =
+                  succeededSubscription.metadata.customer_email;
+                await sendSuccessfulPaymentEmail(customerEmail);
+              }
+            }
           }
           break;
         // Handle failed payment and incomplete subscription
