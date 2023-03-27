@@ -1,5 +1,4 @@
-// Index for payment controllers
-
+import { cancelSubscription } from "./cancelSubscription";
 import createPayment from "./createPayment";
 import createCustomer from "./createCustomer";
 import completeCheckout from "./completeCheckout";
@@ -8,4 +7,4 @@ import completeCheckout from "./completeCheckout";
 // import { deletePayment } from "./deletePayment";
 
 // export { createPayment, getPayment, updatePayment, deletePayment };
-export { createPayment, createCustomer, completeCheckout };
+export { createPayment, createCustomer, completeCheckout, cancelSubscription };
