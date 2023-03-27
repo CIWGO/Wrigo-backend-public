@@ -1,9 +1,9 @@
 import { userAccount } from "../../models/index";
-import userPaymentHistory from "@src/models/payment/paymentHistory";
 import { Request, Response } from "express";
 import findEmailByUid from "@src/utils/db/findEmailByUid";
 import { sendEmail } from "../../utils/ses_sendEmail";
 import { Stripe } from "stripe";
+import createOrUpdatePaymentHistory from "@src/utils/db/createOrUpdatePaymentHistory";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 	apiVersion: "2022-11-15",
@@ -29,27 +29,13 @@ const completeCheckout = async (req: Request, res: Response) => {
 		);
 
 		// create payment history, store uid, customer id, subscription id, invoice paid into database, User.isSubscirbed update to true
-		const latestInvoice = await stripe.invoices.list({
+		const latestInvoiceArray = await stripe.invoices.list({
 			subscription: subscriptionId,
 			limit: 1, // Only fetch the latest invoice
 			status: "paid", // Only fetch paid invoices, change this as needed
 		});
 
-		await userPaymentHistory.findOneAndUpdate(
-			{ uid },
-			{
-				$set: {
-					customerId,
-					subscriptionId
-				},
-				$push: {
-					invoices: latestInvoice.data[0],
-				},
-			},
-			{
-				upsert: true, // Create a new document if it doesn't exist
-			}
-		);
+		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoiceArray.data[0]);
 
 		await userAccount.findOneAndUpdate(
 			{ uid },
