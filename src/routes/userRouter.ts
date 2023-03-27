@@ -16,6 +16,7 @@ import {
 	findTopic,
 	searchAllTopics,
 	searchUserTopics,
+	monitorMonthlyPay,
 	viewPastPayment
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
@@ -37,7 +38,6 @@ userRouter.post("/viewPastPayment", tokenGuard,viewPastPayment);
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
-
 // get (use post)
 userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
@@ -56,5 +56,8 @@ userRouter.patch(
 	changePassword
 );
 userRouter.patch("/changeEmail", changeEmail);
+
+// monitor monthly payment
+userRouter.get("/monitorMonthlyPay", monitorMonthlyPay);
 
 export { userRouter };

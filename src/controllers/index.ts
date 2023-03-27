@@ -19,11 +19,19 @@ import {
 
 import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions, writingDraft } from "./writing/index";
 
-import { createOperationLog, findOperationLogByType, findOperationLogByUid } from "./log/index";
+import {
+	createOperationLog,
+	findOperationLogByType,
+	findOperationLogByUid,
+} from "./log/index";
 
-import { findTopic,searchAllTopics,searchUserTopics } from "./topic/index";
+import { findTopic, searchAllTopics, searchUserTopics } from "./topic/index";
 
-import { createPayment } from "./payment/index";
+import {
+	createPayment,
+	createCustomer,
+	monitorMonthlyPay,
+} from "./payment/index";
 
 
 export {
@@ -52,5 +60,7 @@ export {
 	writingDraft,
 	findTopic,
 	createPayment,
+	createCustomer,
+	monitorMonthlyPay,
 	viewPastPayment
 };
