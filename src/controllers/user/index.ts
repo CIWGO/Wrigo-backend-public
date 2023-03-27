@@ -14,6 +14,7 @@ import { tokenGuard } from "../../middlewares/userSession";
 import { createUser } from "./userSignup";
 import { getUserAccount } from "./getUser";
 import { changeEmail } from "./changeEmail";
+import viewPastPayment from "./viewPastPayment";
 
 export {
 	changePassword,
@@ -28,5 +29,6 @@ export {
 	tokenGuard,
 	createUser,
 	getUserAccount,
-	changeEmail
+	changeEmail,
+	viewPastPayment
 };

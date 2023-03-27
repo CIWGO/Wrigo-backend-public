@@ -13,7 +13,8 @@ import {
 	tokenGuard,
 	createUser,
 	getUserAccount,
-	changeEmail
+	changeEmail,
+	viewPastPayment
 } from "./user/index";
 
 import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions, writingDraft } from "./writing/index";
@@ -23,6 +24,7 @@ import { createOperationLog, findOperationLogByType, findOperationLogByUid } fro
 import { findTopic,searchAllTopics,searchUserTopics } from "./topic/index";
 
 import { createPayment } from "./payment/index";
+
 
 export {
 	changePassword,
@@ -49,6 +51,6 @@ export {
 	writingSubmissions,
 	writingDraft,
 	findTopic,
-	createPayment
-
+	createPayment,
+	viewPastPayment
 };
