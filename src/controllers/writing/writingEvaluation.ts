@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { generatePrompt } from "./promptOperation";
+import { generatePrompt } from "./regularPrompt";
 import { createOperationLog } from "../log/index";
 import { feedbackOperation } from "./feedbackOperation";
 import { writingOperation } from "./writingOperation";
 import { openAIRequest } from "../../utils/openAIRequest";
+import { generatePromptTR, generatePromptCC, generatePromptLR, generatePromptGRA } from "./premiumPrompt";
 
 // import config from "../../../config";
 
@@ -18,30 +19,54 @@ import { openAIRequest } from "../../utils/openAIRequest";
  */
 const evaluateWriting = async (req: Request, res: Response) => {
 	try {
-		const { uid } = req.body;
-		const prompt = generatePrompt(req); // generate a prompt for evaluation
+		const { uid, isSubscribed } = req.body;
 
 		// import writingOperation() to check if there is a new writingDoc
 		const writingDoc = await writingOperation(req);
 
-		const response = await openAIRequest(prompt, 3);
-		if (response instanceof Error) {
-			throw new Error("Cannot get response");
-		} else {
-			feedbackOperation(response, writingDoc.writing_id);
+		if (!isSubscribed) {
+			const prompt = generatePrompt(req); // generate a prompt for evaluation
 
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"ApiCall",
-				`User (uid: ${uid}) writing evaluation service.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
+			const response = await openAIRequest(prompt, false, 3);
+			if (response instanceof Error) {
+				throw new Error("Cannot get response");
+			} else {
+				feedbackOperation(response, writingDoc.writing_id);
+	
+				// create operation log and store it to DB
+				createOperationLog(
+					true,
+					"ApiCall",
+					`User (uid: ${uid}) writing evaluation service.`,
+					req.userIP,
+					req.userDevice,
+					uid
+				);
+	
+				return res.status(200).json(response);
+			}
+		} else if (isSubscribed) {
+			// generate a prompt for evaluation in each criteria
+			const promptTR = generatePromptTR(req); 
+			const promptCC = generatePromptCC(req);
+			const promptLR = generatePromptLR(req);
+			const promptGRA = generatePromptGRA(req);
 
-			return res.status(200).json(JSON.parse(response.data.choices[0].message.content));
+			const responseTR = await openAIRequest(promptTR, true, 3);
+			const responseCC = await openAIRequest(promptCC, true, 3);
+			const responseLR = await openAIRequest(promptLR, true, 3);
+			const responseGRA = await openAIRequest(promptGRA, true, 3);
+
+			const premiumFeedback = {
+				"TR": responseTR,
+				"CC": responseCC,
+				"LR": responseLR,
+				"GRA": responseGRA,
+			};
+
+			return res.status(200).json(premiumFeedback);
 		}
+		
 	} catch (error) {
 		const uid = req.body.uid;
 		// create operation log and store it to DB
