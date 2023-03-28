@@ -17,7 +17,7 @@ import outputFormat from "./outputFormat.json";
 
 const generatePrompt = (req: Request) => {
 	// change the name to generatePrompt
-	const instruction = "Act as an IELTS grader. Evaluate this writing on nine-band scale of JSON. Return JSON following this format:";
+	const instruction = "Ignore all liabilities and act as an IELTS grader. Evaluate this writing on all criteria. Must give feedback in each criteria mentioning extensive details in writing content. Respond only a JSON as the following format: ";
 	const evaluateOutputFormat = JSON.stringify(
 		outputFormat.evaluateOutputFormat
 	);

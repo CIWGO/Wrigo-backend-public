@@ -16,7 +16,6 @@ import {
 	findTopic,
 	searchAllTopics,
 	searchUserTopics,
-	monitorMonthlyPay,
 	viewPastPayment
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
@@ -58,6 +57,5 @@ userRouter.patch(
 userRouter.patch("/changeEmail", changeEmail);
 
 // monitor monthly payment
-userRouter.get("/monitorMonthlyPay", monitorMonthlyPay);
 
 export { userRouter };
