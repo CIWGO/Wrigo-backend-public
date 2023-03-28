@@ -1,6 +1,6 @@
 
 const topicCatPrompt = (topic: string): string => {
-    const instruction = "define the type of this IELTS task 2 topic in format of 'type: ': ";
+    const instruction = "define the type of this IELTS task 2 topic in Opinion, Discussion, Problem and Solution, Direct Question, or Advantage and Disadvantage with format of 'type: ': ";
 
     const prompt = instruction + topic;
 

@@ -5,6 +5,7 @@ import { feedbackOperation } from "./feedbackOperation";
 import { writingOperation } from "./writingOperation";
 import { openAIRequest } from "../../utils/openAIRequest";
 import { generatePromptTR, generatePromptCC, generatePromptLR, generatePromptGRA } from "./premiumPrompt";
+import { premFeedbackOpe } from "./premFeedbackOpe";
 
 // import config from "../../../config";
 
@@ -32,7 +33,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 				throw new Error("Cannot get response");
 			} else {
 				feedbackOperation(response, writingDoc.writing_id);
-	
+
 				// create operation log and store it to DB
 				createOperationLog(
 					true,
@@ -42,12 +43,12 @@ const evaluateWriting = async (req: Request, res: Response) => {
 					req.userDevice,
 					uid
 				);
-	
+
 				return res.status(200).json(response);
 			}
 		} else if (isSubscribed) {
 			// generate a prompt for evaluation in each criteria
-			const promptTR = generatePromptTR(req); 
+			const promptTR = generatePromptTR(req);
 			const promptCC = generatePromptCC(req);
 			const promptLR = generatePromptLR(req);
 			const promptGRA = generatePromptGRA(req);
@@ -57,16 +58,48 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			const responseLR = await openAIRequest(promptLR, true, 3);
 			const responseGRA = await openAIRequest(promptGRA, true, 3);
 
+			// // regular expression to match the pattern, e.g. "TR: 0.0"
+			const regexTR = /TR: \d+\.\d+/;
+			const regexCC = /CC: \d+\.\d+/;
+			const regexLR = /LR: \d+\.\d+/;
+			const regexGRA = /GRA: \d+\.\d+/;
+
+			const extractedScoreTR = responseTR.match(regexTR)[0];
+			const extractedScoreCC = responseCC.match(regexCC)[0];
+			const extractedScoreLR = responseLR.match(regexLR)[0];
+			const extractedScoreGRA = responseGRA.match(regexGRA)[0];
+
+			const extractedTextTR = responseTR.replace(regexTR, "");
+			const extractedTextCC = responseCC.replace(regexCC, "");
+			const extractedTextLR = responseLR.replace(regexLR, "");
+			const extractedTextGRA = responseGRA.replace(regexGRA, "");
+
 			const premiumFeedback = {
-				"TR": responseTR,
-				"CC": responseCC,
-				"LR": responseLR,
-				"GRA": responseGRA,
+				"commentTR": extractedTextTR,
+				"commentCC": extractedTextCC,
+				"commentLR": extractedTextLR,
+				"commentGRA": extractedTextGRA,
+				"TR": extractedScoreTR.toFixed(1),
+				"CC": extractedScoreCC.toFixed(1),
+				"LR": extractedScoreLR.toFixed(1),
+				"GRA": extractedScoreGRA.toFixed(1),
 			};
+
+			premFeedbackOpe(premiumFeedback, writingDoc.writing_id);
+
+			// create operation log and store it to DB
+			createOperationLog(
+				true,
+				"ApiCall",
+				`User (uid: ${uid}) writing evaluation service.`,
+				req.userIP,
+				req.userDevice,
+				uid
+			);
 
 			return res.status(200).json(premiumFeedback);
 		}
-		
+
 	} catch (error) {
 		const uid = req.body.uid;
 		// create operation log and store it to DB

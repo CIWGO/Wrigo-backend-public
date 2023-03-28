@@ -3,16 +3,21 @@ import { openAIRequest } from "../../utils/openAIRequest";
 
 const topicCategory = async (topic: string) => {
     const prompt = topicCatPrompt(topic);
-    const category = await openAIRequest(prompt, true, 3);
+    const categoryOutput = await openAIRequest(prompt, true, 3);
+    const categoryArray = categoryOutput.split(" ");
+    const index = categoryArray.indexOf("type:");
+    const category = categoryArray[index + 1];
 
-    if (category.includes(""))
 
     return category;
 };
 
 const topicDifficulty = async (topic: string) => {
     const prompt = topicDiffPrompt(topic);
-    const difficulty = await openAIRequest(prompt, true, 3);
+    const difficultyOutput = await openAIRequest(prompt, true, 3);
+    const difficultyArray = difficultyOutput.split(" ");
+    const index = difficultyArray.indexOf("difficulty:");
+    const difficulty = difficultyArray[index + 1];
 
     return difficulty;
 };

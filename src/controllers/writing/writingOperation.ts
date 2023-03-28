@@ -11,7 +11,7 @@ const writingOperation = async (req: Request) => {
 	if (writingDoc) {
 		writingDoc.submit_time = new Date(Date.now());
 		writingDoc.writing_content = content;
-
+		// change to update
 		await writingDoc.save();
 		return writingDoc;
 	} else {
