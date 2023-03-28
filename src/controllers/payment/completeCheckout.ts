@@ -42,7 +42,7 @@ const completeCheckout = async (req: Request, res: Response) => {
 		);
 
 		// create payment history, store uid, customer id, subscription id, invoice paid into database, User.isSubscirbed update to true
-		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoiceArray.data[0]);
+		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoice);
 
 		await userAccount.findOneAndUpdate(
 			{ uid },
