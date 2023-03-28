@@ -25,12 +25,20 @@ const completeCheckout = async (req: Request, res: Response) => {
 			limit: 1, // Only fetch the latest invoice
 			status: "paid", // Only fetch paid invoices, change this as needed
 		});
+		const latestInvoice = latestInvoiceArray.data[0];
 
 		// send user receipt
 		await sendEmail(
 			[userEmail],
 			"WRIGO - subscription receipt",
-			`checkout completed. Receipt: ${latestInvoiceArray.data[0]}`
+			`Dear customer,
+
+			Thank you for your payment. Here are the details of your invoice: ${latestInvoice},
+
+			Thank you for your business!
+
+			Best regards,
+			WRIGO`
 		);
 
 		// create payment history, store uid, customer id, subscription id, invoice paid into database, User.isSubscirbed update to true
