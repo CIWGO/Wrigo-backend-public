@@ -30,7 +30,7 @@ const completeCheckout = async (req: Request, res: Response) => {
 		// send user receipt
 		await sendEmail(
 			[userEmail],
-			"WRIGO - subscription receipt",
+			"WRIGO - subscription successful",
 			`Dear customer,
 
 			Thank you for your payment. Here are the details of your invoice: ${latestInvoice},
