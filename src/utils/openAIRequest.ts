@@ -30,7 +30,7 @@ const openAIRequest = async (prompt: any, returnString: boolean, maxRetries = 3)
 			}
 			// return response;
 		} else if (returnString) {
-			return JSON.parse(response.data.choices[0].message.content);
+			return JSON.stringify(JSON.parse(response.data.choices[0].message.content));
 		}
 
 	} catch (error) {
