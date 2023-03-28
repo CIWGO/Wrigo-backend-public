@@ -1,4 +1,4 @@
-import userPaymentHistory from "@src/models/payment/paymentHistory";
+import userPaymentHistory from "../../models/payment/paymentHistory";
 
 const createOrUpdatePaymentHistory = async (uid, customerId, subscriptionId, latestInvoice) => {
 	await userPaymentHistory.findOneAndUpdate(
