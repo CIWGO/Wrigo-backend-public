@@ -9,10 +9,10 @@ import { feedback as FeedbackModel } from "../../models";
  * @param {string} writing_id the id of writingDoc.
  */
 
-const feedbackOperation = async (response:any, writing_id: string) => {
+const feedbackOperation = async (response: any, writing_id: string) => {
 	try {
 		// pick up only JSON format data from response
-		let comment = response.data.choices[0].message.content;
+		let comment = response;
 		console.log(comment);
 		const startBracket = comment.indexOf("{");
 		if (startBracket !== -1) {
