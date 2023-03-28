@@ -20,22 +20,30 @@ const completeCheckout = async (req: Request, res: Response) => {
 	try {
 		// Send receipt to user by email
 		const userEmail = await findEmailByUid(uid);
-
-		// send user receipt
-		await sendEmail(
-			[userEmail],
-			"WRIGO - subscription successful",
-			"Thank you for subscribing WRIGO!"
-		);
-
-		// create payment history, store uid, customer id, subscription id, invoice paid into database, User.isSubscirbed update to true
 		const latestInvoiceArray = await stripe.invoices.list({
 			subscription: subscriptionId,
 			limit: 1, // Only fetch the latest invoice
 			status: "paid", // Only fetch paid invoices, change this as needed
 		});
+		const latestInvoice = latestInvoiceArray.data[0];
 
-		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoiceArray.data[0]);
+		// send user receipt
+		await sendEmail(
+			[userEmail],
+			"WRIGO - subscription successful",
+			"WRIGO - subscription receipt",
+			`Dear customer,
+
+			Thank you for your payment. Here are the details of your invoice: ${latestInvoice},
+
+			Thank you for your business!
+
+			Best regards,
+			WRIGO`
+		);
+
+		// create payment history, store uid, customer id, subscription id, invoice paid into database, User.isSubscirbed update to true
+		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoice);
 
 		await userAccount.findOneAndUpdate(
 			{ uid },
