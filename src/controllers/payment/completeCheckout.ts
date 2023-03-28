@@ -1,9 +1,9 @@
 import { userAccount } from "../../models/index";
 import { Request, Response } from "express";
-import findEmailByUid from "@src/utils/db/findEmailByUid";
+import findEmailByUid from "../../utils/db/findEmailByUid";
 import { sendEmail } from "../../utils/ses_sendEmail";
 import { Stripe } from "stripe";
-import createOrUpdatePaymentHistory from "@src/utils/db/createOrUpdatePaymentHistory";
+import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 	apiVersion: "2022-11-15",
