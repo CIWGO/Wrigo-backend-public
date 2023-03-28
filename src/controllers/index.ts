@@ -29,7 +29,8 @@ import { findTopic, searchAllTopics, searchUserTopics } from "./topic/index";
 
 import {
 	createPayment,
-	createCustomer
+	createCustomer,
+	handleStripeWebhook
 } from "./payment/index";
 
 
@@ -60,5 +61,6 @@ export {
 	findTopic,
 	createPayment,
 	createCustomer,
-	viewPastPayment
+	viewPastPayment,
+	handleStripeWebhook
 };

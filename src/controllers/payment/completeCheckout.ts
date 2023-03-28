@@ -24,8 +24,8 @@ const completeCheckout = async (req: Request, res: Response) => {
 		// send user receipt
 		await sendEmail(
 			[userEmail],
-			"WRIGO - subscription receipt",
-			"checkout completed."
+			"WRIGO - subscription successful",
+			"Thank you for subscribing WRIGO!"
 		);
 
 		// create payment history, store uid, customer id, subscription id, invoice paid into database, User.isSubscirbed update to true
