@@ -17,6 +17,7 @@ import { createOperationLog } from "../log/index";
  */
 
 const showUserProfile = async (req: Request, res: Response) => {
+	
 	const { uid } = req.body;
 
 	try {

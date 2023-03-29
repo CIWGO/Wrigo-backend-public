@@ -38,9 +38,9 @@ userRouter.post("/viewPastPayment", tokenGuard,viewPastPayment);
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
 
 // get (use post)
-userRouter.post("/getUser", getUserAccount);
-userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
-userRouter.post("/viewHistory", viewHistory);
+userRouter.post("/getUser",getUserAccount);
+userRouter.post("/getUserProfile", tokenGuard,showUserProfile);
+userRouter.post("/viewHistory",viewHistory);
 userRouter.post("/getTopic", findTopic);
 userRouter.post("/searchAllTopics", searchAllTopics);
 userRouter.post("/searchUserTopics", searchUserTopics);
