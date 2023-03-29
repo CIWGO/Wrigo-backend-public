@@ -6,7 +6,6 @@ const subscriptionGard = async (req: Request, res: Response, next: NextFunction)
   try {
     const user = await UserAccount.findOne({ uid }).exec();
     const isSubscribed = user.isSubscribed;
-    console.log("isSubscribed:" + isSubscribed); 
     const newReqBody = {
       ...req.body,
       isSubscribed
