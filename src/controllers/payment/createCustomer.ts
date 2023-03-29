@@ -1,4 +1,4 @@
-import { Request, NextFunction } from "express";
+import { Request, Response,NextFunction } from "express";
 import { Stripe } from "stripe";
 import findEmailByUid from "../../utils/db/findEmailByUid";
 
@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 // this middleware has not been tested
-const createCustomer = async (req: Request, next: NextFunction) => {
+const createCustomer = async (req: Request,res:Response, next: NextFunction) => {
 	const { uid, planId } = req.body;
 
 	const userEmail = await findEmailByUid(uid);
@@ -37,6 +37,7 @@ const createCustomer = async (req: Request, next: NextFunction) => {
 		next();
 	} catch (error) {
 		console.log("error in create customer middleware");
+		return res.status(404);
 	}
 };
 
