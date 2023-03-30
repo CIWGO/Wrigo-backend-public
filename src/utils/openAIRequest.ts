@@ -4,7 +4,7 @@ import config from "../../config";
 const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
 
-const openAIRequest = async (prompt: any, returnString: boolean, maxRetries = 3) => {
+const openAIRequest = async (prompt: any, returnString: boolean) => {
 	try {
 		const response = await axios({
 			method: "POST",
@@ -34,12 +34,7 @@ const openAIRequest = async (prompt: any, returnString: boolean, maxRetries = 3)
 		}
 
 	} catch (error) {
-		if (maxRetries <= 0) {
-			console.log(error);
-			throw new Error("Maximum number of retries reached.");
-		} else {
-			return await openAIRequest(prompt, returnString, maxRetries - 1);
-		}
+		console.log(error);
 	}
 };
 

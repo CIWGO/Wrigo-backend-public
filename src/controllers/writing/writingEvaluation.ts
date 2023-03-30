@@ -27,8 +27,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 
 		if (!isSubscribed) {
 			const prompt = generatePrompt(req); // generate a prompt for evaluation
-
-			const response = await openAIRequest(prompt, false, 3);
+			const response = await openAIRequest(prompt, false);
 			if (response instanceof Error) {
 				throw new Error("Cannot get response");
 			} else {
@@ -53,10 +52,10 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			const promptLR = generatePromptLR(req);
 			const promptGRA = generatePromptGRA(req);
 
-			const responseTR = await openAIRequest(promptTR, true, 3);
-			const responseCC = await openAIRequest(promptCC, true, 3);
-			const responseLR = await openAIRequest(promptLR, true, 3);
-			const responseGRA = await openAIRequest(promptGRA, true, 3);
+			const responseTR = await openAIRequest(promptTR, true);
+			const responseCC = await openAIRequest(promptCC, true);
+			const responseLR = await openAIRequest(promptLR, true);
+			const responseGRA = await openAIRequest(promptGRA, true);
 
 			// // regular expression to match the pattern, e.g. "TR: 0.0"
 			const regexTR = /TR: \d+\.\d+/;
