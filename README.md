@@ -55,6 +55,8 @@ STRIPE_PUBLIC_KEY = "pk_test_51Ml43uJm2vMPXBBfJpBJLlYZYDaniI3qbpAkx5cqHakuqkRbQQ
 STRIPE_SECRET_KEY = "sk_test_51Ml43uJm2vMPXBBfPBKnmLijGLwkMtJReVEpZd0foRz2pJW0N1D8xIt1ZmEAjUaiSgvFRc31VVb4tm6eYMbdwIt300IGfq0hVW"
 STRIPE_PRODUCT_ID = "price_1Ml4JRJm2vMPXBBf8YgX4Aqa"
 STRIPE_PAYMENT_URL = "https://buy.stripe.com/test_eVa6rM8swblAely7ss"
+FRONT_END="http://localhost:3000"
+OPENAI_APIKEY = "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"
 ```
 
 ### Create .aws/credentials
