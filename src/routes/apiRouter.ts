@@ -10,7 +10,9 @@ const apiRouter = Router();
 // evaluate writing (core function)
 apiRouter.post("/evaluate", evaluateWriting);
 apiRouter.post("/writingStatistics", tokenGuard, WritingStatistics);
-apiRouter.post("/checkout", tokenGuard,createPayment,createCustomer, completeCheckout);
+// apiRouter.post("/checkout", tokenGuard, createPayment, createCustomer, completeCheckout);
+apiRouter.post("/checkout", tokenGuard, createPayment);
+apiRouter.post("/checkoutSuccess", createCustomer, completeCheckout);
 apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
 
 // payment
