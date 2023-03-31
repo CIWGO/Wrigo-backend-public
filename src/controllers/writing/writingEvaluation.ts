@@ -48,7 +48,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 					uid
 				);
 
-				return res.status(200).json(response);
+				return res.status(200).json({isSubscribed, response});
 			}
 		} else if (isSubscribed === true) {
 			// generate a prompt for evaluation in each criteria
@@ -100,7 +100,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 				uid
 			);
 
-			return res.status(200).json(premiumFeedback);
+			return res.status(200).json({isSubscribed, premiumFeedback});
 		}
 
 	} catch (error) {
