@@ -11,8 +11,18 @@ const writingOperation = async (req: Request) => {
 	if (writingDoc) {
 		writingDoc.submit_time = new Date(Date.now());
 		writingDoc.writing_content = content;
-		// change to update
-		await writingDoc.save();
+
+		WritingModel.findOneAndUpdate(
+			{ writing_id },
+			{
+				$set: {
+					submit_time: new Date(Date.now()),
+					writing_content: content 
+				},
+			},
+			{ new: true }
+		).exec();
+		// await writingDoc.save();
 		return writingDoc;
 	} else {
 		const isTopicExist = await TopicModel.findOne({ topic });
@@ -49,6 +59,7 @@ const writingOperation = async (req: Request) => {
 			task_topic: topic,
 			writing_content: content,
 		});
+
 		await writingDoc.save();
 	}
 	return writingDoc;
