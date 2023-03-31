@@ -49,7 +49,6 @@ const schema = new Schema<Feedback>(
 		},
 		feedback_overall: {
 			type: String,
-			required: true,
 		},
 		score_TR: {
 			type: Number,
