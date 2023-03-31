@@ -4,7 +4,12 @@ import { createOperationLog } from "../log/index";
 import { feedbackOperation } from "./feedbackOperation";
 import { writingOperation } from "./writingOperation";
 import { openAIRequest } from "../../utils/openAIRequest";
-import { generatePromptTR, generatePromptCC, generatePromptLR, generatePromptGRA } from "./premiumPrompt";
+import {
+	generatePromptTR,
+	generatePromptCC,
+	generatePromptLR,
+	generatePromptGRA
+} from "./premiumPrompt";
 import { premFeedbackOpe } from "./premFeedbackOpe";
 
 // import config from "../../../config";
@@ -25,7 +30,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		// import writingOperation() to check if there is a new writingDoc
 		const writingDoc = await writingOperation(req);
 
-		if (!isSubscribed) {
+		if (isSubscribed === false) {
 			const prompt = generatePrompt(req); // generate a prompt for evaluation
 			const response = await openAIRequest(prompt, false);
 			if (response instanceof Error) {
@@ -45,7 +50,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 
 				return res.status(200).json(response);
 			}
-		} else if (isSubscribed) {
+		} else if (isSubscribed === true) {
 			// generate a prompt for evaluation in each criteria
 			const promptTR = generatePromptTR(req);
 			const promptCC = generatePromptCC(req);
@@ -57,18 +62,18 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			const responseLR = await openAIRequest(promptLR, true);
 			const responseGRA = await openAIRequest(promptGRA, true);
 
-			// // regular expression to match the pattern, e.g. "TR: 0.0"
-			const regexTR = /TR: \d+\.\d+/;
-			const regexCC = /CC: \d+\.\d+/;
-			const regexLR = /LR: \d+\.\d+/;
-			const regexGRA = /GRA: \d+\.\d+/;
+			// // regular expression to match the pattern, e.g. "0.0"
+			const regexTR = /\d+\.\d+/;
+			const regexCC = /\d+\.\d+/;
+			const regexLR = /\d+\.\d+/;
+			const regexGRA = /\d+\.\d+/;
 
-			const extractedScoreTR = responseTR.match(regexTR)[0];
+			const extractedScoreTR = await responseTR.match(regexTR)[0];
 			const extractedScoreCC = responseCC.match(regexCC)[0];
 			const extractedScoreLR = responseLR.match(regexLR)[0];
 			const extractedScoreGRA = responseGRA.match(regexGRA)[0];
 
-			const extractedTextTR = responseTR.replace(regexTR, "");
+			const extractedTextTR = await responseTR.replace(regexTR, "");
 			const extractedTextCC = responseCC.replace(regexCC, "");
 			const extractedTextLR = responseLR.replace(regexLR, "");
 			const extractedTextGRA = responseGRA.replace(regexGRA, "");
@@ -78,12 +83,11 @@ const evaluateWriting = async (req: Request, res: Response) => {
 				"commentCC": extractedTextCC,
 				"commentLR": extractedTextLR,
 				"commentGRA": extractedTextGRA,
-				"TR": extractedScoreTR.toFixed(1),
-				"CC": extractedScoreCC.toFixed(1),
-				"LR": extractedScoreLR.toFixed(1),
-				"GRA": extractedScoreGRA.toFixed(1),
+				"TR": extractedScoreTR,
+				"CC": extractedScoreCC,
+				"LR": extractedScoreLR,
+				"GRA": extractedScoreGRA,
 			};
-
 			premFeedbackOpe(premiumFeedback, writingDoc.writing_id);
 
 			// create operation log and store it to DB

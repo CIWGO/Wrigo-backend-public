@@ -6,7 +6,7 @@ const topicCategory = async (topic: string) => {
     const categoryOutput = await openAIRequest(prompt, true);
     const categoryArray = categoryOutput.split(" ");
     const index = categoryArray.indexOf("type:");
-    const category = categoryArray[index + 1];
+    const category = categoryArray[index + 2];
 
 
     return category;

@@ -24,7 +24,7 @@ const generatePrompt = (req: Request) => {
 	const userInput = JSON.stringify(req.body.topic + req.body.content);
 	// const prompt = instruction + evaluateOutputFormat + userInput;
 	const prompt = [{
-		"role": "user", 
+		"role": "user",
 		"content": userInput + instruction + evaluateOutputFormat,
 	}];
 
