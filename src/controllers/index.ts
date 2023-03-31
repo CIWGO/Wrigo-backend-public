@@ -17,7 +17,7 @@ import {
 	viewPastPayment
 } from "./user/index";
 
-import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions, writingDraft } from "./writing/index";
+import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions, writingDraft, deleteWritings } from "./writing/index";
 
 import {
 	createOperationLog,
@@ -62,5 +62,6 @@ export {
 	createPayment,
 	createCustomer,
 	viewPastPayment,
-	handleStripeWebhook
+	handleStripeWebhook,
+	deleteWritings
 };

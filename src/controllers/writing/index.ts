@@ -9,12 +9,14 @@ import { WritingStatistics } from "./writingStatistics";
 import { writingSubmissions } from "./writingSubmissions";
 
 import { writingDraft } from "./writingDraft";
+import { deleteWritings } from "./deleteWriting";
 export {
 	// generatePromptForEvaluation,
 	evaluateWriting,
 	viewHistory,
 	WritingStatistics,
 	writingSubmissions,
-	writingDraft
+	writingDraft,
+	deleteWritings
 	//responseOperation
 };
