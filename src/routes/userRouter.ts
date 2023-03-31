@@ -16,7 +16,8 @@ import {
 	findTopic,
 	searchAllTopics,
 	searchUserTopics,
-	viewPastPayment
+	viewPastPayment,
+	deleteWritings
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -36,6 +37,7 @@ userRouter.post("/viewPastPayment", tokenGuard,viewPastPayment);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
+userRouter.put("/deleteWriting", deleteWritings);
 
 // get (use post)
 userRouter.post("/getUser",getUserAccount);
