@@ -6,6 +6,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 const createPayment = async (req: Request, res: Response) => {
+	console.log("***create payment start");
+
 	const url = process.env.FRONT_END;
 	try {
 		const { planId } = req.body;
@@ -21,6 +23,8 @@ const createPayment = async (req: Request, res: Response) => {
 			],
 			success_url: `${url}/user/paymentSuccess`,
 		});
+
+		console.log("***create payment end");
 		res.status(200).json({ url: session.url });
 	} catch (error) {
 		res.status(500).send(error);
