@@ -33,6 +33,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		if (isSubscribed === false) {
 			const prompt = generatePrompt(req); // generate a prompt for evaluation
 			const response = await openAIRequest(prompt, false);
+			console.log(`writingEvalutation ${response}`);
 			if (response instanceof Error) {
 				throw new Error("Cannot get response");
 			} else {
