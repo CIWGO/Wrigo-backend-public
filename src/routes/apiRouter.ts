@@ -8,7 +8,7 @@ import { createPayment, createCustomer, completeCheckout} from "../controllers/p
 const apiRouter = Router();
 
 // evaluate writing (core function)
-apiRouter.post("/evaluate", subscriptionGard, evaluateWriting);
+apiRouter.post("/evaluate", tokenGuard, subscriptionGard, evaluateWriting);
 apiRouter.post("/writingStatistics", tokenGuard, WritingStatistics);
 apiRouter.post("/checkout", tokenGuard,createPayment,createCustomer, completeCheckout);
 apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
