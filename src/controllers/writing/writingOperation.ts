@@ -10,7 +10,7 @@ const writingOperation = async (req: Request) => {
 	let writingDoc = await WritingModel.findOne({ writing_id });
 
 	if (writingDoc) {
-		console.log(`oldWriting`);
+		console.log("oldWriting");
 		writingDoc.submit_time = new Date(Date.now());
 		writingDoc.writing_content = content;
 
@@ -26,11 +26,11 @@ const writingOperation = async (req: Request) => {
 		).exec();
 		return writingDoc;
 	} else {
-		console.log(`newWriting`);
+		console.log("newWriting");
 		const isTopicExist = await TopicModel.findOne({ topic_content });
 
 		if (isTopicExist === null) {
-			console.log(`newTopic`);
+			console.log("newTopic");
 			const topicCategory = await Category(topic_content);
 			console.log(topicCategory);
 			const topicDifficulty = await Difficulty(topic_content);
