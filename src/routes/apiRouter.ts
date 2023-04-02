@@ -4,7 +4,6 @@ import { evaluateWriting } from "../controllers/index";
 import { WritingStatistics, writingSubmissions } from "../controllers/index";
 import { subscriptionGard, tokenGuard } from "../middlewares/index";
 import { createPayment } from "../controllers/payment/index";
-import { cancelSubscriptionImmediately } from "../controllers/payment/cancelSubscriptionImmediately";
 
 const apiRouter = Router();
 
@@ -18,6 +17,5 @@ apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
 
 // payment
 apiRouter.post("/cancelSubscriptionAtPeriodEnd", cancelSubscriptionAtPeriodEnd);
-apiRouter.post("/cancelSubscriptionImmediately", cancelSubscriptionImmediately);
 
 export { apiRouter };
