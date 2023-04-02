@@ -11,11 +11,11 @@ on:
   workflow_dispatch:
 
 env:
-  ECR_REGISTRY: 425927917438.dkr.ecr.ap-southeast-1.amazonaws.com
-  IMAGE_NAME: ciwgo2023
-  AWS_REGION: ap-southeast-1
-  ECS_CLUSTER: CiwgoBackendCluster
-  ECS_SERVICE: CiwgoBackendService
+  ECR_REGISTRY: 425927917438.dkr.ecr.ap-southeast-2.amazonaws.com
+  IMAGE_NAME: backendecr
+  AWS_REGION: ap-southeast-2
+  ECS_CLUSTER: backend
+  ECS_SERVICE: backend
   
 jobs:
   buildImage:
@@ -57,5 +57,4 @@ jobs:
           aws ecs update-service \
             --cluster $ECS_CLUSTER \
             --service $ECS_SERVICE \
-            --task-definition CiwgoBackendTask:2 \
             --force-new-deployment
