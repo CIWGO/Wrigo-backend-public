@@ -1,9 +1,10 @@
-import { cancelSubscription } from "../controllers/payment/index";
+import { cancelSubscriptionAtPeriodEnd } from "../controllers/payment/index";
 import { Router } from "express";
 import { evaluateWriting } from "../controllers/index";
-import { WritingStatistics, writingSubmissions, handleStripeWebhook } from "../controllers/index";
+import { WritingStatistics, writingSubmissions } from "../controllers/index";
 import { subscriptionGard, tokenGuard } from "../middlewares/index";
-import { createPayment, createCustomer, completeCheckout } from "../controllers/payment/index";
+import { createPayment } from "../controllers/payment/index";
+import { cancelSubscriptionImmediately } from "../controllers/payment/cancelSubscriptionImmediately";
 
 const apiRouter = Router();
 
@@ -16,7 +17,7 @@ apiRouter.post("/checkout", tokenGuard, createPayment);
 apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
 
 // payment
-apiRouter.post("/cancelSubscription", cancelSubscription);
-
+apiRouter.post("/cancelSubscriptionAtPeriodEnd", cancelSubscriptionAtPeriodEnd);
+apiRouter.post("/cancelSubscriptionImmediately", cancelSubscriptionImmediately);
 
 export { apiRouter };

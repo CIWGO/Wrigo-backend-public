@@ -1,4 +1,4 @@
-import { cancelSubscription } from "./cancelSubscription";
+import cancelSubscriptionAtPeriodEnd from "./cancelSubscriptionAtPeriodEnd";
 import createPayment from "./createPayment";
 import createCustomer from "./createCustomer";
 import completeCheckout from "./completeCheckout";
@@ -8,4 +8,4 @@ import handleStripeWebhook from "./webhook";
 // import { deletePayment } from "./deletePayment";
 
 // export { createPayment, getPayment, updatePayment, deletePayment };
-export { createPayment, createCustomer, completeCheckout, cancelSubscription,handleStripeWebhook };
+export { createPayment, createCustomer, completeCheckout, cancelSubscriptionAtPeriodEnd, handleStripeWebhook };

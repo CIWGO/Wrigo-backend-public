@@ -14,10 +14,11 @@ const createPayment = async (req: Request, res: Response) => {
 	const url = process.env.FRONT_END;
 
 	try {
-		const { uid, planId } = req.body;
+		const { uid, username, planId } = req.body;
 
 		// Create a customer with the uid in metadata
 		const customer = await stripe.customers.create({
+			name: username,
 			metadata: {
 				uid: uid,
 			},
