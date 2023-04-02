@@ -1,7 +1,7 @@
 import { cancelSubscription } from "../controllers/payment/index";
 import { Router } from "express";
 import { evaluateWriting } from "../controllers/index";
-import { WritingStatistics, writingSubmissions, handleStripeWebhook } from "../controllers/index";
+import { WritingStatistics, writingSubmissions } from "../controllers/index";
 import { tokenGuard } from "../middlewares/index";
 import { createPayment } from "../controllers/payment/index";
 
@@ -17,6 +17,6 @@ apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
 
 // payment
 apiRouter.post("/cancelSubscription", cancelSubscription);
-apiRouter.post("/stripe-webhook", handleStripeWebhook);
+
 
 export { apiRouter };
