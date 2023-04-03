@@ -30,7 +30,10 @@ const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?
 		await userAccount.findOneAndUpdate(
 			{ uid },
 			{
-				$set: { isSubscribed: false },
+				$set: {
+					isSubscribed: false,
+					subscriptionSince: ""
+				},
 			}
 		).exec();
 

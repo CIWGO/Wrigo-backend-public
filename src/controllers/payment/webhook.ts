@@ -5,7 +5,7 @@ import { createPaymentInvoice } from "../../utils/db/createPaymentInvoice";
 import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
 import { userAccount as UserModel } from "../../models/index";
 import { cancelSubscriptionImmediately } from "./cancelSubscriptionImmediately";
-import newToSubscription from "./addSubscribedSince";
+import addSubscribedSince from "./addSubscribedSince";
 
 const STRIPE_SECRET_KEY = config.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = config.STRIPE_WEBHOOK_SECRET;
@@ -61,7 +61,7 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 
 		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoice);
 
-		await newToSubscription(uid);
+		await addSubscribedSince(uid);
 		await UserModel.findOneAndUpdate(
 			{ uid },
 			{

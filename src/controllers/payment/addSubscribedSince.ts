@@ -1,7 +1,7 @@
 import UserAccount from "../../models/user/userAccount";
 import  PaymentHistory  from "../../models/payment/paymentHistory";
 
-const newToSubscription = async (uid) => { 
+const addSubscribedSince = async (uid) => { 
   const user = await UserAccount.findOne({ uid });
   try {
     if (!user.isSubscribed) {
@@ -19,4 +19,4 @@ const newToSubscription = async (uid) => {
   
 };
 
-export default newToSubscription;
+export default addSubscribedSince;

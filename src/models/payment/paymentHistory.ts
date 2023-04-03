@@ -6,6 +6,7 @@ export interface UserPaymentHistory {
 	uid: string;
 	customerId: string;
 	subscriptionId: string;
+	subscriptionSince: Date;
 	invoices: (typeof Invoice)["prototype"]["_id"][];
 }
 
@@ -21,6 +22,9 @@ const schema = new Schema<UserPaymentHistory>(
 		},
 		subscriptionId: {
 			type: String,
+		},
+		subscriptionSince: {
+			type: Date,
 		},
 		invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }],
 	},
