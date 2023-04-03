@@ -1,19 +1,29 @@
-import Stripe from "stripe";
+// import Stripe from "stripe";
 // import { Request, Response } from "express";
 import { userAccount } from "../../models/index";
 // import findEmailByUid from "../../utils/db/findEmailByUid";
 // import { sendEmail } from "../../utils/ses_sendEmail";
-import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
+// import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
 
 // process.env.STRIPE_SECRET_KEY
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	apiVersion: "2022-11-15",
-});
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+// 	apiVersion: "2022-11-15",
+// });
 
-const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?) => {
+/**
+ * use uid to find the user
+ * set isSubscribed
+ * @param {string} uid user id
+ */
+const changeIsSubscribed = async (uid: string, isSubscribed: boolean) => {
 	try {
+		await userAccount.findOneAndUpdate(
+			{ uid },
+			{
+				$set: { isSubscribed: isSubscribed },
+			}
+		).exec();
 		// const userEmail = await findEmailByUid(uid);
-		await stripe.subscriptions.del(subscriptionId);
 
 		// await paymentHistory.findOneAndUpdate(
 		// 	{ uid },
@@ -25,14 +35,9 @@ const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?
 		// 	}
 		// ).exec();
 
-		await createOrUpdatePaymentHistory(uid, null, null, latestInvoice);
+		// await createOrUpdatePaymentHistory(uid, null, null, latestInvoice);
 
-		await userAccount.findOneAndUpdate(
-			{ uid },
-			{
-				$set: { isSubscribed: false },
-			}
-		).exec();
+
 
 		// await sendEmail(
 		// 	[userEmail],
@@ -49,8 +54,8 @@ const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?
 
 		// res.send({ subscription: deletedSubscription });
 	} catch (error) {
-		console.log("error", error);
+		console.log("error in cancel subscription", error);
 	}
 };
 
-export { cancelSubscriptionImmediately };
+export { changeIsSubscribed };

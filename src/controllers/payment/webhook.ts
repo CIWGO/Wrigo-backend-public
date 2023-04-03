@@ -3,8 +3,7 @@ import Stripe from "stripe";
 import config from "../../../config";
 import { createPaymentInvoice } from "../../utils/db/createPaymentInvoice";
 import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
-import { userAccount as UserModel } from "../../models/index";
-import { cancelSubscriptionImmediately } from "./cancelSubscriptionImmediately";
+import { changeIsSubscribed } from "../../utils/db/changeIsSubscribed";
 
 const STRIPE_SECRET_KEY = config.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = config.STRIPE_WEBHOOK_SECRET;
@@ -59,15 +58,8 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 		console.log("latestInvoice", latestInvoice);
 
 		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId, latestInvoice);
+		await changeIsSubscribed(uid, true);// set isSubscribed to true
 
-		await UserModel.findOneAndUpdate(
-			{ uid },
-			{
-				$set: {
-					isSubscribed: true
-				}
-			},
-		);
 		return res.status(200).send();// send 200 to stripe
 
 		// stripe is expected to send automated email to real subscribers
@@ -90,15 +82,26 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 		const status = invoice.status;// get invoice status
 
 		const uid = customer.metadata.uid;// get uid
-		const subscriptionId = invoice.subscription;// get subscription id
+		// const subscriptionId = invoice.subscription;// get subscription id
 
 		const latestInvoice = await createPaymentInvoice(invoiceId, createdDate, paymentMethod, paymentAmount, status);// create latest invoice
 		await latestInvoice.save();// save invoice into invoice collection
 
-		await cancelSubscriptionImmediately(uid, subscriptionId, latestInvoice);
+		await createOrUpdatePaymentHistory(uid, null, null, latestInvoice);// add failure invoice into payment history, change customerId and subscriptionId to null
+		// await cancelSubscriptionImmediately(uid, subscriptionId, latestInvoice);
 		return res.status(200).send();// send 200 to stripe
 
 		// stripe is expected to send automated email to real subscribers
+	} else if (event.type === "customer.subscription.deleted") {
+		const subscription = event.data.object as Stripe.Subscription;
+		const customerId = subscription.customer as string;
+		// Retrieve the customer object
+		const customer = await stripe.customers.retrieve(customerId) as Stripe.Customer;
+		// Get uid from metadata
+		const uid = customer.metadata.uid;
+		await changeIsSubscribed(uid, false);// set isSubscribed to false
+
+		return res.status(200).send();// send 200 to stripe
 	}
 };
 
