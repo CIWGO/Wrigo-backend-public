@@ -1,8 +1,8 @@
 import Stripe from "stripe";
 // import { Request, Response } from "express";
 import { userAccount } from "../../models/index";
-// import findEmailByUid from "../../utils/db/findEmailByUid";
-// import { sendEmail } from "../../utils/ses_sendEmail";
+import findEmailByUid from "../../utils/db/findEmailByUid";
+import { sendEmail } from "../../utils/ses_sendEmail";
 import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
 
 // process.env.STRIPE_SECRET_KEY
@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?) => {
 	try {
-		// const userEmail = await findEmailByUid(uid);
+		const userEmail = await findEmailByUid(uid);
 		await stripe.subscriptions.del(subscriptionId);
 
 		// await paymentHistory.findOneAndUpdate(
@@ -37,18 +37,18 @@ const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?
 			}
 		).exec();
 
-		// await sendEmail(
-		// 	[userEmail],
-		// 	"WRIGO - Cancel Subscription notification",
-		// 	`Dear customer,
+		await sendEmail(
+			[userEmail],
+			"WRIGO - Cancel Subscription notification",
+			`Dear customer,
 
-		// 	Your subscription has been cancelled successfully,
+			Your subscription has been cancelled successfully,
 
-		// 	Thank you for your business!
+			Thank you for your business!
 
-		// 	Best regards,
-		// 	WRIGO`
-		// );
+			Best regards,
+			WRIGO`
+		);
 
 		// res.send({ subscription: deletedSubscription });
 	} catch (error) {

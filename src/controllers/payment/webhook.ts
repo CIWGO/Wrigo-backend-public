@@ -57,7 +57,7 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 
 		console.log("uid", uid);
 		console.log("subscriptionId", subscriptionId);
-		console.log("latestInvoice", latestInvoice);
+		// console.log("latestInvoice", latestInvoice);
 
 		await createOrUpdatePaymentHistory(uid, customerId, subscriptionId,paymentMethod, latestInvoice);
 
