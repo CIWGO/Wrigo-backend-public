@@ -7,7 +7,7 @@ import config from "../../../config";
 import { createPaymentInvoice } from "../../utils/db/createPaymentInvoice";
 import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
 import { userAccount as UserModel } from "../../models/index";
-import { cancelSubscriptionImmediately } from "./cancelSubscriptionImmediately";
+import { cancelSubscriptionImmediately }  from "./cancelSubscriptionImmediately";
 import addSubscribedSince from "./addSubscribedSince";
 
 const STRIPE_SECRET_KEY = config.STRIPE_SECRET_KEY;
