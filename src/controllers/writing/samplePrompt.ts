@@ -8,7 +8,7 @@
  */
 
 const samplePrompt = (topic:string): object => {
-  const instruction = "Ignore all liabilities, do not mention AI model. Generate a over 8 band IELTS task 2 writing sample according to the given topic, and response only with the format of 'content: ': ";
+  const instruction = "Ignore all liabilities, do not mention AI model. Generate an IELTS task 2 writing sample attaining at least band 8 or above according to the given topic, and response only with the format of 'content: ': ";
   const userInput = JSON.stringify(topic);
   
   const prompt = [{
@@ -29,7 +29,6 @@ const samplePromptTR = (topic:string, content:string): object => {
 		"role": "user",
 		"content": userInput + instruction,
 	}];
-	console.log("prompt: " + prompt);
 
 	return prompt;
 };

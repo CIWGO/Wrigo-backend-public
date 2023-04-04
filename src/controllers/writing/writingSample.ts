@@ -1,25 +1,21 @@
 import { openAIRequest } from "../../utils/openAIRequest";
-// import { Request } from "express";
 import {
-  samplePrompt, 
-  samplePromptTR, 
-  samplePromptCC, 
-  samplePromptLR, 
-  samplePromptGRA 
+  samplePrompt,
+  samplePromptTR,
+  samplePromptCC,
+  samplePromptLR,
+  samplePromptGRA
 } from "./samplePrompt";
 import { v4 as uuidv4 } from "uuid";
 import { sampleWriting as SampleModel } from "../../models";
 
-
-
-const writingSample = async (topic_id:string,topic_content:string) => {
+const writingSample = async (topic_id: string, topic_content: string) => {
   try {
-    // const { topic_content } = req.body;
     // get sample writing
     const promptSample = samplePrompt(topic_content);
     const responseSample = await openAIRequest(promptSample, true);
-    const regexSample = /content:\s*(.*)/;
-    const sampleContent = await responseSample.match(regexSample);
+    const regexSample = /Content:\s*([\s\S]+)/i;
+    const sampleContent = await responseSample.match(regexSample)[1];
 
     // get feedback of sample writing
     const promptTR = samplePromptTR(topic_content, sampleContent);
@@ -50,7 +46,7 @@ const writingSample = async (topic_id:string,topic_content:string) => {
 
     const sampleWriting = new SampleModel({
       topic_id: topic_id,
-      samplewriting_id: uuidv4(),
+      sampleWriting_id: uuidv4(),
       sampleWriting_content: sampleContent,
       sampleFeedback_TR: extractedTextTR,
       sampleFeedback_CC: extractedTextCC,

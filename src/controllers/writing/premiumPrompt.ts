@@ -17,7 +17,6 @@ const generatePromptTR = (req: Request): object => {
 		"role": "user",
 		"content": userInput + instruction,
 	}];
-	console.log("prompt: " + prompt);
 
 	return prompt;
 };

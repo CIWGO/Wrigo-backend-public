@@ -4,24 +4,19 @@ import { openAIRequest } from "../../utils/openAIRequest";
 const topicCategory = async (topic: string) => {
     const prompt = topicCatPrompt(topic);
     const categoryOutput = await openAIRequest(prompt, true);
-    console.log(categoryOutput);
-    const categoryArray = categoryOutput.split(" ");
-    const index = categoryArray.indexOf("type:");
-    const category = categoryArray[index + 2];
+    const regexCategory = /Type:\s+([\w\s]+)/i;
+    const extractedCategory = categoryOutput.match(regexCategory)[1];
 
-
-    return category;
+    return extractedCategory;
 };
 
 const topicDifficulty = async (topic: string) => {
     const prompt = topicDiffPrompt(topic);
     const difficultyOutput = await openAIRequest(prompt, true);
-    console.log(difficultyOutput);
-    const difficultyArray = difficultyOutput.split(" ");
-    const index = difficultyArray.indexOf("difficulty:");
-    const difficulty = difficultyArray[index + 1];
+    const regexDifficulty = /Difficulty:\s+([\w\s]+)/i;
+    const extractedDifficulty = difficultyOutput.match(regexDifficulty)[1];
 
-    return difficulty;
+    return extractedDifficulty;
 };
 
 export { topicCategory, topicDifficulty };
