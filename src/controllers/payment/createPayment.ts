@@ -1,19 +1,33 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { Stripe } from "stripe";
+import config from "../../../config";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const STRIPE_SECRET_KEY = config.STRIPE_SECRET_KEY;
+
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
 	apiVersion: "2022-11-15",
 });
 
-const createPayment = async (req: Request, res: Response, next: NextFunction) => {
-	const url = process.env.FRONT_END;
-	try {
-		const { items, planId } = req.body;
+const createPayment = async (req: Request, res: Response) => {
+	console.log("***create payment start");
 
-		console.log(items);
+	const url = process.env.FRONT_END;
+
+	try {
+		const { uid, username, planId } = req.body;
+
+		// Create a customer with the uid in metadata
+		const customer = await stripe.customers.create({
+			name: username,
+			metadata: {
+				uid: uid,
+			},
+		});
+
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
 			mode: "subscription",
+			customer: customer.id, // Associate the customer with the checkout session
 			line_items: [
 				{
 					price: planId,
@@ -22,9 +36,11 @@ const createPayment = async (req: Request, res: Response, next: NextFunction) =>
 			],
 			success_url: `${url}/user/paymentSuccess`,
 		});
+
+		console.log("***create payment end");
 		res.status(200).json({ url: session.url });
-		next();
 	} catch (error) {
+		console.log(error);
 		res.status(500).send(error);
 	}
 };

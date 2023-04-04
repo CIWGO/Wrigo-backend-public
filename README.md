@@ -46,16 +46,17 @@ Create a file named .env under project root folder and paste the following into 
 
 ```
 PORT = 3005
+FRONT_END="http://localhost:3000"
 CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
 CIW_COLLECTION_NAME = "CIWGO"
 OPENAI_APIURL = "https://api.openai.com/v1/chat/completions"
-OPENAI_APIKEY = "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"
+OPENAI_APIKEY = "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"
 JWT_SECRET = "yoursecretkey"
 STRIPE_PUBLIC_KEY = "pk_test_51Ml43uJm2vMPXBBfJpBJLlYZYDaniI3qbpAkx5cqHakuqkRbQQIJ71gD3LL1oI4S3CiiImhFjfKpoMfqnOWgG0wF00zVRlQOvT"
 STRIPE_SECRET_KEY = "sk_test_51Ml43uJm2vMPXBBfPBKnmLijGLwkMtJReVEpZd0foRz2pJW0N1D8xIt1ZmEAjUaiSgvFRc31VVb4tm6eYMbdwIt300IGfq0hVW"
 STRIPE_PRODUCT_ID = "price_1Ml4JRJm2vMPXBBf8YgX4Aqa"
 STRIPE_PAYMENT_URL = "https://buy.stripe.com/test_eVa6rM8swblAely7ss"
-FRONT_END="http://localhost:3000"
+STRIPE_WEBHOOK_SECRET="whsec_922b28be924e2fd32046447000ffe15a1682d42105321c491bd124f31cdb33d4"
 ```
 
 ### Create .aws/credentials
