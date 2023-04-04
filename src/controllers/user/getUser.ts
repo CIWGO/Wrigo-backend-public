@@ -13,12 +13,12 @@ import { createOperationLog } from "../log/index";
  * @source url
  */
 
-const getUserAccount =async (req: Request, res: Response) => {
+const getUserAccount = async (req: Request, res: Response) => {
 	const { username } = req.body;
-    
+
 	try {
 		const user = await UserModel.findOne({ username }).exec();
-        
+
 		if (user) {
 			// create operation log and store it to DB
 			createOperationLog(
@@ -34,9 +34,9 @@ const getUserAccount =async (req: Request, res: Response) => {
 
 			return res.status(201).json({ message: "User account fetched successful.", user });
 		} else {
-			throw new Error("User is not exist");
+			return res.status(404).json({ message: "User not found." });
 		}
-        
+
 	} catch (error) {
 		// create operation log and store it to DB
 		createOperationLog(
@@ -46,7 +46,7 @@ const getUserAccount =async (req: Request, res: Response) => {
 			req.userIP,
 			req.userDevice
 		);
-		return res.status(500).json({error: error.message || "User is not exist"});
+		return res.status(500).json({ error: error.message || "User is not exist" });
 	}
 };
 

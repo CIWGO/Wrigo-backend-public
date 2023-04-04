@@ -30,9 +30,13 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 			const user = await UserModel.findOne({ username }).exec();
 			email = user.email;
 		}
-		
+
 		// find the userOTP using uid, then store otp into the user
-		await userOTP.findOneAndUpdate({ uid }, { OTP: otp }, { upsert: true, new: true });
+		await userOTP.findOneAndUpdate(
+			{ uid },
+			{ $set: { OTP: otp } },
+			{ upsert: true, new: true }
+		);
 
 		// send email
 		const emailContent = `Your verification code is ${otp}. It will expire in 1 minute.`;
@@ -81,7 +85,8 @@ const verifyOTP = async (req: Request, res: Response): Promise<boolean> => {
 			await createOperationLog(
 				false,
 				"Verify OTP",
-				logContent, req.userIP,
+				logContent,
+				req.userIP,
 				req.userDevice,
 				uid
 			);
