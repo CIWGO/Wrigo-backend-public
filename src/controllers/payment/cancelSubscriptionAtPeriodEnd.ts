@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import getSubscriptionIdByUid from "../../utils/db/getSubscriptionIdByUid";
 import Stripe from "stripe";
+import config from "../../../config";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-	apiVersion: "2022-11-15",
+const STRIPE_SECRET_KEY = config.STRIPE_SECRET_KEY;
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
+    apiVersion: "2022-11-15",
 });
 
 const cancelSubscriptionAtPeriodEnd = async (req: Request, res: Response) => {
