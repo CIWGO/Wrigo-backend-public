@@ -25,7 +25,7 @@ import {
 	findOperationLogByUid,
 } from "./log/index";
 
-import { findTopic, searchAllTopics, searchUserTopics } from "./topic/index";
+import { findTopic, searchAllTopics, searchUserTopics,topicCategoryCounters } from "./topic/index";
 
 import {
 	createPayment,
@@ -63,5 +63,6 @@ export {
 	createCustomer,
 	viewPastPayment,
 	handleStripeWebhook,
-	deleteWritings
+	deleteWritings,
+	topicCategoryCounters
 };
