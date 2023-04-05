@@ -17,8 +17,7 @@ import {
 	searchAllTopics,
 	searchUserTopics,
 	viewPastPayment,
-	deleteWritings,
-	topicCategoryCounters
+	deleteWritings
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
 
@@ -47,7 +46,6 @@ userRouter.post("/viewHistory", tokenGuard, viewHistory);
 userRouter.post("/getTopic", tokenGuard, findTopic);
 userRouter.post("/searchAllTopics", tokenGuard, searchAllTopics);
 userRouter.post("/searchUserTopics", tokenGuard, searchUserTopics);
-userRouter.post("/topicCategoryCounters", topicCategoryCounters);
 
 // delete
 
