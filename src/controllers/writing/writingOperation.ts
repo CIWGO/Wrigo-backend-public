@@ -2,9 +2,11 @@ import { Request } from "express";
 import { topic as TopicModel, writing as WritingModel } from "../../models/index";
 import { topicCategory as Category, topicDifficulty as Difficulty } from "./topicEvaluation";
 import { v4 as uuidv4 } from "uuid";
+import { writingSample } from "./writingSample";
 
 const writingOperation = async (req: Request) => {
 	const { writing_id, topic_content, content } = req.body;
+
 	let writingDoc = await WritingModel.findOne({ writing_id });
 
 	if (writingDoc) {
@@ -28,6 +30,7 @@ const writingOperation = async (req: Request) => {
 		if (isTopicExist === null) {
 			const topicCategory = await Category(topic_content);
 			const topicDifficulty = await Difficulty(topic_content);
+
 			const topicDoc = new TopicModel({
 				topic_id: uuidv4(),
 				topic_content: topic_content,
@@ -35,7 +38,9 @@ const writingOperation = async (req: Request) => {
 				topic_difficulty: topicDifficulty,
 				popularity: 1
 			});
+
 			await topicDoc.save();
+			await writingSample(topicDoc.topic_id, topicDoc.topic_content);
 		} else if (isTopicExist) {
 
 			const topicDoc = await TopicModel.findOne({ isTopicExist }).exec();
