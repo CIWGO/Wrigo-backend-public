@@ -12,6 +12,7 @@ import { writing as Writing, feedback as Feedback } from "../../models/index";
 
 const WritingStatistics = async (req: Request, res: Response) => {
 	const { uid } = req.body;
+	console.log(uid);
 
 	try {
 		// Find all writings with the target uid

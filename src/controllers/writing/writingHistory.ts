@@ -1,4 +1,4 @@
-import { writing as WritingModel, feedback as FeedbackModel, operationLog as LogModel } from "../../models/index";
+import { writing as WritingModel, feedback as FeedbackModel, operationLog as LogModel, userAccount } from "../../models/index";
 import { Response, Request } from "express";
 import { createOperationLog } from "../log/index";
 
@@ -103,7 +103,7 @@ const viewHistory = async (req: Request, res: Response) => {
 			);
 			return res.status(200).json(logs);
 		}else if (type === "writingDoc") {
-			const { writing_id } = req.body;
+			const { writing_id, uid } = req.body;
 			const writingDoc = await getWritingDoc(writing_id);
 			createOperationLog(
 				true,
@@ -112,8 +112,18 @@ const viewHistory = async (req: Request, res: Response) => {
 				req.userIP,
 				req.userDevice,
 				uid
-			);
-			return res.status(200).json(writingDoc);
+			);try {
+				const user = await userAccount.findOne({ uid }).exec();
+				const isSubscribed = user.isSubscribed;
+				const newWritingDoc = {
+					...writingDoc,
+					isSubscribed
+				};
+				console.log(newWritingDoc);		
+			return res.status(200).json(newWritingDoc);	} catch (err) { 
+				console.log(err);
+				res.status(404).json({ err });
+			}
 		} else {
 			createOperationLog(
 				false,
