@@ -22,7 +22,7 @@ interface RequestWithLocals extends Request {
  */
 const changePassword = async (req: RequestWithLocals, res: Response) => {
 	try {
-		const { uid, username, password } = req.body;
+		const { username, password } = req.body;
 
 		const user = await UserModel.findOne({ username }).exec();
 		if (!user) {
@@ -30,62 +30,59 @@ const changePassword = async (req: RequestWithLocals, res: Response) => {
 			createOperationLog(
 				true,
 				"userAction",
-				`User (uid: ${uid}) failed to change password. User not found.`,
+				`User (username: ${username}) failed to change password. User not found.`,
 				req.userIP,
-				req.userDevice,
-				uid
+				req.userDevice
 			);
 			return res.status(404).json({ error: "User not found" });
 		}
 
 		const newPassword = await hashPasswordWithReturn(password);
 		// const email = user.email;
-		const result = await UserModel.updateOne(
+		await UserModel.updateOne(
 			{ username },
 			{ $set: { password: newPassword } }
 		);
 
 		// modifiedCount containing the number of modified documents
-		if (result.modifiedCount === 0) {
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"userAction",
-				`User (uid: ${uid}) failed to change password. Password not modified.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
-			return res
-				.status(404)
-				.json({ error: "Error in changing password, Password not modified." });
-		} else {
-			// temporarily commented (too many emails sent will lock the account)
-			// const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
-			// sendEmail(TEST_EMAIL, email, "Password Changed", msg);
+		// if (result.modifiedCount === 0) {
+		// 	// create operation log and store it to DB
+		// 	createOperationLog(
+		// 		true,
+		// 		"userAction",
+		// 		`User (username: ${username}) failed to change password. Password not modified.`,
+		// 		req.userIP,
+		// 		req.userDevice
+		// 	);
+		// 	return res
+		// 		.status(409)
+		// 		.json({ error: "Error in changing password, Password not modified." });
+		// } else {
 
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"userAction",
-				`User (uid: ${uid}) changed password successfully.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
-			return res.status(200).json({ message: "Password changed successfully" });
-		}
-	} catch (error) {
-		const uid = req.body.uid;
+		// temporarily commented (too many emails sent will lock the account)
+		// const msg = `Hi ${username},\n\nYou recently requested to reset the password for your CIWGO account. `;
+		// sendEmail(TEST_EMAIL, email, "Password Changed", msg);
+
 		// create operation log and store it to DB
 		createOperationLog(
 			true,
 			"userAction",
-			`User (uid: ${uid}) failed to change password. ${error.message || "Error changing password"
+			`User (username: ${username}) changed password successfully.`,
+			req.userIP,
+			req.userDevice
+		);
+		return res.status(200).json({ message: "Password changed successfully" });
+		// }
+	} catch (error) {
+		const username = req.body.username;
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (username: ${username}) failed to change password. ${error.message || "Error changing password"
 			}`,
 			req.userIP,
-			req.userDevice,
-			uid
+			req.userDevice
 		);
 		return res.status(500).json({ error: error.message || "Error changing password" });
 	}

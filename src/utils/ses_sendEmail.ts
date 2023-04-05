@@ -41,8 +41,7 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 
 	try {
 		const command = new SendEmailCommand(params);
-		const result = await client.send(command);
-		console.log(result);
+		await client.send(command);
 	} catch (error) {
 		console.error(error);
 	}
