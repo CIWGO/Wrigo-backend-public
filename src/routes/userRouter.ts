@@ -20,6 +20,7 @@ import {
 	deleteWritings
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
+import getUserPaymentInfo from "../controllers/payment/userPaymentInfo";
 
 const userRouter = Router();
 
@@ -34,6 +35,7 @@ userRouter.post("/verifyOTP", verifyOTP);
 userRouter.post("/writingDraft", tokenGuard, writingDraft);
 userRouter.post("/changePassword", changePassword);
 userRouter.post("/viewPastPayment", tokenGuard, viewPastPayment);
+userRouter.post("/getUserPaymentInfo", tokenGuard, getUserPaymentInfo);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);

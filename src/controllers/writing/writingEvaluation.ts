@@ -12,11 +12,6 @@ import {
 } from "./premiumPrompt";
 import { premFeedbackOpe } from "./premFeedbackOpe";
 
-// import config from "../../../config";
-
-// const URL = config.OPENAI_APIURL;
-// const apiKey = config.OPENAI_APIKEY;
-
 /**
  * take topic and essay from user input and generate a prompt for evaluation
  * user res to send the scores and evaluation back to users
@@ -33,6 +28,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 		if (isSubscribed === false) {
 			const prompt = generatePrompt(req); // generate a prompt for evaluation
 			const response = await openAIRequest(prompt, false);
+
 			if (response instanceof Error) {
 				throw new Error("Cannot get response");
 			} else {
