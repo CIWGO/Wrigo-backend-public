@@ -16,33 +16,19 @@ const topicCategoryCounters = async (req: Request, res: Response) => {
       "Direct Question",
       "Advantage and Disadvantage",
     ];
-    const categoryCounts = await TopicModel.aggregate([
-      { $match: { topic_content: { $in: allTopics } } },
-      {
-        $lookup: {
-          from: "allTopics",
-          localField: "topic_content",
-          foreignField: "task_topic",
-          as: "topic",
-        },
-      },
-      { $unwind: "$topic" },
-      { $group: { _id: "$topic_category", count: { $sum: 1 } } },
-      { $project: { category: "$_id", count: 1, _id: 0 } },
-    ]).exec();
+    const matchedTopics = await TopicModel.find({
+      topic_content: { $in: allTopics },
+    });
+    const categoryCounts = categories.reduce((acc, category) => {
+      acc[category] = matchedTopics.filter(
+        (topic) => topic.topic_category === category
+      ).length;
+      return acc;
+    }, {});
 
-    console.log(allTopics);
     console.log(categoryCounts);
 
-    const categoryCountsArray = categories.map((category) => {
-      const count =
-        categoryCounts.find((count) => count.category === category)?.count || 0;
-      return { category, count };
-    });
-
-    console.log(categoryCountsArray);
-
-    return res.status(200).json({ categoryCounts: categoryCountsArray });
+    return res.status(200).json({ categoryCounts });
   } catch (error) {
     return res.status(500).json({ error: error.message || "Fail to response" });
   }
