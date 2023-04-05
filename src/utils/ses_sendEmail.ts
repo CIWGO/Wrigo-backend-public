@@ -14,14 +14,14 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 
 	const credentials = fromIni({
 		profile: "default",
-		filepath: ".aws/credentials", 
+		filepath: ".aws/credentials",
 	});
 
-	const client = new SESClient({ 
-		region: "ap-southeast-2", 
+	const client = new SESClient({
+		region: "ap-southeast-2",
 		credentials
 	});
-  
+
 	const params = {
 		Destination: {
 			ToAddresses: toAddresses,
@@ -38,11 +38,10 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 		},
 		Source: "wrigo-account-service@wrigo.com.au",
 	};
-  
+
 	try {
 		const command = new SendEmailCommand(params);
-		const result = await client.send(command);
-		console.log(result);
+		await client.send(command);
 	} catch (error) {
 		console.error(error);
 	}
@@ -50,4 +49,3 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 
 export { sendEmail };
 
-  
