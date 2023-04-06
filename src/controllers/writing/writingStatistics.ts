@@ -12,7 +12,6 @@ import { writing as Writing, feedback as Feedback } from "../../models/index";
 
 const WritingStatistics = async (req: Request, res: Response) => {
 	const { uid } = req.body;
-	console.log(uid);
 
 	try {
 		// Find all writings with the target uid
@@ -30,11 +29,15 @@ const WritingStatistics = async (req: Request, res: Response) => {
 		const ccArray = feedbacks.map((feedback) => feedback.score_CC);
 		const lrArray = feedbacks.map((feedback) => feedback.score_LR);
 		const grdArray = feedbacks.map((feedback) => feedback.score_GRA);
-		const meanArray = trArray.map((tr, i) => (tr + ccArray[i] + lrArray[i] + grdArray[i]) / 4);
+		const meanArray = feedbacks.map((feedback) => {
+			const { score_TR, score_CC, score_LR, score_GRA } = feedback;
+			return (score_TR + score_CC + score_LR + score_GRA) / 4;
+		});
 
 		const radarArr = [recentFeedbackObj.score_TR, recentFeedbackObj.score_CC, recentFeedbackObj.score_LR, recentFeedbackObj.score_GRA];
 
-		const meanHighArr = meanArray.sort(function(a, b) {
+		const deepCopyMeanArray = [...meanArray];
+		const meanHighArr = deepCopyMeanArray.sort(function(a, b) {
 			return b - a;
 		});
 		const meanHigh = meanHighArr[0];
@@ -50,4 +53,4 @@ const WritingStatistics = async (req: Request, res: Response) => {
 
 };
 
-export { WritingStatistics };
+export default WritingStatistics;
