@@ -15,13 +15,18 @@ const WritingStatistics = async (req: Request, res: Response) => {
 
 	try {
 		// Find all writings with the target uid
-		const writings = await Writing.find({ uid: uid }).select("_id");
-		const writingIds = writings.map(writing => writing._id);
-
+		const writings = await Writing.find({ uid: uid });
+		const writingIds = writings.map(writing => writing._id.toString());
 		// Find all feedbacks based on the writing ids
 		// sort it from old to new
-		const feedbacks = await Feedback.find({ writingId: { $in: writingIds } }).sort({ createdAt: 1 });
+		const feedbacks = await Feedback.find({ writing_id: { $in: writingIds } }).sort({ createdAt: 1 });
+		
 		const len = feedbacks.length;
+		if (len === 0) {
+			// If there are no writings found, return empty arrays
+			res.json({ trArray: [], ccArray: [], lrArray: [], grdArray: [], meanArray: [], radarArr: [], numberChart: [] });
+			return;
+		}
 
 		const recentFeedbackObj = feedbacks[len-1];
 
