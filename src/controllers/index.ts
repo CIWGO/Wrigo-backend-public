@@ -17,7 +17,15 @@ import {
 	viewPastPayment
 } from "./user/index";
 
-import { evaluateWriting, viewHistory, WritingStatistics, writingSubmissions, writingDraft, deleteWritings } from "./writing/index";
+import { 
+	evaluateWriting, 
+	viewHistory, 
+	WritingStatistics, 
+	writingSubmissions, 
+	writingDraft, 
+	deleteWritings,
+	premWritingSample,
+ } from "./writing/index";
 
 import {
 	createOperationLog,
@@ -25,7 +33,12 @@ import {
 	findOperationLogByUid,
 } from "./log/index";
 
-import { findTopic, searchAllTopics, searchUserTopics,topicCategoryCounters } from "./topic/index";
+import { 
+	findTopic, 
+	searchAllTopics, 
+	searchUserTopics,
+	topicCategoryCounters 
+} from "./topic/index";
 
 import {
 	createPayment,
@@ -64,5 +77,6 @@ export {
 	viewPastPayment,
 	handleStripeWebhook,
 	deleteWritings,
-	topicCategoryCounters
+	topicCategoryCounters,
+	premWritingSample
 };
