@@ -9,9 +9,10 @@ import { createOperationLog } from "../log";
  * @param {Response} res respond to users
  */
 
-const premWritingSample = async (req:Request, res:Response) => {
+const premWritingSample = async (req: Request, res: Response) => {
   try {
     const { uid, topic_content } = req.body;
+
     const promptSample = samplePrompt(topic_content);
     const responseSample = await openAIRequest(promptSample, true);
     const regexSample = /Content:\s*([\s\S]+)/i;
@@ -26,17 +27,17 @@ const premWritingSample = async (req:Request, res:Response) => {
       uid
     );
 
-    return res.status(200).json(JSON.parse(sampleContent));
+    return res.status(200).json({ content: sampleContent });
   } catch (error) {
     const uid = req.body.uid;
     createOperationLog(
-			true,
-			"ApiCall",
-			`User (uid: ${uid}) failed to get writing sample. ${error || "Failed to get response"}`,
-			req.userIP,
-			req.userDevice,
-			uid
-		);
+      true,
+      "ApiCall",
+      `User (uid: ${uid}) failed to get writing sample. ${error || "Failed to get response"}`,
+      req.userIP,
+      req.userDevice,
+      uid
+    );
 
     return res.status(500).json({ error: error.message || "Failed to get writing sample" });
   }
