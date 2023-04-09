@@ -46,7 +46,7 @@ const changeEmail = async (req: Request, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(401).send({ error: "Invalid OTP" });
+			return res.status(401).send({ error: "Invalid or expired verification code" });
 		}
 	} catch(error) {
 		const uid = req.body.uid;

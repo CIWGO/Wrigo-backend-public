@@ -5,6 +5,7 @@ import { WritingStatistics, writingSubmissions } from "../controllers/index";
 import { subscriptionGard, tokenGuard } from "../middlewares/index";
 import { createPayment } from "../controllers/payment/index";
 import { topicCategoryCounters } from "../controllers/index";
+import { premWritingSample } from "../controllers/index";
 
 const apiRouter = Router();
 
@@ -16,6 +17,9 @@ apiRouter.post("/topicCategoryCounters", tokenGuard, topicCategoryCounters);
 apiRouter.post("/checkout", tokenGuard, createPayment);
 // apiRouter.post("/checkoutSuccess", createCustomer, completeCheckout);
 apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
+
+// writing sample endpoint for VIP user;
+apiRouter.post("/premSample", tokenGuard, subscriptionGard, premWritingSample);
 
 // payment
 apiRouter.post("/cancelSubscriptionAtPeriodEnd", cancelSubscriptionAtPeriodEnd);

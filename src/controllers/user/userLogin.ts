@@ -46,7 +46,7 @@ const login = async (req: Request, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(404).json({ error: "Incorrect password" });
+			return res.status(404).json({ error: "Incorrect password or username" });
 		}
 
 		// check if email is verified

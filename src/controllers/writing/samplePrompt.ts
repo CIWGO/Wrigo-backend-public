@@ -13,7 +13,7 @@ const samplePrompt = (topic:string): object => {
   
   const prompt = [{
     "role": "user",
-    "content": userInput + instruction,
+    "content": instruction + userInput,
   }];
 
   return prompt;
