@@ -34,7 +34,7 @@ const createPayment = async (req: Request, res: Response) => {
 					quantity: 1,
 				},
 			],
-			success_url: `${url}/user/paymentSuccess`,
+			success_url: `${url}/paymentSuccess`,
 		});
 
 		console.log("***create payment end");
