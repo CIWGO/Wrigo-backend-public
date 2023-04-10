@@ -22,7 +22,7 @@ const addSubscribedSince = async (uid) => {
         "Welcome to WRIGO!",
         `Dear customer,
 
-Thank you for subscribing to WRIGO. We're thrilled to have you as a part of our community! We look forward to bringing you the best productivity tools and resources to help you succeed.
+Thank you for subscribing to WRIGO. We're thrilled to have you as a part of our community! We look forward to bringing you the most helpful AI writing tips and resources to guide you through the exam preparation.
 
 Best regards,
 The WRIGO Team`

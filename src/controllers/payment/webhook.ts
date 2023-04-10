@@ -112,7 +112,7 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 
 Your subscription has been cancelled successfully,
 
-Thank you for your business!
+Thank you for being one of our members. 
 
 Best regards,
 The WRIGO Team`
