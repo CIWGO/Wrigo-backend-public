@@ -6,6 +6,7 @@ import { subscriptionGard, tokenGuard } from "../middlewares/index";
 import { createPayment } from "../controllers/payment/index";
 import { topicCategoryCounters } from "../controllers/index";
 import { premWritingSample } from "../controllers/index";
+import { grammarFix } from "../controllers/index";
 
 const apiRouter = Router();
 
@@ -20,6 +21,9 @@ apiRouter.post("/writingSubmissions", tokenGuard, writingSubmissions);
 
 // writing sample endpoint for VIP user;
 apiRouter.post("/premSample", tokenGuard, subscriptionGard, premWritingSample);
+//grammar fix for VIP user
+apiRouter.post("/grammarFix", tokenGuard, subscriptionGard, grammarFix);
+
 
 // payment
 apiRouter.post("/cancelSubscriptionAtPeriodEnd", cancelSubscriptionAtPeriodEnd);
