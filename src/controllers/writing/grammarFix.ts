@@ -17,7 +17,7 @@ const grammarPrompt = (text:string): object => {
 
 const grammarFix = async (req: Request, res: Response) => { 
   try {
-    
+
     const { text } = req.body;
     const promptGrammarFix = grammarPrompt(text);
     const responseCorrectedGrammar = await openAIRequest(promptGrammarFix, true);
