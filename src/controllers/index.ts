@@ -25,6 +25,7 @@ import {
 	writingDraft, 
 	deleteWritings,
 	premWritingSample,
+	grammarFix
  } from "./writing/index";
 
 import {
@@ -78,5 +79,6 @@ export {
 	handleStripeWebhook,
 	deleteWritings,
 	topicCategoryCounters,
-	premWritingSample
+	premWritingSample,
+	grammarFix
 };
