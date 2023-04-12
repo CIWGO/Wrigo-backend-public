@@ -41,12 +41,14 @@ jobs:
           CONNECTION_S: ${{ secrets.CONNECTION_STRING }}
           OPENAI_A: ${{ secrets.OPENAI_APIKEY }}
           STRIPE_S: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_W_S: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
         run: |
           docker build \
                 -t $ECR_REGISTRY/$IMAGE_NAME:latest \
                 -t $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }} \
                 --build-arg CONNECTION=$CONNECTION_S \
                 --build-arg STRIPE=$STRIPE_S \
+                --build-arg STRIPE_W=$STRIPE_W_S \
                 --build-arg OPENAI=$OPENAI_A .     
           docker push $ECR_REGISTRY/$IMAGE_NAME
 
