@@ -5,6 +5,8 @@ import { createPaymentInvoice } from "../../utils/db/createPaymentInvoice";
 import createOrUpdatePaymentHistory from "../../utils/db/createOrUpdatePaymentHistory";
 import addSubscribedSince from "./addSubscribedSince";
 import { changeIsSubscribed } from "../../utils/db/changeIsSubscribed";
+import { sendEmail } from "../../utils/ses_sendEmail";
+import findEmailByUid from "../../utils/db/findEmailByUid";
 
 const STRIPE_SECRET_KEY = config.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = config.STRIPE_WEBHOOK_SECRET;
@@ -89,7 +91,7 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 		const latestInvoice = await createPaymentInvoice(invoiceId, createdDate, paymentMethod, paymentAmount, status);// create latest invoice
 		await latestInvoice.save();// save invoice into invoice collection
 
-		await createOrUpdatePaymentHistory(uid, null, null, latestInvoice);// add failure invoice into payment history, change customerId and subscriptionId to null
+		await createOrUpdatePaymentHistory(uid, null, null, paymentMethod, latestInvoice);// add failure invoice into payment history, change customerId and subscriptionId to null
 		// await cancelSubscriptionImmediately(uid, subscriptionId, latestInvoice);
 		return res.status(200).send();// send 200 to stripe
 
@@ -102,6 +104,20 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 		// Get uid from metadata
 		const uid = customer.metadata.uid;
 		await changeIsSubscribed(uid, false);// set isSubscribed to false
+		await createOrUpdatePaymentHistory(uid, null, null);
+		const userEmail = await findEmailByUid(uid);
+		await sendEmail(
+			[userEmail],
+			"WRIGO - Cancel Subscription notification",
+			`Dear customer,
+
+Your subscription has been cancelled successfully,
+
+Thank you for being one of our members. 
+
+Best regards,
+The WRIGO Team`
+		);
 
 		return res.status(200).send();// send 200 to stripe
 	}

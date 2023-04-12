@@ -7,7 +7,7 @@ const secret = process.env.JWT_SECRET;
  * @return {string} token
  */
 const generateToken = (payload) =>
-	jwt.sign(payload, secret, { expiresIn: "1h" });
+	jwt.sign(payload, secret, { expiresIn: "24h" });
 
 /**
  * @param {string} token

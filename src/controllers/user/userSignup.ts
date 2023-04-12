@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { createOperationLog } from "../log/index";
 import { createUserProfile } from "../index";
-import { generateToken } from "../../utils/jwt";
 
 /**
  * Create new user from signup.
@@ -32,16 +31,8 @@ const createUser = async (req: Request, res: Response) => {
 			await user.save();
 			//create new userProfile
 			await createUserProfile(uid, username);
-
-			const payload = {
-				username: user.username,
-				uid: user.uid,
-				email: user.email,
-			};
-			
-			const token = generateToken(payload);
 	
-			const userlog={token:token,username:username,uid:user.uid};
+			const userlog={username:username,uid:user.uid};
 
 			// create operation log and store it to DB
 			createOperationLog(

@@ -6,7 +6,6 @@ import {
 
 const topicCategoryCounters = async (req: Request, res: Response) => {
   const { uid } = req.body;
-  console.log(uid);
   try {
     const allWritings = await WritingModel.find({ uid }).exec();
     const allTopics = allWritings.map((writing) => writing.task_topic);
@@ -31,7 +30,7 @@ const topicCategoryCounters = async (req: Request, res: Response) => {
       (topic) => !categories.includes(topic.topic_category)
     ).length;
 
-    console.log(categoryCounts);
+    // console.log(categoryCounts);
 
     return res.status(200).json({ categoryCounts });
   } catch (error) {
