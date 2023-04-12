@@ -25,6 +25,10 @@ const topicCategoryCounters = async (req: Request, res: Response) => {
       ).length;
       return acc;
     }, {});
+    
+    categoryCounts["Others"] = matchedTopics.filter(
+      (topic) => !categories.includes(topic.topic_category)
+    ).length;
 
     // console.log(categoryCounts);
 
