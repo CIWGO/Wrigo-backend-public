@@ -42,7 +42,7 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 		}
 
 	} catch (error) {
-		console.log(error);
+		return error;
 	}
 };
 

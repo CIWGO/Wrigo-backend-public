@@ -44,7 +44,7 @@ const evaluateWriting = async (req: Request, res: Response) => {
 					uid
 				);
 
-				return res.status(200).json({isSubscribed, response});
+				return res.status(200).json({ isSubscribed, response });
 			}
 		} else if (isSubscribed === true) {
 			// generate a prompt for evaluation in each criteria
@@ -58,45 +58,60 @@ const evaluateWriting = async (req: Request, res: Response) => {
 			const responseLR = await openAIRequest(promptLR, true);
 			const responseGRA = await openAIRequest(promptGRA, true);
 
-			// // regular expression to match the pattern, e.g. "0.0"
-			const regexTR = /\d+\.\d+/;
-			const regexCC = /\d+\.\d+/;
-			const regexLR = /\d+\.\d+/;
-			const regexGRA = /\d+\.\d+/;
+			if (
+				responseTR instanceof Error
+				|| responseCC instanceof Error
+				|| responseLR instanceof Error
+				|| responseGRA instanceof Error
+			) {
+				throw new Error("Cannot get response");
+			} else {
+				// extract score and comment from response
+				const regexTR = /\d+\.\d+/;
+				const regexCC = /\d+\.\d+/;
+				const regexLR = /\d+\.\d+/;
+				const regexGRA = /\d+\.\d+/;
+				
+				try {
 
-			const extractedScoreTR = await responseTR.match(regexTR)[0];
-			const extractedScoreCC = responseCC.match(regexCC)[0];
-			const extractedScoreLR = responseLR.match(regexLR)[0];
-			const extractedScoreGRA = responseGRA.match(regexGRA)[0];
+					const extractedScoreTR = await responseTR.match(regexTR)[0];
+					const extractedScoreCC = responseCC.match(regexCC)[0];
+					const extractedScoreLR = responseLR.match(regexLR)[0];
+					const extractedScoreGRA = responseGRA.match(regexGRA)[0];
 
-			const extractedTextTR = await responseTR.replace(regexTR, "");
-			const extractedTextCC = responseCC.replace(regexCC, "");
-			const extractedTextLR = responseLR.replace(regexLR, "");
-			const extractedTextGRA = responseGRA.replace(regexGRA, "");
+					const extractedTextTR = await responseTR.replace(regexTR, "");
+					const extractedTextCC = responseCC.replace(regexCC, "");
+					const extractedTextLR = responseLR.replace(regexLR, "");
+					const extractedTextGRA = responseGRA.replace(regexGRA, "");
 
-			const premiumFeedback = {
-				"commentTR": extractedTextTR,
-				"commentCC": extractedTextCC,
-				"commentLR": extractedTextLR,
-				"commentGRA": extractedTextGRA,
-				"TR": extractedScoreTR,
-				"CC": extractedScoreCC,
-				"LR": extractedScoreLR,
-				"GRA": extractedScoreGRA,
-			};
-			premFeedbackOpe(premiumFeedback, writingDoc.writing_id);
+					const premiumFeedback = {
+						"commentTR": extractedTextTR,
+						"commentCC": extractedTextCC,
+						"commentLR": extractedTextLR,
+						"commentGRA": extractedTextGRA,
+						"TR": extractedScoreTR,
+						"CC": extractedScoreCC,
+						"LR": extractedScoreLR,
+						"GRA": extractedScoreGRA,
+					};
+					premFeedbackOpe(premiumFeedback, writingDoc.writing_id);
 
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"ApiCall",
-				`User (uid: ${uid}) writing evaluation service.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
+					// create operation log and store it to DB
+					createOperationLog(
+						true,
+						"ApiCall",
+						`User (uid: ${uid}) writing evaluation service.`,
+						req.userIP,
+						req.userDevice,
+						uid
+					);
 
-			return res.status(200).json({isSubscribed, premiumFeedback});
+					return res.status(200).json({ isSubscribed, premiumFeedback });
+
+				} catch (error) {
+					throw new Error("Cannot get response");
+				}
+			}
 		}
 
 	} catch (error) {
