@@ -6,9 +6,11 @@ const apiKey = config.OPENAI_APIKEY;
 
 const openAIRequest = async (prompt: any, returnString: boolean) => {
 	let tokenLength = 0;
+	let tempDiff = 1.0;
 
 	if (returnString === false) {
-		tokenLength = 2000;
+		tokenLength = 3500;
+		tempDiff = 0.6;
 	} else if (returnString === true) {
 		tokenLength = 3000;
 	}
@@ -24,7 +26,7 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 			data: {
 				model: "gpt-3.5-turbo",
 				messages: prompt,
-				temperature: 1.0,
+				temperature: tempDiff,
 				max_tokens: tokenLength,
 			},
 		});
