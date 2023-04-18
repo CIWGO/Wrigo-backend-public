@@ -19,12 +19,16 @@ const stripe = new Stripe(STRIPE_SECRET_KEY, {
 const endpointSecret = STRIPE_WEBHOOK_SECRET;
 
 const handleStripeWebhook = async (req: Request, res: Response) => {
+	console.log("endpointSecret:", endpointSecret);
 	const sig = req.headers["stripe-signature"] as string;
+	console.log("sig:", sig); 
+
 
 	let event: Stripe.Event;
 
 	try {
 		event = stripe.webhooks.constructEvent(req.body.toString("utf8"), sig, endpointSecret);
+		console.log("event:", event); 
 	} catch (err) {
 		return res.status(400).send(`Webhook Error: ${err.message}`);
 	}
