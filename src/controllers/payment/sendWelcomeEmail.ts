@@ -9,11 +9,11 @@ const sendWelcomeEmail = async (userEmail: string) => {
 	<style>
 	body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 	.container {background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 8px;}
-	.header {background-color: #2f71da; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;}
+	.header {padding: 20px; text-align: center; border-radius: 8px 8px 0 0;}
 	.header img {max-width: 200px;}
 	.content {padding: 20px; text-align: left; font-family: 'Roboto', sans-serif; color: #000;}
 	.content p {font-size: 16px; line-height: 24px;}
-	.footer {padding: 20px; text-align: center; font-size: 14px; color: #777;}
+	.footer {padding: 20px; text-align: center; font-size: 14px; color: #777; background-color: #2f71da;border-radius:  0 0 8px 8px;}
 	</style>
 	</head>
 	<body>
