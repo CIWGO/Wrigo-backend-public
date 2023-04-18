@@ -11,6 +11,7 @@ ARG STRIPE_W
 
 # ENV 
 ENV PORT=3005
+ENV FRONT_END="https://wrigo.com.au"
 ENV CIW_COLLECTION_NAME=CIWGO
 ENV OPENAI_APIURL=https://api.openai.com/v1/chat/completions
 ENV JWT_SECRET=yoursecretkey
