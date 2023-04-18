@@ -39,12 +39,12 @@ const cancelSubscriptionImmediately = async (uid, subscriptionId, latestInvoice?
 
 		await sendEmail(
 			[userEmail],
-			"WRIGO - Cancel Subscription notification",
+			"Wrigo - Cancel Subscription notification",
 			`Dear customer,
 			Your subscription has been cancelled successfully,
 			Thank you for your business!
 			Best regards,
-			WRIGO`
+			Wrigo`
 		);
 
 		// res.send({ subscription: deletedSubscription });

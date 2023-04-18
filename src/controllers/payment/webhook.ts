@@ -21,14 +21,14 @@ const endpointSecret = STRIPE_WEBHOOK_SECRET;
 const handleStripeWebhook = async (req: Request, res: Response) => {
 	console.log("endpointSecret:", endpointSecret);
 	const sig = req.headers["stripe-signature"] as string;
-	console.log("sig:", sig); 
+	console.log("sig:", sig);
 
 
 	let event: Stripe.Event;
 
 	try {
 		event = stripe.webhooks.constructEvent(req.body.toString("utf8"), sig, endpointSecret);
-		console.log("event:", event); 
+		console.log("event:", event);
 	} catch (err) {
 		return res.status(400).send(`Webhook Error: ${err.message}`);
 	}
@@ -112,7 +112,7 @@ const handleStripeWebhook = async (req: Request, res: Response) => {
 		const userEmail = await findEmailByUid(uid);
 		await sendEmail(
 			[userEmail],
-			"WRIGO - Cancel Subscription notification",
+			"Wrigo - Cancel Subscription notification",
 			`Dear customer,
 
 Your subscription has been cancelled successfully,
@@ -120,7 +120,7 @@ Your subscription has been cancelled successfully,
 Thank you for being one of our members. 
 
 Best regards,
-The WRIGO Team`
+The Wrigo Team`
 		);
 
 		return res.status(200).send();// send 200 to stripe
