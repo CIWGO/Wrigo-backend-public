@@ -1,12 +1,6 @@
 import { sendEmail } from "../../utils/ses_sendEmail";
-import * as fs from "fs";
-import * as path from "path";
 
 const sendWelcomeEmail = async (userEmail: string) => {
-	const imagePath = path.join(__dirname, "your-image-name.png");
-	const imageData = fs.readFileSync(imagePath);
-	const imageBase64 = imageData.toString("base64");
-
 	const bodyHtml = `
 <!DOCTYPE html>
 <html>
