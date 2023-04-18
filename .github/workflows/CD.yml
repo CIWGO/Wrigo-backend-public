@@ -39,7 +39,7 @@ jobs:
           ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           CONNECTION_S: ${{ secrets.CONNECTION_STRING }}
-          OPENAI_A: ${{ secrets.OPENAI_APIKEY }}
+          OPENAI_A: ${{ secrets.OPENAI_APIKEY2 }}
           STRIPE_S: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_W_S: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
         run: |
@@ -49,7 +49,8 @@ jobs:
                 --build-arg CONNECTION=$CONNECTION_S \
                 --build-arg STRIPE=$STRIPE_S \
                 --build-arg STRIPE_W=$STRIPE_W_S \
-                --build-arg OPENAI=$OPENAI_A .     
+                --build-arg OPENAI=$OPENAI_A \
+                .     
           docker push $ECR_REGISTRY/$IMAGE_NAME
 
       - name: Update ECS task
