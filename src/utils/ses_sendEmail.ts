@@ -10,7 +10,7 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { fromIni } from "@aws-sdk/credential-provider-ini";
 
-const sendEmail = async (toAddresses: string[], subject: string, bodyText: string) => {
+const sendEmail = async (toAddresses: string[], subject: string, bodyText: string, bodyHtml?: string) => {
 
 	const credentials = fromIni({
 		profile: "default",
@@ -31,6 +31,9 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 				Text: {
 					Data: bodyText,
 				},
+				Html: {
+					Data: bodyHtml,
+				},
 			},
 			Subject: {
 				Data: subject,
@@ -48,4 +51,3 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 };
 
 export { sendEmail };
-
