@@ -63,7 +63,7 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 			</div>
 			<div class="content">
 			  <p class="otp-content">Dear customer,</p>
-			  <p class="otp-content">Dear customer,<br>The following is your verification code. It will expire in 1 minute.</p><span class="otp">${otp}</span>
+			  <p class="otp-content">The following is your verification code. It will expire in 1 minute.</p><span class="otp">${otp}</span>
 			  <p class="otp-content">Best regards,<br>The Wrigo Team</p>
 			</div>
 			<div class="footer">
