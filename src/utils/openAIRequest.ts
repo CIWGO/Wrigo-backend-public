@@ -84,6 +84,7 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 			url: URL,
 			headers: {
 				"Content-Type": "application/json",
+				"organization": "org-zNOMagdhlU4unIGkFLv5VvnH",
 				"Authorization": `Bearer ${apiKey}`,
 			},
 			data: {
