@@ -47,6 +47,51 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 			emailContent
 		);
 
+		const bodyHtml = `
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<style>
+	body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
+	.container {background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 8px;}
+	.header {padding: 20px; text-align: center; border-radius: 8px 8px 0 0;}
+	.header img {max-width: 200px;}
+	.content {padding: 20px; text-align: left; font-family: 'Roboto', sans-serif; color: #000;}
+	.content p {font-size: 16px; line-height: 24px;}
+	.footer {padding: 0; text-align: center; font-size: 14px; color: #ffffff; background-color: #2f71da;border-radius:  0 0 8px 8px;}
+	</style>
+	</head>
+	<body>
+	  <div class="container">
+		<div class="header">
+		  <img src="https://wrigopublicdownload.s3.ap-southeast-2.amazonaws.com/logo1.png" alt="Wrigo Logo">
+		</div>
+		<div class="content">
+		  <p>Dear customer,</p>
+		  <p>Your verification code is ${otp}. It will expire in 1 minute.</p>
+		  <p>Best regards,<br>The Wrigo Team</p>
+		</div>
+		<div class="footer">
+		  <p>&copy; ${new Date().getFullYear()} Wrigo. All rights reserved.</p>
+		</div>
+	  </div>
+	</body>
+	</html>
+`;
+
+		await sendEmail(
+			[email],
+			"Wrigo - Email Verification",
+			`Dear customer,
+
+Your verification code is ${otp}. It will expire in 1 minute.
+
+Best regards,
+The Wrigo Team`,
+			bodyHtml
+		);
+
 		// create operation log and store it to DB
 		createOperationLog(
 			true,
