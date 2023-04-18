@@ -69,6 +69,7 @@ const URL = config.OPENAI_APIURL;
 const apiKey = config.OPENAI_APIKEY;
 
 const openAIRequest = async (prompt: any, returnString: boolean) => {
+	console.log("openai request running");
 	let tokenLength = 0;
 
 	if (returnString === false) {
@@ -92,6 +93,7 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 				max_tokens: tokenLength,
 			},
 		});
+		console.log("openai request running: " + response.data);
 
 		if (returnString === false) {
 			// check if the response can be suit as JSON format
@@ -106,6 +108,8 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 		}
 
 	} catch (error) {
+		console.error("Error making request to OpenAI API:", error.message);
+		console.error("Error stack:", error.stack);
 		return error;
 	}
 };
