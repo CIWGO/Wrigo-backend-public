@@ -24,7 +24,7 @@ body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 <body>
   <div class="container">
     <div class="header">
-      <img src="data:image/png;base64,${imageBase64}" alt="Wrigo Logo">
+	<img src="https://wrigopublicdownload.s3.ap-southeast-2.amazonaws.com/logo.png" alt="Wrigo Logo">
     </div>
     <div class="content">
       <p>Dear customer,</p>
