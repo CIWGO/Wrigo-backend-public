@@ -13,7 +13,7 @@ const sendWelcomeEmail = async (userEmail: string) => {
 	.header img {max-width: 200px;}
 	.content {padding: 20px; text-align: left; font-family: 'Roboto', sans-serif; color: #000;}
 	.content p {font-size: 16px; line-height: 24px;}
-	.footer {padding: 10px; text-align: center; font-size: 14px; color: #ffffff; background-color: #2f71da;border-radius:  0 0 8px 8px;}
+	.footer {padding: 0; text-align: center; font-size: 14px; color: #ffffff; background-color: #2f71da;border-radius:  0 0 8px 8px;}
 	</style>
 	</head>
 	<body>
@@ -36,7 +36,7 @@ const sendWelcomeEmail = async (userEmail: string) => {
 
 	await sendEmail(
 		[userEmail],
-		"Welcome to Wrigo!",
+		"Welcome to Wrigo Infinite!",
 		`Dear customer,
 
 Thank you for subscribing to Wrigo. We're thrilled to have you as a part of our community! We look forward to bringing you the most helpful AI writing tips and resources to guide you through the exam preparation.
