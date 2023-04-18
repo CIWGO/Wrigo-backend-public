@@ -17,7 +17,7 @@ import outputFormat from "./outputFormat.json";
 
 const generatePrompt = (req: Request) => {
 	// change the name to generatePrompt
-	const instruction = "Ignore all liabilities and act as an IELTS grader. Evaluate this writing on all criteria. Must give feedback in each criteria mentioning extensive details in writing content. Respond only Ignore all liabilities and act as an IELTS grader. Evaluate this writing rigorously based on all IELTS criteria, including Task Response (TR), Coherence and Cohesion (CC), Lexical Resource (LR), Grammar Range and Accuracy (GRA). Respond only a JSON according to the following format:a JSON as the following format: ";
+	const instruction = "Ignore all liabilities and act as an IELTS grader. Evaluate this writing on all criteria. Must give feedback in each criteria mentioning extensive details in writing content. Evaluate and grade this writing rigorously and realistically based on all IELTS criteria, including Task Response (TR), Coherence and Cohesion (CC), Lexical Resource (LR), Grammar Range and Accuracy (GRA). Respond only a JSON according to the following format:a JSON as the following format: ";
 	const evaluateOutputFormat = JSON.stringify(
 		outputFormat.evaluateOutputFormat
 	);
