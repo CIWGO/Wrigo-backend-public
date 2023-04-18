@@ -53,6 +53,7 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 		.content p {font-size: 16px; line-height: 24px;}
 		.footer {padding: 0; text-align: center; font-size: 14px; color: #ffffff; background-color: #2f71da; border-radius: 0 0 8px 8px;}
 		.otp {font-size: 24px; font-weight: bold;}
+		.signature {color: #000;}
 		</style>
 		</head>
 		<body>
@@ -63,7 +64,7 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 			<div class="content">
 			  <p>Dear customer,</p>
 			  <p>The following is your verification code. It will expire in 1 minute.</p><br><span class="otp">${otp}</span>
-			  <p>Best regards,<br>The Wrigo Team</p>
+			  <p class="signature">Best regards,<br>The Wrigo Team</p>
 			</div>
 			<div class="footer">
 			  <p>&copy; ${new Date().getFullYear()} Wrigo. All rights reserved.</p>
