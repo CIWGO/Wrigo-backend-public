@@ -44,6 +44,8 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 		}
 
 	} catch (error) {
+		console.error("Error making request to OpenAI API:", error.message);
+		console.error("Error stack:", error.stack);
 		return error;
 	}
 };
