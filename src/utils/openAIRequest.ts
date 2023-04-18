@@ -66,7 +66,7 @@ import axios from "axios";
 import config from "../../config";
 
 const URL = config.OPENAI_APIURL;
-const apiKey = "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";
+const apiKey = config.OPENAI_APIKEY;
 
 const openAIRequest = async (prompt: any, returnString: boolean) => {
 	console.log("openai request running");
@@ -84,6 +84,7 @@ const openAIRequest = async (prompt: any, returnString: boolean) => {
 			url: URL,
 			headers: {
 				"Content-Type": "application/json",
+				"organization": "org-zNOMagdhlU4unIGkFLv5VvnH",
 				"Authorization": `Bearer ${apiKey}`,
 			},
 			data: {
