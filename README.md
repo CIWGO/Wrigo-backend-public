@@ -14,6 +14,10 @@ Introducing our innovative language training and assessment platform – designe
 
 ## Getting Started
 
+### Frontend
+
+
+
 ### Installing
 
 - Install all needed Dependencies
@@ -123,7 +127,9 @@ Status Code:
 
 ## Version History
 
-- 2.0 Additional functions
+- 1.0 MVP
+- 1.1 Payment Integration
+- 1.2 Functional Demo
 
 ## Author
 
