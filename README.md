@@ -22,6 +22,8 @@ https://github.com/CIWGO/Wrigo-frontend-public
 
 ### Installing
 
+- This app requires NPM and NodeJS 16 installed.
+
 - Install all needed Dependencies
 
 ```
@@ -55,6 +57,12 @@ Send emails to user's email address using AWS SES. To use this function.
 - .aws is a folder at the root. 
 - credentials file does not have a file extension. 
 - Paste the following AWS credentials with exact format into credentials file and save. 
+
+```
+[default]
+aws_access_key_id = <your key id>
+aws_secret_access_key = <your access key>
+```
 
 ### Executing program
 
