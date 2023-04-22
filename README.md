@@ -1,4 +1,16 @@
-# CIWGO - Chatgpt IELTS Writing GO
+# Wrigo - Your IELTS Writing AI partner
+
+Introducing our innovative language training and assessment platform – designed to revolutionise the way you prepare for IELTS Writing Task 2. Harnessing the power of ChatGPT and its capability of Natural Language Processing, our platform addresses the challenges faced by test-takers in accessing accurate, efficient, and budget-friendly feedback for their IELTS essays.
+
+# Features
+
+1. **AI-Powered Grading**: Say goodbye to subjective scoring and lengthy waiting periods! Our advanced AI technology accurately grades your IELTS writing tasks in real-time, providing you with immediate feedback on your performance. Experience consistent and reliable assessment that's comparable to expert human graders, without the wait.
+2. **In-depth Evaluation & Feedback**: Understand your strengths and areas for improvement with our comprehensive evaluation and personalised feedback. Our AI Writing Assistant not only identifies key issues in your writing but also provides clear and actionable guidance on how to enhance your essays. Improve your writing skills faster and more effectively than ever before.
+3. **Intelligent Grammar Fix**: Eliminate errors and polish your writing with our intelligent grammar fix. The AI Writing Assistant detects and corrects grammar, punctuation, and spelling mistakes while also suggesting improvements in word choice and sentence structure. Impress the examiners with flawless, high-quality essays.
+4. **Writing Sample Generation**: Need inspiration or guidance on how to approach a specific topic? Our AI-powered Writing Sample Generation feature provides you with high-quality writing samples, tailor-made for your chosen topic. Learn from the best and adopt winning strategies to craft essays that stand out.
+5. **Topic Library**: Stay ahead of the curve with our user-driven Topic Library! Access a wide range of IELTS writing topics, uploaded by fellow students to reflect the popularity of subjects in recent exam sessions. Familiarise yourself with diverse themes and be prepared for any topic that comes your way.
+6. **Writing Performance Analytics**: Track your progress and unlock your full potential with our advanced Writing Performance Analytics. Gain insights into your performance trends, identify recurring patterns, and monitor improvements over time. Set goals, stay motivated, and achieve your desired IELTS writing score.
+7. **Other Supporting Features:** Landing Page, User Registration and Authentication, Email Notification, Search, Wrigo Infinite Membership Subscription, and Stripe-based Payment
 
 ## Getting Started
 
