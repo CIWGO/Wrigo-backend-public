@@ -2,34 +2,6 @@
 
 ## Getting Started
 
-### Dependencies
-
-- node ver ^12 || ^14 || ^16
-- bcrypt ver ^5.1.0
-- cors ver ^2.8.5
-- dotenv ver ^16.0.3
-- express ver ^4.18.2
-- express-async-errors ver ^3.1.1
-- jsonwebtoken ver ^9.0.0
-- mongoose ver ^6.6.5
-- morgan ver ^1.10.0
-- nodemailer ^6.4.7
-- pm2 ver ^5.2.2
-
-### Dev Dependencies
-
-- @types/express ver ^4.17.16
-- @types/mongoose ver ^5.11.97
-- @types/node ver ^18.11.18
-- @types/nodemailer ^6.4.7
-- @typescript-eslint/eslint-plugin ver ^5.50.0
-- @typescript-eslint/parser ver ^5.50.0
-- eslint ver ^8.33.0
-- eslint-plugin-import ver ^2.27.5
-- nodemon ver ^2.0.20
-- ts-node ver ^10.9.1
-- typescript ver ^4.9.5
-
 ### Installing
 
 - Install all needed Dependencies
@@ -38,7 +10,7 @@
 npm ci
 ```
 
-- Install MongoDB for VS Code extension
+- Register MongoDB Atlas and install MongoDB for VS Code extension
 
 ### Create .env Variables
 
@@ -47,16 +19,16 @@ Create a file named .env under project root folder and paste the following into 
 ```
 PORT = 3005
 FRONT_END="http://localhost:3000"
-CONNECTION_STRING = "mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/CIWGO?retryWrites=true&w=majority"
-CIW_COLLECTION_NAME = "CIWGO"
-OPENAI_APIURL = "https://api.openai.com/v1/chat/completions"
-OPENAI_APIKEY = "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"
-JWT_SECRET = "yoursecretkey"
-STRIPE_PUBLIC_KEY = "pk_test_51Ml43uJm2vMPXBBfJpBJLlYZYDaniI3qbpAkx5cqHakuqkRbQQIJ71gD3LL1oI4S3CiiImhFjfKpoMfqnOWgG0wF00zVRlQOvT"
-STRIPE_SECRET_KEY = "sk_test_51Ml43uJm2vMPXBBfPBKnmLijGLwkMtJReVEpZd0foRz2pJW0N1D8xIt1ZmEAjUaiSgvFRc31VVb4tm6eYMbdwIt300IGfq0hVW"
-STRIPE_PRODUCT_ID = "price_1Ml4JRJm2vMPXBBf8YgX4Aqa"
-STRIPE_PAYMENT_URL = "https://buy.stripe.com/test_eVa6rM8swblAely7ss"
-STRIPE_WEBHOOK_SECRET="whsec_922b28be924e2fd32046447000ffe15a1682d42105321c491bd124f31cdb33d4"
+CONNECTION_STRING = <Your connection string from MongoDB>
+COLLECTION_NAME = <Collection name>
+OPENAI_APIURL = <API Address>
+OPENAI_APIKEY = <API Key>
+JWT_SECRET = <Your secret key>
+STRIPE_PUBLIC_KEY = <Your stripe public key>
+STRIPE_SECRET_KEY = <Your stripe secret key>
+STRIPE_PRODUCT_ID = <Your stripe product id>
+STRIPE_PAYMENT_URL = <Your stripe payment url>
+STRIPE_WEBHOOK_SECRET= <Your stripe webhook secret>
 ```
 
 ### Create .aws/credentials
@@ -67,16 +39,12 @@ Send emails to user's email address using AWS SES. To use this function.
 - credentials file does not have a file extension. 
 - Paste the following AWS credentials with exact format into credentials file and save. 
 
-```
-Refer to group chat notice for keys
-```
-
 ### Executing program
 
 - Run the project
 
 ```
-npm run start
+npm start
 ```
 
 - DEV modal
@@ -86,10 +54,6 @@ npm run dev
 ```
 
 - Stop running
-
-```
-^c
-```
 
 ```
 control + c
@@ -120,35 +84,17 @@ docker run --name backend -d --rm -p 3005:3005 ciwgo/backend
 - Application connection string:
 
 ```
-mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/?retryWrites=true&w=majority
-```
-
-- VS Code extension connection string:
-
-```
-mongodb+srv://leoyh:jevtom-sowwyv-ciWty8@cluster0.tyq36bu.mongodb.net/test
+<Your mongoDB connection string>
 ```
 
 ## OpenAI URL and APIKey
 
 ```
-https://api.openai.com/v1/completions
+<OpenAI API URL>
 ```
 
 ```
-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
-```
-
-## Test Emails
-
-```
-ciwgo-dev@hotmail.com
-Ciwgo123
-```
-
-```
-ciwgo-test@hotmail.com
-Ciwgo123
+<OpenAI API KEY>
 ```
 
 ## Error Handling
@@ -184,4 +130,4 @@ Status Code:
 
 ## License
 
-This project is licensed under the ISC License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details
