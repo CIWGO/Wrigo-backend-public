@@ -16,9 +16,11 @@ import {
 	findTopic,
 	searchAllTopics,
 	searchUserTopics,
-	viewPastPayment
+	viewPastPayment,
+	deleteWritings
 } from "../controllers/index";
 import { extractUsernameAndPassword, tokenGuard } from "../middlewares/index";
+import getUserPaymentInfo from "../controllers/payment/userPaymentInfo";
 
 const userRouter = Router();
 
@@ -30,20 +32,22 @@ userRouter.post("/userProfile", createUserProfile);
 userRouter.post("/userDelete", tokenGuard, deleteUser);
 userRouter.post("/sendOTP", sendOTPViaEmail);
 userRouter.post("/verifyOTP", verifyOTP);
-userRouter.post("/writingDraft", writingDraft);
+userRouter.post("/writingDraft", tokenGuard, writingDraft);
 userRouter.post("/changePassword", changePassword);
-userRouter.post("/viewPastPayment", tokenGuard,viewPastPayment);
+userRouter.post("/viewPastPayment", tokenGuard, viewPastPayment);
+userRouter.post("/getUserPaymentInfo", tokenGuard, getUserPaymentInfo);
 
 // put
 userRouter.put("/userProfile", tokenGuard, updateUserProfile);
+userRouter.put("/deleteWriting", tokenGuard, deleteWritings);
 
 // get (use post)
 userRouter.post("/getUser", getUserAccount);
 userRouter.post("/getUserProfile", tokenGuard, showUserProfile);
-userRouter.post("/viewHistory", viewHistory);
-userRouter.post("/getTopic", findTopic);
-userRouter.post("/searchAllTopics", searchAllTopics);
-userRouter.post("/searchUserTopics", searchUserTopics);
+userRouter.post("/viewHistory", tokenGuard, viewHistory);
+userRouter.post("/getTopic", tokenGuard, findTopic);
+userRouter.post("/searchAllTopics", tokenGuard, searchAllTopics);
+userRouter.post("/searchUserTopics", tokenGuard, searchUserTopics);
 
 // delete
 

@@ -31,6 +31,9 @@ const createUser = async (req: Request, res: Response) => {
 			await user.save();
 			//create new userProfile
 			await createUserProfile(uid, username);
+	
+			const userlog={username:username,uid:user.uid};
+
 			// create operation log and store it to DB
 			createOperationLog(
 				false,
@@ -40,7 +43,7 @@ const createUser = async (req: Request, res: Response) => {
 				req.userDevice,
 				uid
 			);
-			return res.status(201).json({ username, email });
+			return res.status(201).json({ message: "Sign up successful", ...userlog });
 		} else {
 			// create operation log and store it to DB
 			createOperationLog(

@@ -1,4 +1,4 @@
-import { writing as WritingModel, feedback as FeedbackModel, operationLog as LogModel } from "../../models/index";
+import { writing as WritingModel, feedback as FeedbackModel, operationLog as LogModel, userAccount } from "../../models/index";
 import { Response, Request } from "express";
 import { createOperationLog } from "../log/index";
 
@@ -27,7 +27,7 @@ const feedbackHistory = async (writing_id) => {
 
 //Given time period, will get all writing but not containing any feedback
 const writingHistory = async (from, to, uid) => {
-	const writingHistory = await WritingModel.find({ uid, submit_time: { $gte: from, $lte: to } }).sort({ submit_time: -1 }).exec();
+	const writingHistory = await WritingModel.find({ uid, create_time: { $gte: from, $lte: to } }).sort({ create_time: -1 }).exec();
 	return writingHistory;
 };
 
@@ -102,8 +102,8 @@ const viewHistory = async (req: Request, res: Response) => {
 				uid
 			);
 			return res.status(200).json(logs);
-		}else if (type === "writingDoc") {
-			const { writing_id } = req.body;
+		} else if (type === "writingDoc") {
+			const { writing_id, uid } = req.body;
 			const writingDoc = await getWritingDoc(writing_id);
 			createOperationLog(
 				true,
@@ -112,8 +112,19 @@ const viewHistory = async (req: Request, res: Response) => {
 				req.userIP,
 				req.userDevice,
 				uid
-			);
-			return res.status(200).json(writingDoc);
+			); try {
+				const user = await userAccount.findOne({ uid }).exec();
+				const isSubscribed = user.isSubscribed;
+				const newWritingDoc = {
+					...writingDoc,
+					isSubscribed
+				};
+				console.log(newWritingDoc);
+				return res.status(200).json(newWritingDoc);
+			} catch (err) {
+				console.log(err);
+				res.status(404).json({ err });
+			}
 		} else {
 			createOperationLog(
 				false,

@@ -10,18 +10,18 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { fromIni } from "@aws-sdk/credential-provider-ini";
 
-const sendEmail = async (toAddresses: string[], subject: string, bodyText: string) => {
+const sendEmail = async (toAddresses: string[], subject: string, bodyText: string, bodyHtml?: string) => {
 
 	const credentials = fromIni({
 		profile: "default",
-		filepath: ".aws/credentials", 
+		filepath: ".aws/credentials",
 	});
 
-	const client = new SESClient({ 
-		region: "ap-southeast-2", 
+	const client = new SESClient({
+		region: "ap-southeast-2",
 		credentials
 	});
-  
+
 	const params = {
 		Destination: {
 			ToAddresses: toAddresses,
@@ -31,6 +31,9 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 				Text: {
 					Data: bodyText,
 				},
+				Html: {
+					Data: bodyHtml,
+				},
 			},
 			Subject: {
 				Data: subject,
@@ -38,16 +41,13 @@ const sendEmail = async (toAddresses: string[], subject: string, bodyText: strin
 		},
 		Source: "wrigo-account-service@wrigo.com.au",
 	};
-  
+
 	try {
 		const command = new SendEmailCommand(params);
-		const result = await client.send(command);
-		console.log(result);
+		await client.send(command);
 	} catch (error) {
 		console.error(error);
 	}
 };
 
 export { sendEmail };
-
-  

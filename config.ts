@@ -17,6 +17,11 @@ interface ENV {
 	OPENAI_APIURL?: string;
 	OPENAI_APIKEY?: string;
 	JWT_SECRET?: string;
+	STRIPE_PUBLIC_KEY?: string;
+	STRIPE_SECRET_KEY?: string
+	STRIPE_PRODUCT_ID?: string
+	STRIPE_PAYMENT_URL?: string
+	STRIPE_WEBHOOK_SECRET?: string
 }
 
 interface Config {
@@ -26,6 +31,11 @@ interface Config {
 	OPENAI_APIURL: string;
 	OPENAI_APIKEY: string;
 	JWT_SECRET?: string;
+	STRIPE_PUBLIC_KEY?: string;
+	STRIPE_SECRET_KEY?: string;
+	STRIPE_PRODUCT_ID?: string;
+	STRIPE_PAYMENT_URL?: string;
+	STRIPE_WEBHOOK_SECRET?: string;
 }
 
 // Loading process.env as ENV interface
@@ -38,6 +48,11 @@ const getConfig = (): ENV => {
 		OPENAI_APIKEY: process.env.OPENAI_APIKEY,
 		OPENAI_APIURL: process.env.OPENAI_APIURL,
 		JWT_SECRET: process.env.JWT_SECRET,
+		STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
+		STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+		STRIPE_PRODUCT_ID: process.env.STRIPE_PRODUCT_ID,
+		STRIPE_PAYMENT_URL: process.env.STRIPE_PAYMENT_URL,
+		STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET
 	};
 };
 

@@ -5,16 +5,23 @@ import { evaluateWriting } from "./writingEvaluation";
 //import { responseOperation } from "./responseOperation";
 import { viewHistory } from "./writingHistory";
 
-import { WritingStatistics } from "./writingStatistics";
+import  WritingStatistics  from "./writingStatistics";
 import { writingSubmissions } from "./writingSubmissions";
+import { premWritingSample } from "./premUserWritingSample";
+import { grammarFix} from "./grammarFix";
 
 import { writingDraft } from "./writingDraft";
+import { deleteWritings } from "./deleteWriting";
+
 export {
 	// generatePromptForEvaluation,
 	evaluateWriting,
 	viewHistory,
 	WritingStatistics,
 	writingSubmissions,
-	writingDraft
+	writingDraft,
+	deleteWritings,
+	premWritingSample,
+	grammarFix
 	//responseOperation
 };

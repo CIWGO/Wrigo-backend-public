@@ -12,7 +12,10 @@ import { Response, Request } from "express";
  * @source url
  */
 const searchUserTopics = async (req:Request, res:Response) => {
-	const {uid,input} = req.body;
+	const { uid, input } = req.body;
+	if (!input) {
+    return res.status(200).json([]);
+  }
 	try {
 		const regex = new RegExp(input,"i");
 		const result = await writingModel.find({uid ,task_topic: { $regex: regex } } ).exec();

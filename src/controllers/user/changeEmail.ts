@@ -1,6 +1,5 @@
 import { userAccount } from "../../models/index";
 import { Request, Response } from "express";
-import { verifyOTP } from "./userOtp";
 import { createOperationLog } from "../log/index";
 
 /**
@@ -15,40 +14,26 @@ const changeEmail = async (req: Request, res: Response) => {
 	try {
 		const { uid, newEmail } = req.body;
 
-		const isVerified = await verifyOTP(req, res);
+		await userAccount.findOneAndUpdate(
+			{ uid },
+			{
+				$set: { email: newEmail },
+			},
+			{ new: true }
+		).exec();
 
-		if (isVerified) {
-			await userAccount.findOneAndUpdate(
-				{ uid },
-				{
-					$set: { email: newEmail },
-				},
-				{ new: true }
-			).exec();
+		// create operation log and store it to DB
+		createOperationLog(
+			true,
+			"userAction",
+			`User (uid: ${uid}) email changed successfully.`,
+			req.userIP,
+			req.userDevice,
+			uid
+		);
+		return res.status(200).json({ message: "User email is changed." });
 
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"userAction",
-				`User (uid: ${uid}) email changed successfully.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
-			return res.status(200).json({message: "User email is changed."});
-		} else {
-			// create operation log and store it to DB
-			createOperationLog(
-				true,
-				"userAction",
-				`User (uid: ${uid}) OTP verification failed when changing email.`,
-				req.userIP,
-				req.userDevice,
-				uid
-			);
-			return res.status(401).send({ error: "Invalid OTP" });
-		}
-	} catch(error) {
+	} catch (error) {
 		const uid = req.body.uid;
 		// create operation log and store it to DB
 		createOperationLog(

@@ -15,13 +15,17 @@ const WritingStatistics = async (req: Request, res: Response) => {
 
 	try {
 		// Find all writings with the target uid
-		const writings = await Writing.find({ uid: uid }).select("_id");
-		const writingIds = writings.map(writing => writing._id);
-
+		const writings = await Writing.find({ uid: uid });
+		const writingIds = writings.map(writing => writing.writing_id);
 		// Find all feedbacks based on the writing ids
 		// sort it from old to new
-		const feedbacks = await Feedback.find({ writingId: { $in: writingIds } }).sort({ createdAt: 1 });
+		const feedbacks = await Feedback.find({ writing_id: { $in: writingIds } }).sort({ createdAt: 1 });
 		const len = feedbacks.length;
+		if (len === 0) {
+			// If there are no writings found, return empty arrays
+			res.json({ trArray: [], ccArray: [], lrArray: [], grdArray: [], meanArray: [], radarArr: [], numberChart: [] });
+			return;
+		}
 
 		const recentFeedbackObj = feedbacks[len-1];
 
@@ -29,11 +33,15 @@ const WritingStatistics = async (req: Request, res: Response) => {
 		const ccArray = feedbacks.map((feedback) => feedback.score_CC);
 		const lrArray = feedbacks.map((feedback) => feedback.score_LR);
 		const grdArray = feedbacks.map((feedback) => feedback.score_GRA);
-		const meanArray = trArray.map((tr, i) => (tr + ccArray[i] + lrArray[i] + grdArray[i]) / 4);
+		const meanArray = feedbacks.map((feedback) => {
+			const { score_TR, score_CC, score_LR, score_GRA } = feedback;
+			return (score_TR + score_CC + score_LR + score_GRA) / 4;
+		});
 
 		const radarArr = [recentFeedbackObj.score_TR, recentFeedbackObj.score_CC, recentFeedbackObj.score_LR, recentFeedbackObj.score_GRA];
 
-		const meanHighArr = meanArray.sort(function(a, b) {
+		const deepCopyMeanArray = [...meanArray];
+		const meanHighArr = deepCopyMeanArray.sort(function(a, b) {
 			return b - a;
 		});
 		const meanHigh = meanHighArr[0];
@@ -49,4 +57,4 @@ const WritingStatistics = async (req: Request, res: Response) => {
 
 };
 
-export { WritingStatistics };
+export default WritingStatistics;

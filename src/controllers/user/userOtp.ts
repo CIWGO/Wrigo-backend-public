@@ -30,17 +30,59 @@ const sendOTPViaEmail = async (req: Request, res: Response) => {
 			const user = await UserModel.findOne({ username }).exec();
 			email = user.email;
 		}
-		
+
 		// find the userOTP using uid, then store otp into the user
-		await userOTP.findOneAndUpdate({ uid }, { OTP: otp }, { upsert: true, new: true });
+		await userOTP.findOneAndUpdate(
+			{ uid },
+			{ $set: { OTP: otp } },
+			{ upsert: true, new: true }
+		);
 
 		// send email
-		const emailContent = `Your verification code is ${otp}. It will expire in 1 minute.`;
-		sendEmail(
-			//TEST_EMAIL,
+		const bodyHtml = `
+		<!DOCTYPE html>
+		<html>
+		<head>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+		<style>
+		body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
+		.container {background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 8px;}
+		.header {padding: 20px; text-align: center; border-radius: 8px 8px 0 0;}
+		.header img {max-width: 200px;}
+		.content {padding: 20px; text-align: left; font-family: 'Roboto', sans-serif; color: #000;}
+		.content p {font-size: 16px; line-height: 24px;}
+		.footer {padding: 2px; text-align: center; font-size: 14px; color: #ffffff; background-color: #2f71da; border-radius: 0 0 8px 8px;}
+		.otp {font-size: 24px; font-weight: bold;}
+		.otp-content {color: #000;}
+		</style>
+		</head>
+		<body>
+		  <div class="container">
+			<div class="header">
+			  <img src="https://wrigopublicdownload.s3.ap-southeast-2.amazonaws.com/logo1.png" alt="Wrigo Logo">
+			</div>
+			<div class="content">
+			  <p class="otp-content">Dear customer,</p>
+			  <p class="otp-content">The following is your verification code. It will expire in 1 minute.</p><span class="otp">${otp}</span>
+			  <p class="otp-content">Best regards,<br>The Wrigo Team</p>
+			</div>
+			<div class="footer">
+			  <p>&copy; ${new Date().getFullYear()} Wrigo. All rights reserved.</p>
+			</div>
+		  </div>
+		</body>
+		</html>
+`;
+
+		await sendEmail(
 			[email],
 			"Wrigo - Email Verification",
-			emailContent
+			`Dear customer,
+The following is your verification code. It will expire in 1 minute. ${otp}
+
+Best regards,
+The Wrigo Team`,
+			bodyHtml
 		);
 
 		// create operation log and store it to DB
@@ -81,7 +123,8 @@ const verifyOTP = async (req: Request, res: Response): Promise<boolean> => {
 			await createOperationLog(
 				false,
 				"Verify OTP",
-				logContent, req.userIP,
+				logContent,
+				req.userIP,
 				req.userDevice,
 				uid
 			);

@@ -33,39 +33,38 @@ const schema = new Schema<Feedback>(
 		},
 		feedback_TR: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		feedback_CC: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		feedback_LR: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		feedback_GRA: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		feedback_overall: {
 			type: String,
-			required: true,
 		},
 		score_TR: {
 			type: Number,
-			required: true,
+			// required: true,
 		},
 		score_CC: {
 			type: Number,
-			required: true,
+			// required: true,
 		},
 		score_LR: {
 			type: Number,
-			required: true,
+			// required: true,
 		},
 		score_GRA: {
 			type: Number,
-			required: true,
+			// required: true,
 		},
 	},
 	{ collection: "writing_feedbacks" }

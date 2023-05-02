@@ -20,7 +20,4 @@
 
 # .env
 .env
-.aws
 
-# aws config
-**/.aws
